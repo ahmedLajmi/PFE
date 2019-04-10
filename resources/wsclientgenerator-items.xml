@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2015 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<collectiontypes>
+		<collectiontype code="PriceWSParam"
+			elementtype="PriceParameter" autocreate="true" generate="true"
+			type="list" />
+	</collectiontypes>
+
+	<enumtypes>
+		<enumtype code="ResponseType" autocreate="true"
+			generate="true" dynamic="true">
+			<value code="json" />
+			<value code="xml" />
+			<value code="text" />
+		</enumtype>
+		<enumtype code="MethodType" autocreate="true" generate="true"
+			dynamic="true">
+			<value code="get" />
+			<value code="post" />
+			<value code="put" />
+		</enumtype>
+		<enumtype code="PriceParameter" autocreate="true"
+			generate="true" dynamic="true">
+			<value code="clientCode" />
+			<value code="productCode" />
+			<value code="categorieCode" />
+		</enumtype>
+		<enumtype code="OrderParameter" autocreate="true"
+			generate="true" dynamic="true">
+			<value code="clientCode" />
+			<value code="orderCode" />
+			<value code="orderStatus" />
+		</enumtype>
+		<enumtype code="StockParameter" autocreate="true"
+			generate="true" dynamic="true">
+			<value code="warehouseCode" />
+			<value code="orderCode" />
+			<value code="clientCode" />
+		</enumtype>
+		<enumtype code="CustomerParameter" autocreate="true"
+			generate="true" dynamic="true">
+			<value code="clientCode" />
+			<value code="clientName" />
+			<value code="clientAdress" />
+			<value code="clientZipCode" />
+			<value code="clientEmail" />
+		</enumtype>
+		<enumtype code="ModeType" autocreate="true" generate="true"
+			dynamic="true">
+			<value code="onlyWithWebService" />
+			<value code="webServiceWithNative" />
+		</enumtype>
+		<enumtype code="OrderType" autocreate="true" generate="true"
+			dynamic="true">
+			<value code="webServiceNative" />
+			<value code="NativeWebService" />
+		</enumtype>
+	</enumtypes>
+
+	<relations>
+		<relation code="WebServiceConfigurationParameterRelation"
+			localized="false" generate="true" autocreate="true">
+			<sourceElement type="WebServiceConfiguration"
+				qualifier="configuration" cardinality="one" />
+			<targetElement type="PersoWSParam"
+				qualifier="personalisedParameters" cardinality="many" />
+		</relation>
+		
+		<relation code="WebServiceConfigurationSecurityParameterRelation"
+			localized="false" generate="true" autocreate="true">
+			<sourceElement type="WebServiceConfiguration"
+				qualifier="configuration" cardinality="one" />
+			<targetElement type="PersoWSParam"
+				qualifier="SecurityParameters" cardinality="many" />
+		</relation>
+
+		<relation
+			code="PriceWebServiceConfigurationParameterRelation"
+			localized="false" generate="true" autocreate="true">
+			<sourceElement type="PriceWebServiceConfiguration"
+				qualifier="configuration" cardinality="one" />
+			<targetElement type="PriceWebServiceParameter"
+				qualifier="parameters" cardinality="many" />
+		</relation>
+
+		<relation
+			code="OrderWebServiceConfigurationParameterRelation"
+			localized="false" generate="true" autocreate="true">
+			<sourceElement type="OrderWebServiceConfiguration"
+				qualifier="configuration" cardinality="one" />
+			<targetElement type="OrderWebServiceParameter"
+				qualifier="parameters" cardinality="many" />
+		</relation>
+
+		<relation
+			code="StockWebServiceConfigurationParameterRelation"
+			localized="false" generate="true" autocreate="true">
+			<sourceElement type="StockWebServiceConfiguration"
+				qualifier="configuration" cardinality="one" />
+			<targetElement type="StockWebServiceParameter"
+				qualifier="parameters" cardinality="many" />
+		</relation>
+
+		<relation
+			code="CustomerWebServiceConfigurationParameterRelation"
+			localized="false" generate="true" autocreate="true">
+			<sourceElement type="CustomerWebServiceConfiguration"
+				qualifier="configuration" cardinality="one" />
+			<targetElement type="CustomerWebServiceParameter"
+				qualifier="parameters" cardinality="many" />
+		</relation>
+
+	</relations>
+
+
+
+
+	<itemtypes>
+
+		<itemtype code="WebServiceConfiguration" autocreate="true"
+			generate="true" abstract="true">
+			<attributes>
+				<attribute type="java.lang.String" qualifier="name">
+					<modifiers read="true" write="true" search="true"
+						optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute type="java.lang.String" qualifier="description">
+					<modifiers read="true" write="true" search="true"
+						optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="url" type="java.lang.String">
+					<modifiers read="true" write="true" search="true"
+						optional="false" />
+					<description>The URL of the webservice</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute type="MethodType" qualifier="method">
+					<modifiers read="true" write="true" search="true"
+						optional="false" />
+					<persistence type="property" />
+					<defaultvalue>em().getEnumerationValue("MethodType","get")</defaultvalue>
+				</attribute>
+				<attribute type="ModeType" qualifier="mode">
+					<modifiers read="true" write="true" search="true"
+						optional="false" />
+					<persistence type="property" />
+					<defaultvalue>em().getEnumerationValue("ModeType","onlyWithWebService")</defaultvalue>
+				</attribute>
+				<attribute type="OrderType" qualifier="order">
+					<modifiers read="true" write="true" search="true"
+						optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute type="java.lang.Boolean" qualifier="enable">
+					<modifiers read="true" write="true" search="true"
+						optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute type="ResponseType" qualifier="accept">
+					<modifiers read="true" write="true" search="true"
+						optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute type="ResponseType" qualifier="contentType">
+					<modifiers read="true" write="true" search="true"
+						optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute type="java.lang.String"
+					qualifier="responseTemplate">
+					<modifiers read="true" write="true" search="true"
+						optional="true" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="WebServiceParameter" autocreate="true"
+			generate="true" abstract="true">
+			<attributes>
+				<attribute qualifier="key" type="java.lang.String">
+					<description>The name of the parametre</description>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="PersoWSParam" autocreate="true"
+			generate="true" extends="WebServiceParameter">
+			<attributes>
+				<attribute type="java.lang.String" qualifier="value">
+					<modifiers read="true" write="true" search="true"
+						optional="false" />
+					<description>The value of the parametre</description>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="PriceWebServiceParameter" autocreate="true"
+			generate="true" extends="WebServiceParameter">
+			<attributes>
+				<attribute type="PriceParameter" qualifier="value">
+					<modifiers read="true" write="true" search="true"
+						optional="false" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="OrderWebServiceParameter" autocreate="true"
+			generate="true" extends="WebServiceParameter">
+			<attributes>
+				<attribute type="OrderParameter" qualifier="value">
+					<modifiers read="true" write="true" search="true"
+						optional="false" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="StockWebServiceParameter" autocreate="true"
+			generate="true" extends="WebServiceParameter">
+			<attributes>
+				<attribute type="StockParameter" qualifier="value">
+					<modifiers read="true" write="true" search="true"
+						optional="false" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="CustomerWebServiceParameter"
+			autocreate="true" generate="true" extends="WebServiceParameter">
+			<attributes>
+				<attribute type="CustomerParameter" qualifier="value">
+					<modifiers read="true" write="true" search="true"
+						optional="false" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="PriceWebServiceConfiguration"
+			autocreate="true" generate="true" extends="WebServiceConfiguration">
+			<deployment table="PriceWSConfiguration" typecode="13001" />
+			<attributes>
+				<attribute qualifier="priceKey" type="java.lang.String">
+					<modifiers read="true" write="true" search="true"
+						optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="currencyKey" type="java.lang.String">
+					<modifiers read="true" write="true" search="true"
+						optional="true" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="StockWebServiceConfiguration"
+			autocreate="true" generate="true" extends="WebServiceConfiguration">
+			<attributes>
+				<attribute qualifier="stockKey" type="java.lang.String">
+					<modifiers read="true" write="true" search="true"
+						optional="true" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="OrderWebServiceConfiguration"
+			autocreate="true" generate="true" extends="WebServiceConfiguration">
+			<attributes>
+
+			</attributes>
+		</itemtype>
+
+		<itemtype code="CustomerWebServiceConfiguration"
+			autocreate="true" generate="true" extends="WebServiceConfiguration">
+			<attributes>
+
+			</attributes>
+		</itemtype>
+
+	</itemtypes>
+
+
+	<!-- <itemtype generate="true" code="MyProduct" jaloclass="de.hybris.platform.addons.wsclientgenerator.jalo.MyProduct" 
+		extends="Product" autocreate="true" > <attributes> <attribute qualifier="myExampleInitialStringField" 
+		type="java.lang.String"> <description>My Example Initial String Value</description> 
+		<modifiers initial="true"/> <persistence type="property"/> </attribute> <attribute 
+		qualifier="myExampleBooleanField" type="java.lang.Boolean"> <description>Example 
+		Initial Boolean Field</description> <persistence type="property"/> </attribute> 
+		<attribute qualifier="media" type="Media"> <persistence type="property"/> 
+		</attribute> </attributes> </itemtype> -->
+</items>

@@ -1,0 +1,9 @@
+#Ant properties
+#Fri Oct 30 09:11:29 CET 2015
+builddate=20151030 0910
+description=wsclientgenerator
+name=wsclientgenerator
+releasedate=20150915 1445
+vendor=hybris
+version=5.7.0.1
+version.api=5.7.0

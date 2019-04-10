@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2015 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:annotation-config />
+
+	<bean id="wsclientgeneratorCoreDataImportedEventListener"
+		parent="abstractCoreDataImportedEventListener">
+		<property name="supportedChannels">
+			<list
+				value-type="de.hybris.platform.commerceservices.enums.SiteChannel">
+				<value>B2C</value>
+				<!-- <value>B2B</value> -->
+			</list>
+		</property>
+		<property name="addonExtensionMetadata">
+			<bean
+				class="de.hybris.platform.addonsupport.data.AddonExtensionMetadata">
+				<property name="suffixChannel" value="false" />
+				<property name="baseExtensionName"
+					value="wsclientgenerator" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="wsclientgeneratorSampleDataEventListener"
+		parent="abstractGenericAddOnSampleDataEventListener">
+		<property name="extensionName" value="wsclientgenerator" />
+	</bean>
+
+	<alias alias="priceService" name="wsPriceService" />
+	<bean id="wsPriceService"
+		class="de.hybris.platform.addons.wsclientgenerator.price.impl.WSPriceService"
+		parent="netPriceService" />
+
+	<!-- <alias alias="commerceStockService" name="wsStockService"/> <bean id="wsStockService" 
+		class="de.hybris.platform.addons.wsclientgenerator.stock.impl.WSStockService" 
+		parent="defaultCommerceStockService" /> -->
+
+	<alias alias="commerceStockService" name="wsStockService" />
+	<bean id="wsStockService"
+		class="de.hybris.platform.addons.wsclientgenerator.stock.impl.WSStockService"
+		parent="defaultCommerceStockService">
+		<!-- <property name="warehouseService" value="warehouseService" /> -->
+	</bean>
+
+	<bean id="priceWebServiceConfigurationDao"
+		class="de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.impl.DefaultPriceWebServiceConfigurationDao">
+	</bean>
+	
+	<bean id="stockWebServiceConfigurationDao"
+		class="de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.impl.DefaultStockWebServiceConfigurationDao">
+	</bean>
+
+	<bean id="priceConfigurationInterceptor"
+		class="de.hybris.platform.addons.wsclientgenerator.interceptors.PriceConfigurationEnabledInterceptor">
+		<property name="l10NService" ref="l10nService" />
+	</bean>
+	
+	<bean id="stockConfigurationInterceptor"
+		class="de.hybris.platform.addons.wsclientgenerator.interceptors.StockConfigurationEnabledInterceptor">
+		<property name="l10NService" ref="l10nService" />
+	</bean>
+	
+	<bean id="orderCreationInterceptor"
+		class="de.hybris.platform.addons.wsclientgenerator.interceptors.OrderCreationInterceptor">
+		<property name="l10NService" ref="l10nService" />
+	</bean>
+
+	<bean id="priceWebServiceConfigurationInterceptor"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor"
+			ref="priceConfigurationInterceptor" />
+		<property name="typeCode"
+			value="PriceWebServiceConfiguration" />
+	</bean>
+	
+	<bean id="stockWebServiceConfigurationInterceptor"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor"
+			ref="stockConfigurationInterceptor" />
+		<property name="typeCode"
+			value="StockWebServiceConfiguration" />
+	</bean>
+	
+	<bean id="orderInterceptor"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor"
+			ref="orderCreationInterceptor" />
+		<property name="typeCode"
+			value="Order" />
+	</bean>
+	
+	
+
+
+</beans>

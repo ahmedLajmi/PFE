@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- [y] hybris Platform Copyright (c) 2000-2015 hybris AG All rights reserved. 
+	This software is the confidential and proprietary information of hybris ("Confidential 
+	Information"). You shall not disclose such Confidential Information and shall 
+	use it only in accordance with the terms of the license agreement you entered 
+	into with hybris. -->
+<configuration xmlns="hybris.de/schemas/hmc/generic"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="hybris.de/schemas/hmc/generic hmc.xsd">
+
+
+	<!-- Configuration for extension wsclientgenerator -->
+
+	<!-- <explorertree> <group name="wsclientgeneratorgroup"> <externalnode 
+		classname="de.hybris.platform.addons.wsclientgenerator.hmc.WsclientgeneratorTreeLeafChip"/> 
+		</group> </explorertree> -->
+
+
+	<explorertree>
+		<group name="wsclientgenerator">
+			<typeref type="WebServiceConfiguration" />
+		</group>
+	</explorertree>
+
+	<type name="WebServiceConfiguration" mode="append">
+		<organizer>
+			<search mode="replace">
+				<condition attribute="url" />
+				<condition attribute="method" />
+			</search>
+			<result>
+				<listview mode="replace">
+					<itemlayout>
+						<attribute name="name" width="200" />
+						<attribute name="enable" width="200" />
+						<attribute name="url" width="200" />
+						<attribute name="method" width="200" />
+						<attribute name="description" width="200" />
+					</itemlayout>
+				</listview>
+			</result>
+		</organizer>
+	</type>
+
+	<type name="PriceWebServiceConfiguration" mode="append">
+		<organizer>
+			<search mode="replace">
+				<condition attribute="url" />
+			</search>
+			<result>
+				<listview mode="replace">
+					<itemlayout>
+						<attribute name="url" />
+					</itemlayout>
+				</listview>
+			</result>
+			<editor>
+				<essentials>
+					<listlayout>
+						<attribute name="name" />
+						<attribute name="description">
+							<textareaeditor />
+						</attribute>
+						<attribute name="url" />
+						<attribute name="enable" />
+					</listlayout>
+				</essentials>
+				<tab name="tab.PriceWebServiceConfiguration">
+					<section name="section.security">
+						<listlayout>
+							<attribute name="SecurityParameters">
+								<referencecollectioneditor
+									editable="true" externalcreate="false" remove="true"
+									create="true" autosave="true">
+									<itemeditorlayout>
+										<attribute name="key" width="77">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+										<attribute name="value" width="80">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+									</itemeditorlayout>
+								</referencecollectioneditor>
+							</attribute>
+						</listlayout>
+					</section>
+					<section name="section.order">
+						<listlayout>
+							<attribute name="mode" />
+							<attribute name="order" />
+						</listlayout>
+					</section>
+					<section name="section.meta">
+						<listlayout>
+							<attribute name="accept" />
+						</listlayout>
+					</section>
+					<section name="section.param">
+						<listlayout>
+							<attribute name="parameters">
+								<referencecollectioneditor
+									editable="true" externalcreate="false" remove="true"
+									create="true" autosave="true">
+									<itemeditorlayout>
+										<attribute name="key" width="77">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+										<attribute name="value" width="80">
+										</attribute>
+									</itemeditorlayout>
+								</referencecollectioneditor>
+							</attribute>
+						</listlayout>
+					</section>
+					<section name="section.perso">
+						<listlayout>
+							<attribute name="personalisedParameters">
+								<referencecollectioneditor
+									editable="true" externalcreate="false" remove="true"
+									create="true" autosave="true">
+									<itemeditorlayout>
+										<attribute name="key" width="77">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+										<attribute name="value" width="80">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+									</itemeditorlayout>
+								</referencecollectioneditor>
+							</attribute>
+						</listlayout>
+					</section>
+					<section name="section.response">
+						<listlayout>
+							<attribute name="priceKey"/>
+							<attribute name="currencyKey"/>
+							<attribute name="responseTemplate">
+								<textareaeditor />
+							</attribute>
+						</listlayout>
+					</section>
+				</tab>
+			</editor>
+		</organizer>
+	</type>
+
+	<type name="StockWebServiceConfiguration" mode="append">
+		<organizer>
+			<search mode="replace">
+				<condition attribute="url" />
+				<condition attribute="method" />
+			</search>
+			<result>
+				<listview mode="replace">
+					<itemlayout>
+						<attribute name="url" />
+						<attribute name="method" />
+					</itemlayout>
+				</listview>
+			</result>
+			<editor>
+				<essentials>
+					<listlayout>
+						<attribute name="name" />
+						<attribute name="description">
+							<textareaeditor />
+						</attribute>
+						<attribute name="url" />
+						<attribute name="method" />
+						<attribute name="enable" />
+					</listlayout>
+				</essentials>
+				<tab name="tab.StockWebServiceConfiguration">
+					<section name="section.security">
+						<listlayout>
+							<attribute name="SecurityParameters">
+								<referencecollectioneditor
+									editable="true" externalcreate="false" remove="true"
+									create="true" autosave="true">
+									<itemeditorlayout>
+										<attribute name="key" width="77">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+										<attribute name="value" width="80">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+									</itemeditorlayout>
+								</referencecollectioneditor>
+							</attribute>
+						</listlayout>
+					</section>
+					<section name="section.order">
+						<listlayout>
+							<attribute name="mode" />
+							<attribute name="order" />
+						</listlayout>
+					</section>
+					<section name="section.meta">
+						<listlayout>
+							<attribute name="accept" />
+							<attribute name="contentType" />
+						</listlayout>
+					</section>
+					<section name="section.perso">
+						<listlayout>
+							<attribute name="personalisedParameters">
+								<referencecollectioneditor
+									editable="true" externalcreate="false" remove="true"
+									create="true" autosave="true">
+									<itemeditorlayout>
+
+										<attribute name="key" width="77">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+										<attribute name="value" width="80">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+									</itemeditorlayout>
+								</referencecollectioneditor>
+							</attribute>
+						</listlayout>
+					</section>
+					<section name="section.response">
+						<listlayout>
+							<attribute name="stockKey"/>
+							<attribute name="responseTemplate">
+								<textareaeditor />
+							</attribute>
+						</listlayout>
+					</section>
+					<section name="section.param">
+						<listlayout>
+							<attribute name="parameters">
+								<referencecollectioneditor
+									editable="true" externalcreate="false" remove="true"
+									create="true" autosave="true">
+									<itemeditorlayout>
+										<attribute name="key" width="77">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+										<attribute name="value" width="80">
+										</attribute>
+									</itemeditorlayout>
+								</referencecollectioneditor>
+							</attribute>
+						</listlayout>
+					</section>
+				</tab>
+			</editor>
+		</organizer>
+	</type>
+
+	<type name="OrderWebServiceConfiguration" mode="append">
+		<organizer>
+			<search mode="replace">
+				<condition attribute="url" />
+				<condition attribute="method" />
+			</search>
+			<result>
+				<listview mode="replace">
+					<itemlayout>
+						<attribute name="url" />
+						<attribute name="method" />
+					</itemlayout>
+				</listview>
+			</result>
+			<editor>
+				<essentials>
+					<listlayout>
+						<attribute name="name" />
+						<attribute name="description">
+							<textareaeditor />
+						</attribute>
+						<attribute name="url" />
+						<attribute name="method" />
+						<attribute name="enable" />
+					</listlayout>
+				</essentials>
+				<tab name="tab.OrderWebServiceConfiguration">
+					<section name="section.security">
+						<listlayout>
+							<attribute name="apiKey" />
+						</listlayout>
+					</section>
+					<section name="section.order">
+						<listlayout>
+							<attribute name="mode" />
+							<attribute name="order" />
+						</listlayout>
+					</section>
+					<section name="section.meta">
+						<listlayout>
+							<attribute name="accept" />
+							<attribute name="contentType" />
+						</listlayout>
+					</section>
+					<section name="section.perso">
+						<listlayout>
+							<attribute name="personalisedParameters">
+								<referencecollectioneditor
+									editable="true" externalcreate="false" remove="true"
+									create="true" autosave="true">
+									<itemeditorlayout>
+
+										<attribute name="key" width="77">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+										<attribute name="value" width="80">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+									</itemeditorlayout>
+								</referencecollectioneditor>
+							</attribute>
+						</listlayout>
+					</section>
+				</tab>
+			</editor>
+		</organizer>
+	</type>
+
+	<type name="CustomerWebServiceConfiguration" mode="append">
+		<organizer>
+			<search mode="replace">
+				<condition attribute="url" />
+				<condition attribute="method" />
+			</search>
+			<result>
+				<listview mode="replace">
+					<itemlayout>
+						<attribute name="url" />
+						<attribute name="method" />
+					</itemlayout>
+				</listview>
+			</result>
+			<editor>
+				<essentials>
+					<listlayout>
+						<attribute name="name" />
+						<attribute name="description">
+							<textareaeditor />
+						</attribute>
+						<attribute name="url" />
+						<attribute name="method" />
+						<attribute name="enable" />
+					</listlayout>
+				</essentials>
+				<tab name="tab.CustomerWebServiceConfiguration">
+					<section name="section.security">
+						<listlayout>
+							<attribute name="apiKey" />
+						</listlayout>
+					</section>
+					<section name="section.order">
+						<listlayout>
+							<attribute name="mode" />
+							<attribute name="order" />
+						</listlayout>
+					</section>
+					<section name="section.meta">
+						<listlayout>
+							<attribute name="accept" />
+							<attribute name="contentType" />
+						</listlayout>
+					</section>
+					<section name="section.perso">
+						<listlayout>
+							<attribute name="personalisedParameters">
+								<referencecollectioneditor
+									editable="true" externalcreate="false" remove="true"
+									create="true" autosave="true">
+									<itemeditorlayout>
+
+										<attribute name="key" width="77">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+										<attribute name="value" width="80">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+									</itemeditorlayout>
+								</referencecollectioneditor>
+							</attribute>
+						</listlayout>
+					</section>
+				</tab>
+			</editor>
+		</organizer>
+	</type>
+
+	<type name="PersoWSParam" mode="append">
+		<organizer>
+			<search mode="replace">
+				<condition attribute="key" />
+				<condition attribute="value" />
+			</search>
+			<result>
+				<listview mode="replace">
+					<itemlayout>
+						<attribute name="key" width="200" />
+						<attribute name="value" width="200" />
+					</itemlayout>
+				</listview>
+			</result>
+		</organizer>
+	</type>
+
+	<!-- <type name="Stadium" mode="append"> <organizer> <search mode="replace"> 
+		<condition attribute="code" /> <condition attribute="capacity" /> <condition 
+		attribute="matches" /> </search> <result> <listview mode="replace"> <itemlayout> 
+		<attribute name="code" /> <attribute name="capacity" /> <attribute name="matches" 
+		/> </itemlayout> </listview> </result> <editor> <essentials> <listlayout> 
+		<attribute name="code" /> </listlayout> </essentials> <tab name="tab.cuppytrail"> 
+		<section name="section.cuppytrail"> <listlayout> <attribute name="capacity" 
+		/> <attribute name="matches" /> </listlayout> </section> </tab> </editor> 
+		</organizer> </type> -->
+
+
+</configuration>
