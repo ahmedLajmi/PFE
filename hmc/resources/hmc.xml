@@ -391,7 +391,7 @@
 						<attribute name="enable" />
 					</listlayout>
 				</essentials>
-				<tab name="tab.StockWebServiceConfiguration">
+				<tab name="tab.CustomerWebServiceConfiguration">
 					<section name="section.security">
 						<listlayout>
 							<attribute name="SecurityParameters">

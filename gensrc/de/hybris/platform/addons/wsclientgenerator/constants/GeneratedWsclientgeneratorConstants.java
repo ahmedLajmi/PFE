@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 16 avr. 2019 12:17:53                       ---
+ * --- Generated at 16 avr. 2019 16:41:54                       ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -57,8 +57,10 @@ public class GeneratedWsclientgeneratorConstants
 		public static class CustomerParameter
 		{
 			public static final String CLIENTCODE = "clientCode".intern();
-			public static final String CLIENTNAME = "clientName".intern();
+			public static final String CLIENTFIRSTNAME = "clientFirstName".intern();
+			public static final String CLIENTLASTNAME = "clientLastName".intern();
 			public static final String CLIENTEMAIL = "clientEmail".intern();
+			public static final String TITLECODE = "titleCode".intern();
 		}
 		public static class MethodType
 		{

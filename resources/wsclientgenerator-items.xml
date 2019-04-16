@@ -54,8 +54,10 @@
 		<enumtype code="CustomerParameter" autocreate="true"
 			generate="true" dynamic="true">
 			<value code="clientCode" />
-			<value code="clientName" />
+			<value code="clientFirstName" />
+			<value code="clientLastName" />
 			<value code="clientEmail" />
+			<value code="titleCode" />
 		</enumtype>
 		<enumtype code="ModeType" autocreate="true" generate="true"
 			dynamic="true">
@@ -300,7 +302,8 @@
 		<itemtype code="CustomerWebServiceConfiguration"
 			autocreate="true" generate="true" extends="WebServiceConfiguration">
 			<attributes>
-				<attribute qualifier="firstNameKey" type="java.lang.String">
+				<attribute qualifier="firstNameKey"
+					type="java.lang.String">
 					<modifiers read="true" write="true" search="true"
 						optional="false" />
 					<persistence type="property" />
@@ -315,8 +318,14 @@
 						optional="false" />
 					<persistence type="property" />
 				</attribute>
+				<attribute qualifier="titleKey" type="java.lang.String">
+					<modifiers read="true" write="true" search="true"
+						optional="false" />
+					<persistence type="property" />
+				</attribute>
 			</attributes>
 		</itemtype>
+
 	</itemtypes>
 
 

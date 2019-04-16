@@ -302,6 +302,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 				single_createattr_CustomerWebServiceConfiguration_emailKey();
 			
+				single_createattr_CustomerWebServiceConfiguration_titleKey();
+			
 		createRelationAttributes(
 			"WebServiceConfigurationParameterRelation", 
 			false, 
@@ -817,6 +819,23 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 	}
 	
+	public void single_createattr_CustomerWebServiceConfiguration_titleKey() throws JaloBusinessException
+	{
+		
+						Map sqlColumnDefinitions = null;
+					
+				createPropertyAttribute(
+					"CustomerWebServiceConfiguration", 
+					"titleKey",  
+					null,
+					"java.lang.String",
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					null,
+					sqlColumnDefinitions
+				);
+			
+	}
+	
 
 
 	/**
@@ -898,8 +917,10 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			Arrays.asList( new String[] {
 			
 				"clientCode",
-				"clientName",
-				"clientEmail"
+				"clientFirstName",
+				"clientLastName",
+				"clientEmail",
+				"titleCode"
 			} )
 		);
 	
@@ -1225,6 +1246,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			single_setAttributeProperties_CustomerWebServiceConfiguration_lastNameKey();
 		
 			single_setAttributeProperties_CustomerWebServiceConfiguration_emailKey();
+		
+			single_setAttributeProperties_CustomerWebServiceConfiguration_titleKey();
 		
 				setDefaultProperties(
 					"PriceWSParam",
@@ -1794,6 +1817,28 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 							setAttributeProperties(
 								"CustomerWebServiceConfiguration", 
 								"emailKey",
+								false, 
+								null,
+								null,
+								null,
+								true,
+								true,
+								null,
+								customPropsMap,
+								null
+							);
+						}
+					
+						public void single_setAttributeProperties_CustomerWebServiceConfiguration_titleKey() throws JaloBusinessException
+						{
+							
+							
+							
+							Map customPropsMap = new HashMap();
+							
+							setAttributeProperties(
+								"CustomerWebServiceConfiguration", 
+								"titleKey",
 								false, 
 								null,
 								null,

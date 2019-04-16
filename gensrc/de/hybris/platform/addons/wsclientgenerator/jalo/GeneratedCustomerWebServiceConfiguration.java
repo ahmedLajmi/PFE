@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 16 avr. 2019 12:17:53                       ---
+ * --- Generated at 16 avr. 2019 16:41:54                       ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -41,6 +41,8 @@ public abstract class GeneratedCustomerWebServiceConfiguration extends WebServic
 	public static final String LASTNAMEKEY = "lastNameKey";
 	/** Qualifier of the <code>CustomerWebServiceConfiguration.emailKey</code> attribute **/
 	public static final String EMAILKEY = "emailKey";
+	/** Qualifier of the <code>CustomerWebServiceConfiguration.titleKey</code> attribute **/
+	public static final String TITLEKEY = "titleKey";
 	/** Qualifier of the <code>CustomerWebServiceConfiguration.parameters</code> attribute **/
 	public static final String PARAMETERS = "parameters";
 	/**
@@ -62,6 +64,7 @@ public abstract class GeneratedCustomerWebServiceConfiguration extends WebServic
 		tmp.put(FIRSTNAMEKEY, AttributeMode.INITIAL);
 		tmp.put(LASTNAMEKEY, AttributeMode.INITIAL);
 		tmp.put(EMAILKEY, AttributeMode.INITIAL);
+		tmp.put(TITLEKEY, AttributeMode.INITIAL);
 		DEFAULT_INITIAL_ATTRIBUTES = Collections.unmodifiableMap(tmp);
 	}
 	@Override
@@ -248,6 +251,42 @@ public abstract class GeneratedCustomerWebServiceConfiguration extends WebServic
 	public void removeFromParameters(final CustomerWebServiceParameter value)
 	{
 		removeFromParameters( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>CustomerWebServiceConfiguration.titleKey</code> attribute.
+	 * @return the titleKey
+	 */
+	public String getTitleKey(final SessionContext ctx)
+	{
+		return (String)getProperty( ctx, TITLEKEY);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>CustomerWebServiceConfiguration.titleKey</code> attribute.
+	 * @return the titleKey
+	 */
+	public String getTitleKey()
+	{
+		return getTitleKey( getSession().getSessionContext() );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>CustomerWebServiceConfiguration.titleKey</code> attribute. 
+	 * @param value the titleKey
+	 */
+	public void setTitleKey(final SessionContext ctx, final String value)
+	{
+		setProperty(ctx, TITLEKEY,value);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>CustomerWebServiceConfiguration.titleKey</code> attribute. 
+	 * @param value the titleKey
+	 */
+	public void setTitleKey(final String value)
+	{
+		setTitleKey( getSession().getSessionContext(), value );
 	}
 	
 }
