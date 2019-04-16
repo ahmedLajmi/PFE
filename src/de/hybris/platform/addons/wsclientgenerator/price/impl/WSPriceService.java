@@ -6,6 +6,7 @@ package de.hybris.platform.addons.wsclientgenerator.price.impl;
 import de.hybris.platform.addons.wsclientgenerator.enums.ModeType;
 import de.hybris.platform.addons.wsclientgenerator.enums.PriceParameter;
 import de.hybris.platform.addons.wsclientgenerator.enums.ResponseType;
+import de.hybris.platform.addons.wsclientgenerator.exceptions.InvokeWsException;
 import de.hybris.platform.addons.wsclientgenerator.exceptions.ParseWsResponseException;
 import de.hybris.platform.addons.wsclientgenerator.model.PersoWSParamModel;
 import de.hybris.platform.addons.wsclientgenerator.model.PriceWebServiceConfigurationModel;
@@ -37,6 +38,7 @@ import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.util.UriComponentsBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -78,12 +80,12 @@ public class WSPriceService extends NetPriceService
 			Map<String, String> result = new HashMap<>();
 			final List<PriceInformation> prices = new ArrayList<PriceInformation>();
 			PriceInformation priceInfo;
-			final String url = priceConfiguration.getUrl() + "/" + model.getCode();
 			final WSInvoke wsinvoke = new WSInvoke();
 			try
 			{
-				final ResponseEntity<String> response = wsinvoke.get(priceConfiguration.getUrl(), "", priceConfiguration.getAccept());
-				System.out.println(url + prepareParameters(priceConfiguration, model));
+				final ResponseEntity<String> response = wsinvoke.get(prepareUrl(priceConfiguration, model),
+						priceConfiguration.getAccept());
+				System.out.println(prepareUrl(priceConfiguration, model));
 				System.out.println(response.getBody());
 
 				if (priceConfiguration.getAccept().equals(ResponseType.JSON))
@@ -94,15 +96,30 @@ public class WSPriceService extends NetPriceService
 				{
 					result = xmlParseResponse(response.getBody());
 				}
+				else if (priceConfiguration.getAccept().equals(ResponseType.TEXT))
+				{
+					result = textParseResponse(response.getBody(), priceConfiguration);
+				}
 				priceInfo = new PriceInformation(
 						new PriceValue(result.get("currency"), Double.parseDouble(result.get("price")), true));
 				prices.add(priceInfo);
 				return prices;
 			}
-			catch (final Exception e)
+			catch (final ParseWsResponseException | InvokeWsException e)
 			{
-				LOG.error("Error in parsing response");
 				LOG.error(e.getMessage());
+				if (priceConfiguration.getMode().equals(ModeType.WEBSERVICEWITHNATIVE))
+				{
+					return super.getPriceInformationsForProduct(model);
+				}
+				else
+				{
+					return null;
+				}
+			}
+			catch (final NumberFormatException e)
+			{
+				LOG.error("Incorrect result format" + e.getMessage());
 				if (priceConfiguration.getMode().equals(ModeType.WEBSERVICEWITHNATIVE))
 				{
 					return super.getPriceInformationsForProduct(model);
@@ -129,13 +146,16 @@ public class WSPriceService extends NetPriceService
 				if (root.has(priceConfiguration.getCurrencyKey()))
 				{
 					currency = root.path(priceConfiguration.getCurrencyKey()).asText();
-
 				}
 				else
 				{
 					if (!userService.isAnonymousUser(userService.getCurrentUser()))
 					{
-						currency = userService.getCurrentUser().getSessionCurrency().getIsocode();
+						currency = userService.getCurrentUser().getSessionCurrency().getIsocode().toUpperCase();
+						if (!validateCurrency(currency))
+						{
+							throw new ParseWsResponseException("Error in parsing response!! Invalid currency value");
+						}
 					}
 				}
 				result.put("price", price);
@@ -144,7 +164,7 @@ public class WSPriceService extends NetPriceService
 			}
 			else
 			{
-				throw new ParseWsResponseException("Key doesn t exist");
+				throw new ParseWsResponseException("Error in parsing response!! Key doesn t exist");
 			}
 		}
 		catch (final IOException e)
@@ -152,7 +172,6 @@ public class WSPriceService extends NetPriceService
 			throw new ParseWsResponseException("Problem in reading JSON response \n" + e.getMessage());
 		}
 	}
-
 
 	private Map<String, String> xmlParseResponse(final String response) throws ParseWsResponseException
 	{
@@ -186,13 +205,17 @@ public class WSPriceService extends NetPriceService
 						}
 						else if (StringUtils.equals(priceConfiguration.getCurrencyKey(), elem.getTagName()))
 						{
-							currency = elem.getFirstChild().getNodeValue();
+							currency = elem.getFirstChild().getNodeValue().toUpperCase();
+							if (!validateCurrency(currency))
+							{
+								throw new ParseWsResponseException("Error in parsing response!! Invalid currency value");
+							}
 						}
 					}
 				}
 				if (price.isEmpty())
 				{
-					throw new ParseWsResponseException("Key doesn t exist");
+					throw new ParseWsResponseException("Error in parsing response!! Key doesn t exist");
 				}
 				else
 				{
@@ -208,25 +231,62 @@ public class WSPriceService extends NetPriceService
 		}
 	}
 
-
-	private String prepareParameters(final PriceWebServiceConfigurationModel priceConfiguration, final ProductModel model)
+	private Map<String, String> textParseResponse(final String response,
+			final PriceWebServiceConfigurationModel priceConfiguration) throws ParseWsResponseException
 	{
-		final StringBuilder param = new StringBuilder();
-		param.append("?");
+		final Map<String, String> result = new HashMap<>();
+		final String sepearator = priceConfiguration.getTextSeperator();
+		try
+		{
+			final String[] arrOfStr = response.split(sepearator);
+			if (arrOfStr != null && arrOfStr.length >= Integer.parseInt(priceConfiguration.getPriceKey()) - 1)
+			{
+				result.put("price", arrOfStr[Integer.parseInt(priceConfiguration.getPriceKey()) - 1]);
+				if (arrOfStr.length >= Integer.parseInt(priceConfiguration.getCurrencyKey()) - 1)
+				{
+					final String currency = arrOfStr[Integer.parseInt(priceConfiguration.getCurrencyKey()) - 1].toUpperCase();
+					if (validateCurrency(currency))
+					{
+						result.put("currency", arrOfStr[Integer.parseInt(priceConfiguration.getCurrencyKey()) - 1].toUpperCase());
+					}
+					else
+					{
+						throw new ParseWsResponseException("Error in parsing response!! Invalid currency value");
+					}
+				}
+				return result;
+			}
+			else
+			{
+				throw new ParseWsResponseException("Error in parsing response!! Key doesn t exist");
+			}
+		}
+		catch (final Exception e)
+		{
+			throw new ParseWsResponseException("Problem in reading TEXT response \n" + e.getMessage());
+		}
+	}
+
+
+	private String prepareUrl(final PriceWebServiceConfigurationModel priceConfiguration, final ProductModel model)
+	{
+		final UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(priceConfiguration.getUrl());
 		final Collection<PersoWSParamModel> persoParams = priceConfiguration.getPersonalisedParameters();
+		final Collection<PersoWSParamModel> securityParams = priceConfiguration.getSecurityParameters();
 		final Collection<PriceWebServiceParameterModel> additionelParams = priceConfiguration.getParameters();
 		if (additionelParams != null && !additionelParams.isEmpty())
 		{
 			for (final PriceWebServiceParameterModel additionelParam : additionelParams)
 			{
+				if (additionelParam.getValue().equals(PriceParameter.PRODUCTCODE))
+				{
+					uriBuilder.queryParam(additionelParam.getKey(), model.getCode());
+				}
 				if (additionelParam.getValue().equals(PriceParameter.CLIENTCODE))
 				{
 					if (!userService.isAnonymousUser(userService.getCurrentUser()))
 					{
-						param.append(additionelParam.getKey());
-						param.append("=");
-						param.append(userService.getCurrentUser().getUid());
-						param.append("&");
+						uriBuilder.queryParam(additionelParam.getKey(), userService.getCurrentUser().getUid());
 					}
 				}
 				else if (additionelParam.getValue().equals(PriceParameter.CATEGORIECODE))
@@ -236,29 +296,40 @@ public class WSPriceService extends NetPriceService
 						final Collection<CategoryModel> categories = model.getSupercategories();
 						if (categories != null && !categories.isEmpty())
 						{
-							param.append(additionelParam.getKey());
-							param.append("=");
-							param.append(categories.toArray().toString());
-							param.append("&");
+							uriBuilder.queryParam(additionelParam.getKey(), categories.toArray().toString());
 						}
-						param.deleteCharAt(param.length() - 1);
 					}
 				}
 			}
-
+		}
+		if (securityParams != null && !securityParams.isEmpty())
+		{
+			for (final PersoWSParamModel securityParam : securityParams)
+			{
+				uriBuilder.queryParam(securityParam.getKey(), securityParam.getValue());
+			}
 		}
 		if (persoParams != null && !persoParams.isEmpty())
 		{
 			for (final PersoWSParamModel persoParam : persoParams)
 			{
-				param.append(persoParam.getKey());
-				param.append("=");
-				param.append(persoParam.getValue());
-				param.append("&");
+				uriBuilder.queryParam(persoParam.getKey(), persoParam.getValue());
 			}
-			param.deleteCharAt(param.length() - 1);
 		}
-		return param.toString();
+		return uriBuilder.toUriString();
+	}
+
+	private boolean validateCurrency(final String currency)
+	{
+		if (StringUtils.equalsIgnoreCase(currency, "EUR") || StringUtils.equalsIgnoreCase(currency, "USD")
+				|| StringUtils.equalsIgnoreCase(currency, "JPY"))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 }

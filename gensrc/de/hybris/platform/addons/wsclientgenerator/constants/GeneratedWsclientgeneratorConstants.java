@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 12 avr. 2019 14:56:44                       ---
+ * --- Generated at 16 avr. 2019 12:17:53                       ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -40,6 +40,7 @@ public class GeneratedWsclientgeneratorConstants
 		public static final String PRICEPARAMETER = "PriceParameter".intern();
 		public static final String PRICEWEBSERVICECONFIGURATION = "PriceWebServiceConfiguration".intern();
 		public static final String PRICEWEBSERVICEPARAMETER = "PriceWebServiceParameter".intern();
+		public static final String REQUESTTYPE = "RequestType".intern();
 		public static final String RESPONSETYPE = "ResponseType".intern();
 		public static final String STOCKPARAMETER = "StockParameter".intern();
 		public static final String STOCKWEBSERVICECONFIGURATION = "StockWebServiceConfiguration".intern();
@@ -57,15 +58,12 @@ public class GeneratedWsclientgeneratorConstants
 		{
 			public static final String CLIENTCODE = "clientCode".intern();
 			public static final String CLIENTNAME = "clientName".intern();
-			public static final String CLIENTADRESS = "clientAdress".intern();
-			public static final String CLIENTZIPCODE = "clientZipCode".intern();
 			public static final String CLIENTEMAIL = "clientEmail".intern();
 		}
 		public static class MethodType
 		{
 			public static final String GET = "get".intern();
 			public static final String POST = "post".intern();
-			public static final String PUT = "put".intern();
 		}
 		public static class ModeType
 		{
@@ -89,6 +87,12 @@ public class GeneratedWsclientgeneratorConstants
 			public static final String PRODUCTCODE = "productCode".intern();
 			public static final String CATEGORIECODE = "categorieCode".intern();
 		}
+		public static class RequestType
+		{
+			public static final String JSON = "json".intern();
+			public static final String XML = "xml".intern();
+			public static final String FORM = "form".intern();
+		}
 		public static class ResponseType
 		{
 			public static final String JSON = "json".intern();
@@ -97,8 +101,7 @@ public class GeneratedWsclientgeneratorConstants
 		}
 		public static class StockParameter
 		{
-			public static final String WAREHOUSECODE = "warehouseCode".intern();
-			public static final String ORDERCODE = "orderCode".intern();
+			public static final String PRODUCTCODE = "productCode".intern();
 			public static final String CLIENTCODE = "clientCode".intern();
 		}
 	}

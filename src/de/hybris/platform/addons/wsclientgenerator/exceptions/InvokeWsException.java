@@ -13,4 +13,9 @@ public class InvokeWsException extends Exception
 	{
 		super();
 	}
+
+	public InvokeWsException(final String message)
+	{
+		super(message);
+	}
 }

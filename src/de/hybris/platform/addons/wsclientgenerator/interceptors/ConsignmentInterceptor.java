@@ -5,6 +5,7 @@ package de.hybris.platform.addons.wsclientgenerator.interceptors;
 
 import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceConfigurationModel;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.StockWebServiceConfigurationDao;
+import de.hybris.platform.ordersplitting.model.ConsignmentModel;
 import de.hybris.platform.servicelayer.event.EventService;
 import de.hybris.platform.servicelayer.i18n.L10NService;
 import de.hybris.platform.servicelayer.interceptor.InterceptorContext;
@@ -41,7 +42,10 @@ public class ConsignmentInterceptor implements ValidateInterceptor, PrepareInter
 		//final String url = stockConfiguration.getUrl() + "/";
 		//final WSInvoke wsinvoke = new WSInvoke();
 		//final ResponseEntity<String> response = wsinvoke.get(stockConfiguration.getUrl(), "", stockConfiguration.getAccept());
-		System.out.println("hello here");
+		//System.out.println("hello here");
+		final ConsignmentModel consignement = (ConsignmentModel) model;
+		consignement.getConsignmentEntries();
+
 		/*
 		 * System.out.println(response.getBody()); final ObjectMapper mapper = new ObjectMapper(); try { final JsonNode
 		 * root = mapper.readTree(response.getBody()); final JsonNode stockValue =

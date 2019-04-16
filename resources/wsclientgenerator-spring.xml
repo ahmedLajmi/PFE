@@ -57,6 +57,24 @@
 		parent="defaultCommerceStockService">
 		<!-- <property name="warehouseService" value="warehouseService" /> -->
 	</bean>
+	
+	<alias alias="commerceCheckoutService" name="wsCheckoutService"/>
+	<bean id="wsCheckoutService"
+		class="de.hybris.platform.addons.wsclientgenerator.order.impl.WSCheckoutService"
+		parent="defaultCommerceCheckoutService">
+	</bean>
+	
+	<alias alias="customerAccountService" name="wsCustomerAccountService"/>
+	<bean id="wsCustomerAccountService"
+		class="de.hybris.platform.addons.wsclientgenerator.customer.impl.WSCustomerAccountService"
+		parent="defaultCustomerAccountService">
+	</bean>
+	
+	<alias name="wsCustomerFacade" alias="customerFacade"/>
+	<bean id="wsCustomerFacade"
+		class="de.hybris.platform.addons.wsclientgenerator.customer.impl.WSCustomerFacade"
+		parent="defaultCustomerFacade">
+	</bean>
 
 	<bean id="priceWebServiceConfigurationDao"
 		class="de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.impl.DefaultPriceWebServiceConfigurationDao">
@@ -64,6 +82,10 @@
 	
 	<bean id="stockWebServiceConfigurationDao"
 		class="de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.impl.DefaultStockWebServiceConfigurationDao">
+	</bean>
+	
+	<bean id="customerWebServiceConfigurationDao"
+		class="de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.impl.DefaultCustomerWebServiceConfigurationDao">
 	</bean>
 
 	<bean id="priceConfigurationInterceptor"

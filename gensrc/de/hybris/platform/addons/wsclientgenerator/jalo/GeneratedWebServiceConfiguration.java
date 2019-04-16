@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 12 avr. 2019 14:56:44                       ---
+ * --- Generated at 16 avr. 2019 12:17:53                       ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -56,6 +56,8 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	public static final String CONTENTTYPE = "contentType";
 	/** Qualifier of the <code>WebServiceConfiguration.responseTemplate</code> attribute **/
 	public static final String RESPONSETEMPLATE = "responseTemplate";
+	/** Qualifier of the <code>WebServiceConfiguration.textSeperator</code> attribute **/
+	public static final String TEXTSEPERATOR = "textSeperator";
 	/** Qualifier of the <code>WebServiceConfiguration.personalisedParameters</code> attribute **/
 	public static final String PERSONALISEDPARAMETERS = "personalisedParameters";
 	/** Qualifier of the <code>WebServiceConfiguration.SecurityParameters</code> attribute **/
@@ -98,6 +100,7 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 		tmp.put(ACCEPT, AttributeMode.INITIAL);
 		tmp.put(CONTENTTYPE, AttributeMode.INITIAL);
 		tmp.put(RESPONSETEMPLATE, AttributeMode.INITIAL);
+		tmp.put(TEXTSEPERATOR, AttributeMode.INITIAL);
 		DEFAULT_INITIAL_ATTRIBUTES = Collections.unmodifiableMap(tmp);
 	}
 	@Override
@@ -609,6 +612,42 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	public void removeFromSecurityParameters(final PersoWSParam value)
 	{
 		removeFromSecurityParameters( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.textSeperator</code> attribute.
+	 * @return the textSeperator
+	 */
+	public String getTextSeperator(final SessionContext ctx)
+	{
+		return (String)getProperty( ctx, TEXTSEPERATOR);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.textSeperator</code> attribute.
+	 * @return the textSeperator
+	 */
+	public String getTextSeperator()
+	{
+		return getTextSeperator( getSession().getSessionContext() );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>WebServiceConfiguration.textSeperator</code> attribute. 
+	 * @param value the textSeperator
+	 */
+	public void setTextSeperator(final SessionContext ctx, final String value)
+	{
+		setProperty(ctx, TEXTSEPERATOR,value);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>WebServiceConfiguration.textSeperator</code> attribute. 
+	 * @param value the textSeperator
+	 */
+	public void setTextSeperator(final String value)
+	{
+		setTextSeperator( getSession().getSessionContext(), value );
 	}
 	
 	/**

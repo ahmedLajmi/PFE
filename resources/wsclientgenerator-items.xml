@@ -17,6 +17,12 @@
 	</collectiontypes>
 
 	<enumtypes>
+		<enumtype code="RequestType" autocreate="true"
+			generate="true" dynamic="true">
+			<value code="json" />
+			<value code="xml" />
+			<value code="form" />
+		</enumtype>
 		<enumtype code="ResponseType" autocreate="true"
 			generate="true" dynamic="true">
 			<value code="json" />
@@ -27,7 +33,6 @@
 			dynamic="true">
 			<value code="get" />
 			<value code="post" />
-			<value code="put" />
 		</enumtype>
 		<enumtype code="PriceParameter" autocreate="true"
 			generate="true" dynamic="true">
@@ -43,16 +48,13 @@
 		</enumtype>
 		<enumtype code="StockParameter" autocreate="true"
 			generate="true" dynamic="true">
-			<value code="warehouseCode" />
-			<value code="orderCode" />
+			<value code="productCode" />
 			<value code="clientCode" />
 		</enumtype>
 		<enumtype code="CustomerParameter" autocreate="true"
 			generate="true" dynamic="true">
 			<value code="clientCode" />
 			<value code="clientName" />
-			<value code="clientAdress" />
-			<value code="clientZipCode" />
 			<value code="clientEmail" />
 		</enumtype>
 		<enumtype code="ModeType" autocreate="true" generate="true"
@@ -75,8 +77,9 @@
 			<targetElement type="PersoWSParam"
 				qualifier="personalisedParameters" cardinality="many" />
 		</relation>
-		
-		<relation code="WebServiceConfigurationSecurityParameterRelation"
+
+		<relation
+			code="WebServiceConfigurationSecurityParameterRelation"
 			localized="false" generate="true" autocreate="true">
 			<sourceElement type="WebServiceConfiguration"
 				qualifier="configuration" cardinality="one" />
@@ -173,13 +176,19 @@
 						optional="false" />
 					<persistence type="property" />
 				</attribute>
-				<attribute type="ResponseType" qualifier="contentType">
+				<attribute type="RequestType" qualifier="contentType">
 					<modifiers read="true" write="true" search="true"
 						optional="true" />
 					<persistence type="property" />
 				</attribute>
 				<attribute type="java.lang.String"
 					qualifier="responseTemplate">
+					<modifiers read="true" write="true" search="true"
+						optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute type="java.lang.String"
+					qualifier="textSeperator">
 					<modifiers read="true" write="true" search="true"
 						optional="true" />
 					<persistence type="property" />
@@ -275,7 +284,7 @@
 			<attributes>
 				<attribute qualifier="stockKey" type="java.lang.String">
 					<modifiers read="true" write="true" search="true"
-						optional="true" />
+						optional="false" />
 					<persistence type="property" />
 				</attribute>
 			</attributes>
@@ -291,10 +300,23 @@
 		<itemtype code="CustomerWebServiceConfiguration"
 			autocreate="true" generate="true" extends="WebServiceConfiguration">
 			<attributes>
-
+				<attribute qualifier="firstNameKey" type="java.lang.String">
+					<modifiers read="true" write="true" search="true"
+						optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="lastNameKey" type="java.lang.String">
+					<modifiers read="true" write="true" search="true"
+						optional="false" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="emailKey" type="java.lang.String">
+					<modifiers read="true" write="true" search="true"
+						optional="false" />
+					<persistence type="property" />
+				</attribute>
 			</attributes>
 		</itemtype>
-
 	</itemtypes>
 
 

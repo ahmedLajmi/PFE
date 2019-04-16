@@ -193,6 +193,11 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 		);
 	
 		createEnumerationType(
+			"RequestType",
+			null
+		);
+	
+		createEnumerationType(
 			"ResponseType",
 			null
 		);
@@ -271,6 +276,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 				single_createattr_WebServiceConfiguration_responseTemplate();
 			
+				single_createattr_WebServiceConfiguration_textSeperator();
+			
 				single_createattr_WebServiceParameter_key();
 			
 				single_createattr_PersoWSParam_value();
@@ -288,6 +295,12 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				single_createattr_PriceWebServiceConfiguration_currencyKey();
 			
 				single_createattr_StockWebServiceConfiguration_stockKey();
+			
+				single_createattr_CustomerWebServiceConfiguration_firstNameKey();
+			
+				single_createattr_CustomerWebServiceConfiguration_lastNameKey();
+			
+				single_createattr_CustomerWebServiceConfiguration_emailKey();
 			
 		createRelationAttributes(
 			"WebServiceConfigurationParameterRelation", 
@@ -558,7 +571,7 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 					"WebServiceConfiguration", 
 					"contentType",  
 					null,
-					"ResponseType",
+					"RequestType",
 					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
 					null,
 					sqlColumnDefinitions
@@ -574,6 +587,23 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				createPropertyAttribute(
 					"WebServiceConfiguration", 
 					"responseTemplate",  
+					null,
+					"java.lang.String",
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					null,
+					sqlColumnDefinitions
+				);
+			
+	}
+	
+	public void single_createattr_WebServiceConfiguration_textSeperator() throws JaloBusinessException
+	{
+		
+						Map sqlColumnDefinitions = null;
+					
+				createPropertyAttribute(
+					"WebServiceConfiguration", 
+					"textSeperator",  
 					null,
 					"java.lang.String",
 					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
@@ -729,7 +759,58 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 					"stockKey",  
 					null,
 					"java.lang.String",
-					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					null,
+					sqlColumnDefinitions
+				);
+			
+	}
+	
+	public void single_createattr_CustomerWebServiceConfiguration_firstNameKey() throws JaloBusinessException
+	{
+		
+						Map sqlColumnDefinitions = null;
+					
+				createPropertyAttribute(
+					"CustomerWebServiceConfiguration", 
+					"firstNameKey",  
+					null,
+					"java.lang.String",
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					null,
+					sqlColumnDefinitions
+				);
+			
+	}
+	
+	public void single_createattr_CustomerWebServiceConfiguration_lastNameKey() throws JaloBusinessException
+	{
+		
+						Map sqlColumnDefinitions = null;
+					
+				createPropertyAttribute(
+					"CustomerWebServiceConfiguration", 
+					"lastNameKey",  
+					null,
+					"java.lang.String",
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					null,
+					sqlColumnDefinitions
+				);
+			
+	}
+	
+	public void single_createattr_CustomerWebServiceConfiguration_emailKey() throws JaloBusinessException
+	{
+		
+						Map sqlColumnDefinitions = null;
+					
+				createPropertyAttribute(
+					"CustomerWebServiceConfiguration", 
+					"emailKey",  
+					null,
+					"java.lang.String",
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
 					null,
 					sqlColumnDefinitions
 				);
@@ -748,6 +829,17 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 	
 	
 		createEnumerationValues(
+			"RequestType",
+			true,
+			Arrays.asList( new String[] {
+			
+				"json",
+				"xml",
+				"form"
+			} )
+		);
+	
+		createEnumerationValues(
 			"ResponseType",
 			true,
 			Arrays.asList( new String[] {
@@ -764,8 +856,7 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			Arrays.asList( new String[] {
 			
 				"get",
-				"post",
-				"put"
+				"post"
 			} )
 		);
 	
@@ -796,8 +887,7 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			true,
 			Arrays.asList( new String[] {
 			
-				"warehouseCode",
-				"orderCode",
+				"productCode",
 				"clientCode"
 			} )
 		);
@@ -809,8 +899,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 				"clientCode",
 				"clientName",
-				"clientAdress",
-				"clientZipCode",
 				"clientEmail"
 			} )
 		);
@@ -982,6 +1070,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 		
 			single_setAttributeProperties_WebServiceConfiguration_responseTemplate();
 		
+			single_setAttributeProperties_WebServiceConfiguration_textSeperator();
+		
 				{
 				Map customPropsMap = new HashMap();
 				
@@ -1130,8 +1220,21 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				);
 				}
 			
+			single_setAttributeProperties_CustomerWebServiceConfiguration_firstNameKey();
+		
+			single_setAttributeProperties_CustomerWebServiceConfiguration_lastNameKey();
+		
+			single_setAttributeProperties_CustomerWebServiceConfiguration_emailKey();
+		
 				setDefaultProperties(
 					"PriceWSParam",
+					true,
+					true,
+					null
+				);
+			
+				setDefaultProperties(
+					"RequestType",
 					true,
 					true,
 					null
@@ -1417,6 +1520,28 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 							);
 						}
 					
+						public void single_setAttributeProperties_WebServiceConfiguration_textSeperator() throws JaloBusinessException
+						{
+							
+							
+							
+							Map customPropsMap = new HashMap();
+							
+							setAttributeProperties(
+								"WebServiceConfiguration", 
+								"textSeperator",
+								false, 
+								null,
+								null,
+								null,
+								true,
+								true,
+								null,
+								customPropsMap,
+								null
+							);
+						}
+					
 						public void single_setAttributeProperties_WebServiceParameter_key() throws JaloBusinessException
 						{
 							
@@ -1603,6 +1728,72 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 							setAttributeProperties(
 								"StockWebServiceConfiguration", 
 								"stockKey",
+								false, 
+								null,
+								null,
+								null,
+								true,
+								true,
+								null,
+								customPropsMap,
+								null
+							);
+						}
+					
+						public void single_setAttributeProperties_CustomerWebServiceConfiguration_firstNameKey() throws JaloBusinessException
+						{
+							
+							
+							
+							Map customPropsMap = new HashMap();
+							
+							setAttributeProperties(
+								"CustomerWebServiceConfiguration", 
+								"firstNameKey",
+								false, 
+								null,
+								null,
+								null,
+								true,
+								true,
+								null,
+								customPropsMap,
+								null
+							);
+						}
+					
+						public void single_setAttributeProperties_CustomerWebServiceConfiguration_lastNameKey() throws JaloBusinessException
+						{
+							
+							
+							
+							Map customPropsMap = new HashMap();
+							
+							setAttributeProperties(
+								"CustomerWebServiceConfiguration", 
+								"lastNameKey",
+								false, 
+								null,
+								null,
+								null,
+								true,
+								true,
+								null,
+								customPropsMap,
+								null
+							);
+						}
+					
+						public void single_setAttributeProperties_CustomerWebServiceConfiguration_emailKey() throws JaloBusinessException
+						{
+							
+							
+							
+							Map customPropsMap = new HashMap();
+							
+							setAttributeProperties(
+								"CustomerWebServiceConfiguration", 
+								"emailKey",
 								false, 
 								null,
 								null,

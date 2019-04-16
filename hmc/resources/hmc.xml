@@ -101,6 +101,11 @@
 							<attribute name="accept" />
 						</listlayout>
 					</section>
+					<section name="section.text">
+						<listlayout>
+							<attribute name="textSeperator" />
+						</listlayout>
+					</section>
 					<section name="section.param">
 						<listlayout>
 							<attribute name="parameters">
@@ -222,6 +227,32 @@
 							<attribute name="contentType" />
 						</listlayout>
 					</section>
+					<section name="section.text">
+						<listlayout>
+							<attribute name="textSeperator" />
+							<attribute name="textOperator" />
+						</listlayout>
+					</section>
+					<section name="section.param">
+						<listlayout>
+							<attribute name="parameters">
+								<referencecollectioneditor
+									editable="true" externalcreate="false" remove="true"
+									create="true" autosave="true">
+									<itemeditorlayout>
+										<attribute name="key" width="77">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+										<attribute name="value" width="80">
+										</attribute>
+									</itemeditorlayout>
+								</referencecollectioneditor>
+							</attribute>
+						</listlayout>
+					</section>
 					<section name="section.perso">
 						<listlayout>
 							<attribute name="personalisedParameters">
@@ -252,26 +283,6 @@
 							<attribute name="stockKey"/>
 							<attribute name="responseTemplate">
 								<textareaeditor />
-							</attribute>
-						</listlayout>
-					</section>
-					<section name="section.param">
-						<listlayout>
-							<attribute name="parameters">
-								<referencecollectioneditor
-									editable="true" externalcreate="false" remove="true"
-									create="true" autosave="true">
-									<itemeditorlayout>
-										<attribute name="key" width="77">
-											<editor
-												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
-												<parameter key="align" value="right" />
-											</editor>
-										</attribute>
-										<attribute name="value" width="80">
-										</attribute>
-									</itemeditorlayout>
-								</referencecollectioneditor>
 							</attribute>
 						</listlayout>
 					</section>
@@ -380,10 +391,29 @@
 						<attribute name="enable" />
 					</listlayout>
 				</essentials>
-				<tab name="tab.CustomerWebServiceConfiguration">
+				<tab name="tab.StockWebServiceConfiguration">
 					<section name="section.security">
 						<listlayout>
-							<attribute name="apiKey" />
+							<attribute name="SecurityParameters">
+								<referencecollectioneditor
+									editable="true" externalcreate="false" remove="true"
+									create="true" autosave="true">
+									<itemeditorlayout>
+										<attribute name="key" width="77">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+										<attribute name="value" width="80">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+									</itemeditorlayout>
+								</referencecollectioneditor>
+							</attribute>
 						</listlayout>
 					</section>
 					<section name="section.order">
@@ -396,6 +426,32 @@
 						<listlayout>
 							<attribute name="accept" />
 							<attribute name="contentType" />
+						</listlayout>
+					</section>
+					<section name="section.text">
+						<listlayout>
+							<attribute name="textSeperator" />
+							<attribute name="textOperator" />
+						</listlayout>
+					</section>
+					<section name="section.param">
+						<listlayout>
+							<attribute name="parameters">
+								<referencecollectioneditor
+									editable="true" externalcreate="false" remove="true"
+									create="true" autosave="true">
+									<itemeditorlayout>
+										<attribute name="key" width="77">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+										<attribute name="value" width="80">
+										</attribute>
+									</itemeditorlayout>
+								</referencecollectioneditor>
+							</attribute>
 						</listlayout>
 					</section>
 					<section name="section.perso">
@@ -423,25 +479,18 @@
 							</attribute>
 						</listlayout>
 					</section>
+					<section name="section.response">
+						<listlayout>
+							<attribute name="firstNameKey"/>
+							<attribute name="lastNameKey"/>
+							<attribute name="emailKey"/>
+							<attribute name="responseTemplate">
+								<textareaeditor />
+							</attribute>
+						</listlayout>
+					</section>
 				</tab>
 			</editor>
-		</organizer>
-	</type>
-
-	<type name="PersoWSParam" mode="append">
-		<organizer>
-			<search mode="replace">
-				<condition attribute="key" />
-				<condition attribute="value" />
-			</search>
-			<result>
-				<listview mode="replace">
-					<itemlayout>
-						<attribute name="key" width="200" />
-						<attribute name="value" width="200" />
-					</itemlayout>
-				</listview>
-			</result>
 		</organizer>
 	</type>
 

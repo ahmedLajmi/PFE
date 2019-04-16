@@ -5,6 +5,7 @@ package de.hybris.platform.addons.wsclientgenerator.interceptors;
 
 import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
 import de.hybris.platform.addons.wsclientgenerator.enums.ModeType;
+import de.hybris.platform.addons.wsclientgenerator.enums.ResponseType;
 import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceConfigurationModel;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.StockWebServiceConfigurationDao;
 import de.hybris.platform.servicelayer.event.EventService;
@@ -70,6 +71,25 @@ public class StockConfigurationEnabledInterceptor implements ValidateInterceptor
 					&& stockConfiguration.getContentType() == null)
 			{
 				throw new InterceptorException(getL10NService().getLocalizedString("empty.contentType"));
+			}
+			if (stockConfiguration.getAccept().equals(ResponseType.TEXT))
+			{
+				if (stockConfiguration.getTextSeperator() == null || stockConfiguration.getTextSeperator().isEmpty())
+				{
+					throw new InterceptorException(getL10NService().getLocalizedString("empty.seperator"));
+				}
+				else if (stockConfiguration.getTextSeperator().length() > 1)
+				{
+					throw new InterceptorException(getL10NService().getLocalizedString("invalid.seperator"));
+				}
+				try
+				{
+					Integer.parseInt(stockConfiguration.getStockKey());
+				}
+				catch (final Exception e)
+				{
+					throw new InterceptorException(getL10NService().getLocalizedString("invalid.key"));
+				}
 			}
 		}
 	}

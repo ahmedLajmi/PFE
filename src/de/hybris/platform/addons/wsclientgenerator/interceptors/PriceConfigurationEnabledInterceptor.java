@@ -3,6 +3,7 @@
  */
 package de.hybris.platform.addons.wsclientgenerator.interceptors;
 
+import de.hybris.platform.addons.wsclientgenerator.enums.ResponseType;
 import de.hybris.platform.addons.wsclientgenerator.model.PriceWebServiceConfigurationModel;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.PriceWebServiceConfigurationDao;
 import de.hybris.platform.servicelayer.event.EventService;
@@ -46,10 +47,32 @@ public class PriceConfigurationEnabledInterceptor implements ValidateInterceptor
 				if (enabledPriceConfig != null
 						&& !StringUtils.equals(enabledPriceConfig.getPk().toString(), priceConfiguration.getPk().toString()))
 				{
-					throw new InterceptorException(getL10NService().getLocalizedString("error.message.txt"));
+					throw new InterceptorException(getL10NService().getLocalizedString("unique.configuration"));
 				}
 			}
-
+			if (priceConfiguration.getAccept().equals(ResponseType.TEXT))
+			{
+				if (priceConfiguration.getTextSeperator() == null || priceConfiguration.getTextSeperator().isEmpty())
+				{
+					throw new InterceptorException(getL10NService().getLocalizedString("empty.seperator"));
+				}
+				else if (priceConfiguration.getTextSeperator().length() > 1)
+				{
+					throw new InterceptorException(getL10NService().getLocalizedString("invalid.seperator"));
+				}
+				try
+				{
+					Integer.parseInt(priceConfiguration.getPriceKey());
+					if (priceConfiguration.getCurrencyKey() != null)
+					{
+						Integer.parseInt(priceConfiguration.getCurrencyKey());
+					}
+				}
+				catch (final Exception e)
+				{
+					throw new InterceptorException(getL10NService().getLocalizedString("invalid.key"));
+				}
+			}
 		}
 	}
 

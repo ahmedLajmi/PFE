@@ -74,23 +74,5 @@ public class DefaultStockWebServiceConfigurationDao implements StockWebServiceCo
 		{
 			return null;
 		}
-
 	}
-
-
-	/*
-	 * public Integer getCountWsEnabledConfiguration(final MethodType type) { final StringBuilder builder = new
-	 * StringBuilder("SELECT {s:" + StockWebServiceConfigurationModel.PK +
-	 * "} FROM {StockWebServiceConfiguration AS s LEFT JOIN EnumerationValue AS e ON {s." +
-	 * StockWebServiceConfigurationModel.METHOD + " } = { e." + EnumerationValue.PK + "} } WHERE { s." +
-	 * StockWebServiceConfigurationModel.ENABLE + " } = TRUE AND {e." + EnumerationValue.CODE + " } = '" + type + "'");
-	 * 
-	 * final FlexibleSearchQuery query = new FlexibleSearchQuery(builder.toString()); final
-	 * SearchResult<StockWebServiceConfigurationModel> result = flexibleSearchService.search(query); if (result != null)
-	 * { return new Integer(result.getCount()); } else { return null; }
-	 * 
-	 * 
-	 * }
-	 */
-
 }
