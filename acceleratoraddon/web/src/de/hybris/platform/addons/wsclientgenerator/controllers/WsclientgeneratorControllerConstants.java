@@ -18,4 +18,6 @@ package de.hybris.platform.addons.wsclientgenerator.controllers;
 public interface WsclientgeneratorControllerConstants
 {
 	// implement here controller constants used by this extension
+	final String ADDON_PREFIX = "addon:/wsclientgenerator/";
+	String Test = ADDON_PREFIX + "pages/test";
 }

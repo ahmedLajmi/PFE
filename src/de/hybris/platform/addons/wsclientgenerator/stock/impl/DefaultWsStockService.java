@@ -12,7 +12,8 @@ import de.hybris.platform.addons.wsclientgenerator.exceptions.ParseWsResponseExc
 import de.hybris.platform.addons.wsclientgenerator.model.PersoWSParamModel;
 import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceConfigurationModel;
 import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceParameterModel;
-import de.hybris.platform.addons.wsclientgenerator.price.impl.WSPriceService;
+import de.hybris.platform.addons.wsclientgenerator.price.impl.DefaultWsPriceService;
+import de.hybris.platform.addons.wsclientgenerator.stock.WSStockService;
 import de.hybris.platform.addons.wsclientgenerator.tools.WSInvoke;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.StockWebServiceConfigurationDao;
 import de.hybris.platform.commerceservices.stock.impl.DefaultCommerceStockService;
@@ -46,7 +47,7 @@ import org.xml.sax.SAXException;
  * @author Ahmed-LAJMI
  *
  */
-public class WSStockService extends DefaultCommerceStockService
+public class DefaultWsStockService extends DefaultCommerceStockService implements WSStockService
 {
 
 	@Resource(name = "stockWebServiceConfigurationDao")
@@ -57,7 +58,7 @@ public class WSStockService extends DefaultCommerceStockService
 
 	private StockWebServiceConfigurationModel stockConfiguration;
 
-	private static final Logger LOG = Logger.getLogger(WSPriceService.class);
+	private static final Logger LOG = Logger.getLogger(DefaultWsPriceService.class);
 
 	@Override
 	public Long getStockLevelForProductAndBaseStore(final ProductModel product, final BaseStoreModel baseStore)
@@ -139,7 +140,8 @@ public class WSStockService extends DefaultCommerceStockService
 		}
 	}
 
-	private Long jsonParseResponse(final String response) throws ParseWsResponseException
+	@Override
+	public Long jsonParseResponse(final String response) throws ParseWsResponseException
 	{
 		final ObjectMapper mapper = new ObjectMapper();
 		try
@@ -161,7 +163,8 @@ public class WSStockService extends DefaultCommerceStockService
 		}
 	}
 
-	private Long xmlParseResponse(final String response) throws ParseWsResponseException
+	@Override
+	public Long xmlParseResponse(final String response) throws ParseWsResponseException
 	{
 		try
 		{
@@ -191,7 +194,8 @@ public class WSStockService extends DefaultCommerceStockService
 		}
 	}
 
-	private String prepareUrl(final StockWebServiceConfigurationModel stockConfiguration, final ProductModel model)
+	@Override
+	public String prepareUrl(final StockWebServiceConfigurationModel stockConfiguration, final ProductModel model)
 	{
 		final UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(stockConfiguration.getUrl());
 		final Collection<PersoWSParamModel> persoParams = stockConfiguration.getPersonalisedParameters();

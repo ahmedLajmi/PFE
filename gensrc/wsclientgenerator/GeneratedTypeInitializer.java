@@ -296,6 +296,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 				single_createattr_StockWebServiceConfiguration_stockKey();
 			
+				single_createattr_OrderWebServiceConfiguration_statusKey();
+			
 				single_createattr_CustomerWebServiceConfiguration_firstNameKey();
 			
 				single_createattr_CustomerWebServiceConfiguration_lastNameKey();
@@ -768,6 +770,23 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 	}
 	
+	public void single_createattr_OrderWebServiceConfiguration_statusKey() throws JaloBusinessException
+	{
+		
+						Map sqlColumnDefinitions = null;
+					
+				createPropertyAttribute(
+					"OrderWebServiceConfiguration", 
+					"statusKey",  
+					null,
+					"java.lang.String",
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					null,
+					sqlColumnDefinitions
+				);
+			
+	}
+	
 	public void single_createattr_CustomerWebServiceConfiguration_firstNameKey() throws JaloBusinessException
 	{
 		
@@ -897,7 +916,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 				"clientCode",
 				"orderCode",
-				"orderStatus"
+				"orderDate",
+				"currencyCode"
 			} )
 		);
 	
@@ -1228,6 +1248,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				);
 				}
 			
+			single_setAttributeProperties_OrderWebServiceConfiguration_statusKey();
+		
 				{
 				Map customPropsMap = new HashMap();
 				
@@ -1751,6 +1773,28 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 							setAttributeProperties(
 								"StockWebServiceConfiguration", 
 								"stockKey",
+								false, 
+								null,
+								null,
+								null,
+								true,
+								true,
+								null,
+								customPropsMap,
+								null
+							);
+						}
+					
+						public void single_setAttributeProperties_OrderWebServiceConfiguration_statusKey() throws JaloBusinessException
+						{
+							
+							
+							
+							Map customPropsMap = new HashMap();
+							
+							setAttributeProperties(
+								"OrderWebServiceConfiguration", 
+								"statusKey",
 								false, 
 								null,
 								null,

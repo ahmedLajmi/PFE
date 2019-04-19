@@ -320,7 +320,26 @@
 				<tab name="tab.OrderWebServiceConfiguration">
 					<section name="section.security">
 						<listlayout>
-							<attribute name="apiKey" />
+							<attribute name="SecurityParameters">
+								<referencecollectioneditor
+									editable="true" externalcreate="false" remove="true"
+									create="true" autosave="true">
+									<itemeditorlayout>
+										<attribute name="key" width="77">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+										<attribute name="value" width="80">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+									</itemeditorlayout>
+								</referencecollectioneditor>
+							</attribute>
 						</listlayout>
 					</section>
 					<section name="section.order">
@@ -333,6 +352,32 @@
 						<listlayout>
 							<attribute name="accept" />
 							<attribute name="contentType" />
+						</listlayout>
+					</section>
+					<section name="section.text">
+						<listlayout>
+							<attribute name="textSeperator" />
+							<attribute name="textOperator" />
+						</listlayout>
+					</section>
+					<section name="section.param">
+						<listlayout>
+							<attribute name="parameters">
+								<referencecollectioneditor
+									editable="true" externalcreate="false" remove="true"
+									create="true" autosave="true">
+									<itemeditorlayout>
+										<attribute name="key" width="77">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+										<attribute name="value" width="80">
+										</attribute>
+									</itemeditorlayout>
+								</referencecollectioneditor>
+							</attribute>
 						</listlayout>
 					</section>
 					<section name="section.perso">
@@ -357,6 +402,14 @@
 										</attribute>
 									</itemeditorlayout>
 								</referencecollectioneditor>
+							</attribute>
+						</listlayout>
+					</section>
+					<section name="section.response">
+						<listlayout>
+							<attribute name="statusKey"/>
+							<attribute name="responseTemplate">
+								<textareaeditor />
 							</attribute>
 						</listlayout>
 					</section>

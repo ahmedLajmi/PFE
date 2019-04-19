@@ -11,15 +11,18 @@ import de.hybris.platform.addons.wsclientgenerator.exceptions.ParseWsResponseExc
 import de.hybris.platform.addons.wsclientgenerator.model.PersoWSParamModel;
 import de.hybris.platform.addons.wsclientgenerator.model.PriceWebServiceConfigurationModel;
 import de.hybris.platform.addons.wsclientgenerator.model.PriceWebServiceParameterModel;
+import de.hybris.platform.addons.wsclientgenerator.price.WSPriceService;
 import de.hybris.platform.addons.wsclientgenerator.tools.WSInvoke;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.PriceWebServiceConfigurationDao;
 import de.hybris.platform.category.model.CategoryModel;
+import de.hybris.platform.commercefacades.storesession.data.CurrencyData;
 import de.hybris.platform.commerceservices.price.impl.NetPriceService;
 import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.jalo.order.price.PriceInformation;
 import de.hybris.platform.servicelayer.time.TimeService;
 import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.util.PriceValue;
+import de.hybris.platform.ycommercewebservices.storesession.data.CurrencyDataList;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -51,7 +54,7 @@ import org.xml.sax.SAXException;
  * @author Ahmed-LAJMI
  *
  */
-public class WSPriceService extends NetPriceService
+public class DefaultWsPriceService extends NetPriceService implements WSPriceService
 {
 	@Resource(name = "timeService")
 	private TimeService timeService;
@@ -64,7 +67,7 @@ public class WSPriceService extends NetPriceService
 
 	private PriceWebServiceConfigurationModel priceConfiguration;
 
-	private static final Logger LOG = Logger.getLogger(WSPriceService.class);
+	private static final Logger LOG = Logger.getLogger(DefaultWsPriceService.class);
 
 
 	@Override
@@ -132,7 +135,8 @@ public class WSPriceService extends NetPriceService
 		}
 	}
 
-	private Map<String, String> jsonParseResponse(final String response) throws ParseWsResponseException
+	@Override
+	public Map<String, String> jsonParseResponse(final String response) throws ParseWsResponseException
 	{
 		final Map<String, String> result = new HashMap<>();
 		final ObjectMapper mapper = new ObjectMapper();
@@ -173,7 +177,8 @@ public class WSPriceService extends NetPriceService
 		}
 	}
 
-	private Map<String, String> xmlParseResponse(final String response) throws ParseWsResponseException
+	@Override
+	public Map<String, String> xmlParseResponse(final String response) throws ParseWsResponseException
 	{
 		final Map<String, String> result = new HashMap<>();
 		String price = "";
@@ -231,8 +236,9 @@ public class WSPriceService extends NetPriceService
 		}
 	}
 
-	private Map<String, String> textParseResponse(final String response,
-			final PriceWebServiceConfigurationModel priceConfiguration) throws ParseWsResponseException
+	@Override
+	public Map<String, String> textParseResponse(final String response, final PriceWebServiceConfigurationModel priceConfiguration)
+			throws ParseWsResponseException
 	{
 		final Map<String, String> result = new HashMap<>();
 		final String sepearator = priceConfiguration.getTextSeperator();
@@ -267,8 +273,8 @@ public class WSPriceService extends NetPriceService
 		}
 	}
 
-
-	private String prepareUrl(final PriceWebServiceConfigurationModel priceConfiguration, final ProductModel model)
+	@Override
+	public String prepareUrl(final PriceWebServiceConfigurationModel priceConfiguration, final ProductModel model)
 	{
 		final UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(priceConfiguration.getUrl());
 		final Collection<PersoWSParamModel> persoParams = priceConfiguration.getPersonalisedParameters();
@@ -319,17 +325,19 @@ public class WSPriceService extends NetPriceService
 		return uriBuilder.toUriString();
 	}
 
-	private boolean validateCurrency(final String currency)
+	@Override
+	public boolean validateCurrency(final String value)
 	{
-		if (StringUtils.equalsIgnoreCase(currency, "EUR") || StringUtils.equalsIgnoreCase(currency, "USD")
-				|| StringUtils.equalsIgnoreCase(currency, "JPY"))
+
+		final Collection<CurrencyData> CurrencyList = new CurrencyDataList().getCurrencies();
+		for (final CurrencyData currency : CurrencyList)
 		{
-			return true;
+			if (StringUtils.equalsIgnoreCase(currency.getIsocode(), value))
+			{
+				return true;
+			}
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 
 }

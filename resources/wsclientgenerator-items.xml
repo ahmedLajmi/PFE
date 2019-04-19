@@ -44,7 +44,8 @@
 			generate="true" dynamic="true">
 			<value code="clientCode" />
 			<value code="orderCode" />
-			<value code="orderStatus" />
+			<value code="orderDate" />
+			<value code="currencyCode" />
 		</enumtype>
 		<enumtype code="StockParameter" autocreate="true"
 			generate="true" dynamic="true">
@@ -295,7 +296,12 @@
 		<itemtype code="OrderWebServiceConfiguration"
 			autocreate="true" generate="true" extends="WebServiceConfiguration">
 			<attributes>
-
+				<attribute qualifier="statusKey"
+					type="java.lang.String">
+					<modifiers read="true" write="true" search="true"
+						optional="false" />
+					<persistence type="property" />
+				</attribute>
 			</attributes>
 		</itemtype>
 

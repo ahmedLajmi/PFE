@@ -44,7 +44,7 @@
 
 	<alias alias="priceService" name="wsPriceService" />
 	<bean id="wsPriceService"
-		class="de.hybris.platform.addons.wsclientgenerator.price.impl.WSPriceService"
+		class="de.hybris.platform.addons.wsclientgenerator.price.impl.DefaultWsPriceService"
 		parent="netPriceService" />
 
 	<!-- <alias alias="commerceStockService" name="wsStockService"/> <bean id="wsStockService" 
@@ -53,27 +53,36 @@
 
 	<alias alias="commerceStockService" name="wsStockService" />
 	<bean id="wsStockService"
-		class="de.hybris.platform.addons.wsclientgenerator.stock.impl.WSStockService"
+		class="de.hybris.platform.addons.wsclientgenerator.stock.impl.DefaultWsStockService"
 		parent="defaultCommerceStockService">
 		<!-- <property name="warehouseService" value="warehouseService" /> -->
 	</bean>
 	
 	<alias alias="commerceCheckoutService" name="wsCheckoutService"/>
 	<bean id="wsCheckoutService"
-		class="de.hybris.platform.addons.wsclientgenerator.order.impl.WSCheckoutService"
+		class="de.hybris.platform.addons.wsclientgenerator.order.impl.DefaultWsCheckoutService"
 		parent="defaultCommerceCheckoutService">
 	</bean>
 	
+	<!-- 
 	<alias alias="customerAccountService" name="wsCustomerAccountService"/>
 	<bean id="wsCustomerAccountService"
-		class="de.hybris.platform.addons.wsclientgenerator.customer.impl.WSCustomerAccountService"
+		class="de.hybris.platform.addons.wsclientgenerator.customer.impl.DefaultWsCustomerAccountService"
 		parent="defaultCustomerAccountService">
 	</bean>
+	 -->
+	
 	
 	<alias name="wsCustomerFacade" alias="customerFacade"/>
 	<bean id="wsCustomerFacade"
-		class="de.hybris.platform.addons.wsclientgenerator.customer.impl.WSCustomerFacade"
+		class="de.hybris.platform.addons.wsclientgenerator.customer.impl.DefaultWsCustomerFacade"
 		parent="defaultCustomerFacade">
+	</bean>
+	
+	<alias name="wsOrderFacade" alias="orderFacade"/>
+	<bean id="wsOrderFacade"
+		class="de.hybris.platform.addons.wsclientgenerator.order.impl.DefaultWsOrderFacade"
+		parent="defaultOrderFacade">
 	</bean>
 
 	<bean id="priceWebServiceConfigurationDao"
@@ -86,6 +95,10 @@
 	
 	<bean id="customerWebServiceConfigurationDao"
 		class="de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.impl.DefaultCustomerWebServiceConfigurationDao">
+	</bean>
+	
+	<bean id="orderWebServiceConfigurationDao"
+		class="de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.impl.DefaultOrderWebServiceConfigurationDao">
 	</bean>
 
 	<bean id="priceConfigurationInterceptor"

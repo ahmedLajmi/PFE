@@ -3,6 +3,9 @@
  */
 package de.hybris.platform.addons.wsclientgenerator.customer.impl;
 
+import static de.hybris.platform.servicelayer.util.ServicesUtil.validateParameterNotNullStandardMessage;
+
+import de.hybris.platform.addons.wsclientgenerator.customer.WSCustomerFacade;
 import de.hybris.platform.addons.wsclientgenerator.enums.CustomerParameter;
 import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
 import de.hybris.platform.addons.wsclientgenerator.enums.ModeType;
@@ -19,6 +22,7 @@ import de.hybris.platform.addons.wsclientgenerator.tools.WSInvoke;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.CustomerWebServiceConfigurationDao;
 import de.hybris.platform.commercefacades.customer.impl.DefaultCustomerFacade;
 import de.hybris.platform.commercefacades.user.data.CustomerData;
+import de.hybris.platform.commercefacades.user.data.RegisterData;
 import de.hybris.platform.commercefacades.user.exceptions.PasswordMismatchException;
 import de.hybris.platform.commerceservices.customer.DuplicateUidException;
 import de.hybris.platform.core.model.user.UserModel;
@@ -47,6 +51,9 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -60,7 +67,7 @@ import org.xml.sax.SAXException;
  * @author Ahmed-LAJMI
  *
  */
-public class WSCustomerFacade extends DefaultCustomerFacade
+public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WSCustomerFacade
 {
 	@Resource(name = "userService")
 	private UserService userService;
@@ -70,7 +77,7 @@ public class WSCustomerFacade extends DefaultCustomerFacade
 
 	private CustomerWebServiceConfigurationModel customerConfiguration;
 
-	private static final Logger LOG = Logger.getLogger(WSCustomerFacade.class);
+	private static final Logger LOG = Logger.getLogger(DefaultWsCustomerFacade.class);
 
 	@Override
 	public CustomerData getCurrentCustomer()
@@ -148,27 +155,70 @@ public class WSCustomerFacade extends DefaultCustomerFacade
 	{
 		validateDataBeforeUpdate(customerData);
 		customerConfiguration = customerWebServiceConfigurationDao.getWsEnabledConfiguration(MethodType.POST);
-		if (customerConfiguration.getMode().equals(ModeType.ONLYWITHWEBSERVICE))
+		if (customerConfiguration != null)
 		{
-			wsUpdateProfil(customerConfiguration, customerData);
+			if (customerConfiguration.getMode().equals(ModeType.ONLYWITHWEBSERVICE))
+			{
+				wsCreateUpdateProfil(customerConfiguration, customerData);
+			}
+			else if (customerConfiguration.getMode().equals(ModeType.WEBSERVICEWITHNATIVE))
+			{
+				if (customerConfiguration.getOrder().equals(OrderType.NATIVEWEBSERVICE))
+				{
+					super.updateProfile(customerData);
+					wsCreateUpdateProfil(customerConfiguration, customerData);
+				}
+				else if (customerConfiguration.getOrder().equals(OrderType.WEBSERVICENATIVE))
+				{
+					wsCreateUpdateProfil(customerConfiguration, customerData);
+					super.updateProfile(customerData);
+				}
+			}
+			else
+			{
+				super.updateProfile(customerData);
+			}
 		}
-		else if (customerConfiguration.getMode().equals(ModeType.WEBSERVICEWITHNATIVE))
+
+	}
+
+	@Override
+	public void register(final RegisterData registerData) throws DuplicateUidException
+	{
+		validateParameterNotNullStandardMessage("registerData", registerData);
+		Assert.hasText(registerData.getFirstName(), "The field [FirstName] cannot be empty");
+		Assert.hasText(registerData.getLastName(), "The field [LastName] cannot be empty");
+		Assert.hasText(registerData.getLogin(), "The field [Login] cannot be empty");
+
+		final CustomerData customerData = new CustomerData();
+		customerData.setFirstName(registerData.getFirstName());
+		customerData.setLastName(registerData.getLastName());
+		customerData.setTitleCode(registerData.getTitleCode());
+		customerData.setDisplayUid(registerData.getLogin());
+		customerData.setUid(registerData.getLogin());
+
+		customerConfiguration = customerWebServiceConfigurationDao.getWsEnabledConfiguration(MethodType.POST);
+		if (customerConfiguration != null)
 		{
-			if (customerConfiguration.getOrder().equals(OrderType.NATIVEWEBSERVICE))
+			if (customerConfiguration.getOrder() != null && customerConfiguration.getOrder().equals(OrderType.WEBSERVICENATIVE))
 			{
-				super.updateProfile(customerData);
-				wsUpdateProfil(customerConfiguration, customerData);
+				wsCreateUpdateProfil(customerConfiguration, customerData);
+				super.register(registerData);
 			}
-			else if (customerConfiguration.getOrder().equals(OrderType.WEBSERVICENATIVE))
+			else
 			{
-				wsUpdateProfil(customerConfiguration, customerData);
-				super.updateProfile(customerData);
+				super.register(registerData);
+				wsCreateUpdateProfil(customerConfiguration, customerData);
 			}
+		}
+		else
+		{
+			super.register(registerData);
 		}
 	}
 
-
-	private Map<String, String> jsonParseResponse(final String response) throws ParseWsResponseException
+	@Override
+	public Map<String, String> jsonParseResponse(final String response) throws ParseWsResponseException
 	{
 		final Map<String, String> result = new HashMap<>();
 		final ObjectMapper mapper = new ObjectMapper();
@@ -198,7 +248,8 @@ public class WSCustomerFacade extends DefaultCustomerFacade
 		return result;
 	}
 
-	private Map<String, String> xmlParseResponse(final String response) throws ParseWsResponseException
+	@Override
+	public Map<String, String> xmlParseResponse(final String response) throws ParseWsResponseException
 	{
 		final Map<String, String> result = new HashMap<>();
 		String firstName = "", lastName = "", mail = "";
@@ -246,7 +297,8 @@ public class WSCustomerFacade extends DefaultCustomerFacade
 		}
 	}
 
-	private void wsUpdateEmail(final CustomerWebServiceConfigurationModel customerConfiguration, final String newUid)
+	@Override
+	public void wsUpdateEmail(final CustomerWebServiceConfigurationModel customerConfiguration, final String newUid)
 	{
 		final WSInvoke wsinvoke = new WSInvoke();
 		ResponseEntity<String> response;
@@ -275,7 +327,9 @@ public class WSCustomerFacade extends DefaultCustomerFacade
 		}
 	}
 
-	private void wsUpdateProfil(final CustomerWebServiceConfigurationModel customerConfiguration, final CustomerData customerData)
+	@Override
+	public void wsCreateUpdateProfil(final CustomerWebServiceConfigurationModel customerConfiguration,
+			final CustomerData customerData)
 	{
 		final WSInvoke wsinvoke = new WSInvoke();
 		ResponseEntity<String> response;
@@ -284,7 +338,7 @@ public class WSCustomerFacade extends DefaultCustomerFacade
 			if (customerConfiguration.getContentType().equals(RequestType.JSON))
 			{
 				response = wsinvoke.postRequest(customerConfiguration.getUrl(),
-						prepareJSONUpdateProfilRequest(customerData, customerConfiguration), customerConfiguration.getAccept(),
+						prepareJSONProfilRequest(customerData, customerConfiguration), customerConfiguration.getAccept(),
 						customerConfiguration.getContentType());
 				System.out.println(response);
 
@@ -292,13 +346,15 @@ public class WSCustomerFacade extends DefaultCustomerFacade
 			else if (customerConfiguration.getContentType().equals(RequestType.XML))
 			{
 				response = wsinvoke.postRequest(customerConfiguration.getUrl(),
-						prepareXMLUpdateProfilRequest(customerData, customerConfiguration), customerConfiguration.getAccept(),
+						prepareXMLProfilRequest(customerData, customerConfiguration), customerConfiguration.getAccept(),
 						customerConfiguration.getContentType());
 				System.out.println(response);
 			}
 			else if (customerConfiguration.getContentType().equals(RequestType.FORM))
 			{
-				//
+				response = wsinvoke.postRequest(customerConfiguration.getUrl(),
+						prepareFORMProfilRequest(customerData, customerConfiguration), customerConfiguration.getAccept());
+				System.out.println(response);
 			}
 		}
 		catch (final CreateWsRequestException | InvokeWsException e)
@@ -307,11 +363,10 @@ public class WSCustomerFacade extends DefaultCustomerFacade
 		}
 	}
 
-
-	private final String prepareJSONUpdateEmailRequest(final String newUid,
+	@Override
+	public String prepareJSONUpdateEmailRequest(final String newUid,
 			final CustomerWebServiceConfigurationModel customerConfiguration) throws CreateWsRequestException
 	{
-
 		final ObjectMapper mapper = new ObjectMapper();
 		final ObjectNode rootNode = mapper.createObjectNode();
 		final UserModel user = userService.getCurrentUser();
@@ -357,21 +412,17 @@ public class WSCustomerFacade extends DefaultCustomerFacade
 		}
 	}
 
-	private final String prepareJSONUpdateProfilRequest(final CustomerData customerData,
+	@Override
+	public String prepareJSONProfilRequest(final CustomerData customerData,
 			final CustomerWebServiceConfigurationModel customerConfiguration) throws CreateWsRequestException
 	{
 		final ObjectMapper mapper = new ObjectMapper();
 		final ObjectNode rootNode = mapper.createObjectNode();
-		final UserModel user = userService.getCurrentUser();
 		for (final CustomerWebServiceParameterModel additionelParam : customerConfiguration.getParameters())
 		{
-			if (additionelParam.getValue().equals(CustomerParameter.CLIENTCODE))
+			if (additionelParam.getValue().equals(CustomerParameter.CLIENTEMAIL))
 			{
-				rootNode.put(additionelParam.getKey(), user.getPk().toString());
-			}
-			else if (additionelParam.getValue().equals(CustomerParameter.CLIENTEMAIL))
-			{
-				rootNode.put(additionelParam.getKey(), user.getUid());
+				rootNode.put(additionelParam.getKey(), customerData.getUid());
 			}
 			else if (additionelParam.getValue().equals(CustomerParameter.CLIENTFIRSTNAME))
 			{
@@ -404,7 +455,8 @@ public class WSCustomerFacade extends DefaultCustomerFacade
 		}
 	}
 
-	private final String prepareXMLUpdateProfilRequest(final CustomerData customerData,
+	@Override
+	public String prepareXMLProfilRequest(final CustomerData customerData,
 			final CustomerWebServiceConfigurationModel customerConfiguration) throws CreateWsRequestException
 	{
 		try
@@ -421,13 +473,7 @@ public class WSCustomerFacade extends DefaultCustomerFacade
 
 			for (final CustomerWebServiceParameterModel additionelParam : customerConfiguration.getParameters())
 			{
-				if (additionelParam.getValue().equals(CustomerParameter.CLIENTCODE))
-				{
-					elem = document.createElement(additionelParam.getKey());
-					elem.appendChild(document.createTextNode(user.getPk().toString()));
-					root.appendChild(elem);
-				}
-				else if (additionelParam.getValue().equals(CustomerParameter.CLIENTEMAIL))
+				if (additionelParam.getValue().equals(CustomerParameter.CLIENTEMAIL))
 				{
 					elem = document.createElement(additionelParam.getKey());
 					elem.appendChild(document.createTextNode(user.getUid()));
@@ -473,7 +519,44 @@ public class WSCustomerFacade extends DefaultCustomerFacade
 		}
 	}
 
-	private String prepareUrl(final CustomerWebServiceConfigurationModel customerConfiguration, final UserModel model)
+	@Override
+	public MultiValueMap<String, String> prepareFORMProfilRequest(final CustomerData customerData,
+			final CustomerWebServiceConfigurationModel customerConfiguration)
+	{
+
+		final MultiValueMap<String, String> request = new LinkedMultiValueMap<String, String>();
+		for (final CustomerWebServiceParameterModel additionelParam : customerConfiguration.getParameters())
+		{
+			if (additionelParam.getValue().equals(CustomerParameter.CLIENTEMAIL))
+			{
+				request.add(additionelParam.getKey(), customerData.getUid());
+			}
+			else if (additionelParam.getValue().equals(CustomerParameter.CLIENTFIRSTNAME))
+			{
+				request.add(additionelParam.getKey(), customerData.getFirstName());
+			}
+			else if (additionelParam.getValue().equals(CustomerParameter.CLIENTLASTNAME))
+			{
+				request.add(additionelParam.getKey(), customerData.getLastName());
+			}
+			else if (additionelParam.getValue().equals(CustomerParameter.TITLECODE))
+			{
+				request.add(additionelParam.getKey(), customerData.getTitleCode());
+			}
+		}
+		for (final PersoWSParamModel persoParam : customerConfiguration.getPersonalisedParameters())
+		{
+			request.add(persoParam.getKey(), persoParam.getValue());
+		}
+		for (final PersoWSParamModel securityParam : customerConfiguration.getSecurityParameters())
+		{
+			request.add(securityParam.getKey(), securityParam.getValue());
+		}
+		return request;
+	}
+
+	@Override
+	public String prepareUrl(final CustomerWebServiceConfigurationModel customerConfiguration, final UserModel model)
 	{
 		final UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(customerConfiguration.getUrl());
 		final Collection<PersoWSParamModel> persoParams = customerConfiguration.getPersonalisedParameters();

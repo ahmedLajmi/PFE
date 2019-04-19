@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 16 avr. 2019 16:41:54                       ---
+ * --- Generated at 19 avr. 2019 10:28:41                       ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -35,6 +35,8 @@ import java.util.Map;
 @SuppressWarnings({"deprecation","unused","cast","PMD"})
 public abstract class GeneratedOrderWebServiceConfiguration extends WebServiceConfiguration
 {
+	/** Qualifier of the <code>OrderWebServiceConfiguration.statusKey</code> attribute **/
+	public static final String STATUSKEY = "statusKey";
 	/** Qualifier of the <code>OrderWebServiceConfiguration.parameters</code> attribute **/
 	public static final String PARAMETERS = "parameters";
 	/**
@@ -53,6 +55,7 @@ public abstract class GeneratedOrderWebServiceConfiguration extends WebServiceCo
 	static
 	{
 		final Map<String, AttributeMode> tmp = new HashMap<String, AttributeMode>(WebServiceConfiguration.DEFAULT_INITIAL_ATTRIBUTES);
+		tmp.put(STATUSKEY, AttributeMode.INITIAL);
 		DEFAULT_INITIAL_ATTRIBUTES = Collections.unmodifiableMap(tmp);
 	}
 	@Override
@@ -131,6 +134,42 @@ public abstract class GeneratedOrderWebServiceConfiguration extends WebServiceCo
 	public void removeFromParameters(final OrderWebServiceParameter value)
 	{
 		removeFromParameters( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>OrderWebServiceConfiguration.statusKey</code> attribute.
+	 * @return the statusKey
+	 */
+	public String getStatusKey(final SessionContext ctx)
+	{
+		return (String)getProperty( ctx, STATUSKEY);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>OrderWebServiceConfiguration.statusKey</code> attribute.
+	 * @return the statusKey
+	 */
+	public String getStatusKey()
+	{
+		return getStatusKey( getSession().getSessionContext() );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>OrderWebServiceConfiguration.statusKey</code> attribute. 
+	 * @param value the statusKey
+	 */
+	public void setStatusKey(final SessionContext ctx, final String value)
+	{
+		setProperty(ctx, STATUSKEY,value);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>OrderWebServiceConfiguration.statusKey</code> attribute. 
+	 * @param value the statusKey
+	 */
+	public void setStatusKey(final String value)
+	{
+		setStatusKey( getSession().getSessionContext(), value );
 	}
 	
 }

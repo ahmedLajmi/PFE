@@ -11,6 +11,7 @@ import de.hybris.platform.addons.wsclientgenerator.exceptions.InvokeWsException;
 import de.hybris.platform.addons.wsclientgenerator.model.PersoWSParamModel;
 import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceConfigurationModel;
 import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceParameterModel;
+import de.hybris.platform.addons.wsclientgenerator.order.WSCheckoutService;
 import de.hybris.platform.addons.wsclientgenerator.tools.WSInvoke;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.StockWebServiceConfigurationDao;
 import de.hybris.platform.commerceservices.enums.SalesApplication;
@@ -48,7 +49,7 @@ import org.w3c.dom.Element;
 
 
 
-public class WSCheckoutService extends DefaultCommerceCheckoutService
+public class DefaultWsCheckoutService extends DefaultCommerceCheckoutService implements WSCheckoutService
 {
 
 	@Resource(name = "stockWebServiceConfigurationDao")
@@ -59,7 +60,7 @@ public class WSCheckoutService extends DefaultCommerceCheckoutService
 
 	private StockWebServiceConfigurationModel stockConfiguration;
 
-	private static final Logger LOG = Logger.getLogger(WSCheckoutService.class);
+	private static final Logger LOG = Logger.getLogger(DefaultWsCheckoutService.class);
 
 	@Override
 	@Deprecated
@@ -89,7 +90,8 @@ public class WSCheckoutService extends DefaultCommerceCheckoutService
 		return result;
 	}
 
-	private void wsTreatement(final OrderModel model)
+	@Override
+	public void wsTreatement(final OrderModel model)
 	{
 		stockConfiguration = stockWebServiceConfigurationDao.getWsEnabledConfiguration(MethodType.POST);
 		if (stockConfiguration != null)
@@ -131,8 +133,8 @@ public class WSCheckoutService extends DefaultCommerceCheckoutService
 		}
 	}
 
-
-	private final String prepareXMLRequest(final AbstractOrderEntryModel entry) throws CreateWsRequestException
+	@Override
+	public String prepareXMLRequest(final AbstractOrderEntryModel entry) throws CreateWsRequestException
 	{
 		try
 		{
@@ -186,7 +188,8 @@ public class WSCheckoutService extends DefaultCommerceCheckoutService
 		}
 	}
 
-	private final String prepareJSONRequest(final AbstractOrderEntryModel entry) throws CreateWsRequestException
+	@Override
+	public String prepareJSONRequest(final AbstractOrderEntryModel entry) throws CreateWsRequestException
 	{
 
 		final ObjectMapper mapper = new ObjectMapper();
@@ -224,8 +227,8 @@ public class WSCheckoutService extends DefaultCommerceCheckoutService
 		}
 	}
 
-	private final MultiValueMap<String, String> prepareFORMRequest(final AbstractOrderEntryModel entry)
-			throws CreateWsRequestException
+	@Override
+	public MultiValueMap<String, String> prepareFORMRequest(final AbstractOrderEntryModel entry)
 	{
 
 		final MultiValueMap<String, String> request = new LinkedMultiValueMap<String, String>();
