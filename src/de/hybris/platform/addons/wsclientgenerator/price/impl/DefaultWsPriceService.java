@@ -150,16 +150,16 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 				if (root.has(priceConfiguration.getCurrencyKey()))
 				{
 					currency = root.path(priceConfiguration.getCurrencyKey()).asText();
+					if (!validateCurrency(currency))
+					{
+						throw new ParseWsResponseException("Error in parsing response!! Invalid currency value");
+					}
 				}
 				else
 				{
 					if (!userService.isAnonymousUser(userService.getCurrentUser()))
 					{
 						currency = userService.getCurrentUser().getSessionCurrency().getIsocode().toUpperCase();
-						if (!validateCurrency(currency))
-						{
-							throw new ParseWsResponseException("Error in parsing response!! Invalid currency value");
-						}
 					}
 				}
 				result.put("price", price);

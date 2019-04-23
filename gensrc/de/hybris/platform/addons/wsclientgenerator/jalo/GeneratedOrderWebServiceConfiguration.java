@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 19 avr. 2019 10:28:41                       ---
+ * --- Generated at 23 avr. 2019 09:55:57                       ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -37,6 +37,8 @@ public abstract class GeneratedOrderWebServiceConfiguration extends WebServiceCo
 {
 	/** Qualifier of the <code>OrderWebServiceConfiguration.statusKey</code> attribute **/
 	public static final String STATUSKEY = "statusKey";
+	/** Qualifier of the <code>OrderWebServiceConfiguration.orderCode</code> attribute **/
+	public static final String ORDERCODE = "orderCode";
 	/** Qualifier of the <code>OrderWebServiceConfiguration.parameters</code> attribute **/
 	public static final String PARAMETERS = "parameters";
 	/**
@@ -56,12 +58,86 @@ public abstract class GeneratedOrderWebServiceConfiguration extends WebServiceCo
 	{
 		final Map<String, AttributeMode> tmp = new HashMap<String, AttributeMode>(WebServiceConfiguration.DEFAULT_INITIAL_ATTRIBUTES);
 		tmp.put(STATUSKEY, AttributeMode.INITIAL);
+		tmp.put(ORDERCODE, AttributeMode.INITIAL);
 		DEFAULT_INITIAL_ATTRIBUTES = Collections.unmodifiableMap(tmp);
 	}
 	@Override
 	protected Map<String, AttributeMode> getDefaultAttributeModes()
 	{
 		return DEFAULT_INITIAL_ATTRIBUTES;
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>OrderWebServiceConfiguration.orderCode</code> attribute.
+	 * @return the orderCode
+	 */
+	public Boolean isOrderCode(final SessionContext ctx)
+	{
+		return (Boolean)getProperty( ctx, ORDERCODE);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>OrderWebServiceConfiguration.orderCode</code> attribute.
+	 * @return the orderCode
+	 */
+	public Boolean isOrderCode()
+	{
+		return isOrderCode( getSession().getSessionContext() );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>OrderWebServiceConfiguration.orderCode</code> attribute. 
+	 * @return the orderCode
+	 */
+	public boolean isOrderCodeAsPrimitive(final SessionContext ctx)
+	{
+		Boolean value = isOrderCode( ctx );
+		return value != null ? value.booleanValue() : false;
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>OrderWebServiceConfiguration.orderCode</code> attribute. 
+	 * @return the orderCode
+	 */
+	public boolean isOrderCodeAsPrimitive()
+	{
+		return isOrderCodeAsPrimitive( getSession().getSessionContext() );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>OrderWebServiceConfiguration.orderCode</code> attribute. 
+	 * @param value the orderCode
+	 */
+	public void setOrderCode(final SessionContext ctx, final Boolean value)
+	{
+		setProperty(ctx, ORDERCODE,value);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>OrderWebServiceConfiguration.orderCode</code> attribute. 
+	 * @param value the orderCode
+	 */
+	public void setOrderCode(final Boolean value)
+	{
+		setOrderCode( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>OrderWebServiceConfiguration.orderCode</code> attribute. 
+	 * @param value the orderCode
+	 */
+	public void setOrderCode(final SessionContext ctx, final boolean value)
+	{
+		setOrderCode( ctx,Boolean.valueOf( value ) );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>OrderWebServiceConfiguration.orderCode</code> attribute. 
+	 * @param value the orderCode
+	 */
+	public void setOrderCode(final boolean value)
+	{
+		setOrderCode( getSession().getSessionContext(), value );
 	}
 	
 	/**

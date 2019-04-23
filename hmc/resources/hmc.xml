@@ -108,6 +108,7 @@
 					</section>
 					<section name="section.param">
 						<listlayout>
+							<attribute name="productCode" />
 							<attribute name="parameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
@@ -235,6 +236,7 @@
 					</section>
 					<section name="section.param">
 						<listlayout>
+							<attribute name="productCode" />
 							<attribute name="parameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
@@ -362,6 +364,7 @@
 					</section>
 					<section name="section.param">
 						<listlayout>
+							<attribute name="orderCode" />
 							<attribute name="parameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
@@ -489,7 +492,28 @@
 					</section>
 					<section name="section.param">
 						<listlayout>
+							<attribute name="clientCode" />
 							<attribute name="parameters">
+								<referencecollectioneditor
+									editable="true" externalcreate="false" remove="true"
+									create="true" autosave="true">
+									<itemeditorlayout>
+										<attribute name="key" width="77">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+										<attribute name="value" width="80">
+										</attribute>
+									</itemeditorlayout>
+								</referencecollectioneditor>
+							</attribute>
+						</listlayout>
+					</section>
+					<section name="section.emailparam">
+						<listlayout>
+							<attribute name="emailParameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
 									create="true" autosave="true">
@@ -546,16 +570,6 @@
 			</editor>
 		</organizer>
 	</type>
-
-	<!-- <type name="Stadium" mode="append"> <organizer> <search mode="replace"> 
-		<condition attribute="code" /> <condition attribute="capacity" /> <condition 
-		attribute="matches" /> </search> <result> <listview mode="replace"> <itemlayout> 
-		<attribute name="code" /> <attribute name="capacity" /> <attribute name="matches" 
-		/> </itemlayout> </listview> </result> <editor> <essentials> <listlayout> 
-		<attribute name="code" /> </listlayout> </essentials> <tab name="tab.cuppytrail"> 
-		<section name="section.cuppytrail"> <listlayout> <attribute name="capacity" 
-		/> <attribute name="matches" /> </listlayout> </section> </tab> </editor> 
-		</organizer> </type> -->
 
 
 </configuration>

@@ -19,6 +19,6 @@ public interface StockWebServiceConfigurationDao
 
 	public StockWebServiceConfigurationModel getWsEnabledConfiguration(final MethodType method);
 
-	public StockWebServiceConfigurationModel getConfigurationById(StockWebServiceConfigurationModel model);
+	public StockWebServiceConfigurationModel findStockWsConfiguration(String id);
 
 }

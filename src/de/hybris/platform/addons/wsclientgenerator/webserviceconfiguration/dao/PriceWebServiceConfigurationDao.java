@@ -18,5 +18,5 @@ public interface PriceWebServiceConfigurationDao
 
 	public PriceWebServiceConfigurationModel getWsEnabledConfiguration();
 
-	public Integer getCountWsEnabledConfiguration();
+	public PriceWebServiceConfigurationModel findPriceWsConfiguration(String id);
 }

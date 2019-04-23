@@ -38,11 +38,10 @@ public class DefaultStockWebServiceConfigurationDao implements StockWebServiceCo
 	}
 
 	@Override
-	public StockWebServiceConfigurationModel getConfigurationById(final StockWebServiceConfigurationModel model)
+	public StockWebServiceConfigurationModel findStockWsConfiguration(final String id)
 	{
-		final StringBuilder builder = new StringBuilder(
-				"SELECT " + StockWebServiceConfigurationModel.PK + " FROM {StockWebServiceConfiguration AS s } WHERE {s."
-						+ StockWebServiceConfigurationModel.PK + "}=" + model.getPk());
+		final StringBuilder builder = new StringBuilder("SELECT " + StockWebServiceConfigurationModel.PK
+				+ " FROM {StockWebServiceConfiguration AS s } WHERE {s." + StockWebServiceConfigurationModel.PK + "}=" + id);
 
 		final FlexibleSearchQuery query = new FlexibleSearchQuery(builder.toString());
 		final SearchResult<StockWebServiceConfigurationModel> result = flexibleSearchService.search(query);

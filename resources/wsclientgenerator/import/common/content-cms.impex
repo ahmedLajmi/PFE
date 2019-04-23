@@ -1,0 +1,26 @@
+$contentCatalog=hybrisContentCatalog
+$contentCatalogName=Hybris Content Catalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+ 
+ 
+ 
+INSERT_UPDATE PageTemplate ; $contentCV[unique=true] ; uid[unique=true]   ; name                      ; frontendTemplateName            ; restrictedPageTypes(code) ; active[default=true] 
+                           ;                         ; WsCallPageTemplate ; Web service call template ; pages/wsclientgeneratortemplate ; ContentPage               
+                           
+                           
+INSERT_UPDATE ContentPage ; $contentCV[unique=true] ; uid[unique=true]  ; name                          ; masterTemplate(uid,$contentCV) ; label         ; defaultPage[default='true'] ; approvalStatus(code)[default='approved'] ; homepage[default='false'] 
+                          ;                         ; wsCallContentPage ; Web service call Content Page ; WsCallPageTemplate             ; wsCallCMSPage 
+                          
+INSERT_UPDATE ContentSlotName ; name[unique=true] ; template(uid,$contentCV)[unique=true][default='WsCallPageTemplate'] ; validComponentTypes(code)                              ; compTypeGroup(code) 
+                              ; SiteLogo          ;                                                                     ; CMSImageComponent,BannerComponent                      
+                              ; HeaderLinks       ;                                                                     ; CMSLinkComponent,CMSParagraphComponent                 
+                              ; NavigationBar     ;                                                                     ; NavigationBarComponent                                 
+                              ; Section1          ;                                                                     ; CMSParagraphComponent                                  
+                              ; Footer            ;                                                                     ; CMSLinkComponent,CMSParagraphComponent,FooterComponent 
+                              
+                              
+INSERT_UPDATE ContentSlotForTemplate ; $contentCV[unique=true] ; uid[unique=true]       ; position[unique=true] ; pageTemplate(uid,$contentCV)[unique=true][default='WsCallPageTemplate'] ; contentSlot(uid,$contentCV)[unique=true] ; allowOverwrite 
+                                     ;                         ; SiteLogo-OffersPage    ; SiteLogo              ;                                                                         ; SiteLogoSlot                             ; true           
+                                     ;                         ; NavigationBar-WsPage   ; NavigationBar         ;                                                                         ; NavigationBarSlot                        ; true           
+                                     ;                         ; Footer-OffersPage      ; Footer                ;                                                                         ; FooterSlot                               ; true           
+                                     ;                         ; HeaderLinks-OffersPage ; HeaderLinks           ;                                                                         ; HeaderLinksSlot                          ; true           

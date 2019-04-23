@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 19 avr. 2019 10:28:41                       ---
+ * --- Generated at 23 avr. 2019 09:55:57                       ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -27,6 +27,8 @@ public class GeneratedWsclientgeneratorConstants
 	public static final String EXTENSIONNAME = "wsclientgenerator";
 	public static class TC
 	{
+		public static final String CUSTOMEREMAILPARAMETER = "CustomerEmailParameter".intern();
+		public static final String CUSTOMEREMAILWEBSERVICEPARAMETER = "CustomerEmailWebServiceParameter".intern();
 		public static final String CUSTOMERPARAMETER = "CustomerParameter".intern();
 		public static final String CUSTOMERWEBSERVICECONFIGURATION = "CustomerWebServiceConfiguration".intern();
 		public static final String CUSTOMERWEBSERVICEPARAMETER = "CustomerWebServiceParameter".intern();
@@ -54,6 +56,15 @@ public class GeneratedWsclientgeneratorConstants
 	}
 	public static class Enumerations
 	{
+		public static class CustomerEmailParameter
+		{
+			public static final String CLIENTCODE = "clientCode".intern();
+			public static final String CLIENTFIRSTNAME = "clientFirstName".intern();
+			public static final String CLIENTLASTNAME = "clientLastName".intern();
+			public static final String CLIENTOLDEMAIL = "clientOldEmail".intern();
+			public static final String CLIENTNEWEMAIL = "clientNewEmail".intern();
+			public static final String TITLECODE = "titleCode".intern();
+		}
 		public static class CustomerParameter
 		{
 			public static final String CLIENTCODE = "clientCode".intern();
@@ -110,6 +121,7 @@ public class GeneratedWsclientgeneratorConstants
 	}
 	public static class Relations
 	{
+		public static final String CUSTOMEREMAILWEBSERVICECONFIGURATIONPARAMETERRELATION = "CustomerEmailWebServiceConfigurationParameterRelation".intern();
 		public static final String CUSTOMERWEBSERVICECONFIGURATIONPARAMETERRELATION = "CustomerWebServiceConfigurationParameterRelation".intern();
 		public static final String ORDERWEBSERVICECONFIGURATIONPARAMETERRELATION = "OrderWebServiceConfigurationParameterRelation".intern();
 		public static final String PRICEWEBSERVICECONFIGURATIONPARAMETERRELATION = "PriceWebServiceConfigurationParameterRelation".intern();

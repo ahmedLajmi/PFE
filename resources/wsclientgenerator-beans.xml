@@ -25,5 +25,14 @@
 		<property name="flag" type="boolean"/>
 	</bean>
 	-->
+	
+	<bean class="de.hybris.platform.addons.wsclientgenerator.data.CustomerWebServiceConfigurationData">
+        <description>Data object for CustomerWebServiceConfiguration which has no equivalent on the type system</description>
+        <property name="name" type="String"/>
+        <property name="description" type="String"/>
+        <property name="url" type="String"/>
+        <property name="method" type="String"/>
+        <property name="enable" type="boolean"/>
+    </bean>
 
 </beans>

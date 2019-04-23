@@ -57,29 +57,25 @@
 		parent="defaultCommerceStockService">
 		<!-- <property name="warehouseService" value="warehouseService" /> -->
 	</bean>
-	
-	<alias alias="commerceCheckoutService" name="wsCheckoutService"/>
+
+	<alias alias="commerceCheckoutService" name="wsCheckoutService" />
 	<bean id="wsCheckoutService"
 		class="de.hybris.platform.addons.wsclientgenerator.order.impl.DefaultWsCheckoutService"
 		parent="defaultCommerceCheckoutService">
 	</bean>
-	
-	<!-- 
-	<alias alias="customerAccountService" name="wsCustomerAccountService"/>
-	<bean id="wsCustomerAccountService"
-		class="de.hybris.platform.addons.wsclientgenerator.customer.impl.DefaultWsCustomerAccountService"
-		parent="defaultCustomerAccountService">
-	</bean>
-	 -->
-	
-	
-	<alias name="wsCustomerFacade" alias="customerFacade"/>
+
+	<!-- <alias alias="customerAccountService" name="wsCustomerAccountService"/> 
+		<bean id="wsCustomerAccountService" class="de.hybris.platform.addons.wsclientgenerator.customer.impl.DefaultWsCustomerAccountService" 
+		parent="defaultCustomerAccountService"> </bean> -->
+
+
+	<alias name="wsCustomerFacade" alias="customerFacade" />
 	<bean id="wsCustomerFacade"
 		class="de.hybris.platform.addons.wsclientgenerator.customer.impl.DefaultWsCustomerFacade"
 		parent="defaultCustomerFacade">
 	</bean>
-	
-	<alias name="wsOrderFacade" alias="orderFacade"/>
+
+	<alias name="wsOrderFacade" alias="orderFacade" />
 	<bean id="wsOrderFacade"
 		class="de.hybris.platform.addons.wsclientgenerator.order.impl.DefaultWsOrderFacade"
 		parent="defaultOrderFacade">
@@ -88,33 +84,50 @@
 	<bean id="priceWebServiceConfigurationDao"
 		class="de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.impl.DefaultPriceWebServiceConfigurationDao">
 	</bean>
-	
+
 	<bean id="stockWebServiceConfigurationDao"
 		class="de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.impl.DefaultStockWebServiceConfigurationDao">
 	</bean>
-	
+
 	<bean id="customerWebServiceConfigurationDao"
 		class="de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.impl.DefaultCustomerWebServiceConfigurationDao">
 	</bean>
-	
+
 	<bean id="orderWebServiceConfigurationDao"
 		class="de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.impl.DefaultOrderWebServiceConfigurationDao">
+	</bean>
+
+	<bean id="priceWebServiceConfigurationService"
+		class="de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.service.impl.DefaultPriceWebServiceConfigurationService">
+	</bean>
+
+	<bean id="stockWebServiceConfigurationService"
+		class="de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.service.impl.DefaultStockWebServiceConfigurationService">
+	</bean>
+
+	<bean id="customerWebServiceConfigurationService"
+		class="de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.service.impl.DefaultCustomerWebServiceConfigurationService">
+	</bean>
+
+	<bean id="orderWebServiceConfigurationService"
+		class="de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.service.impl.DefaultOrderWebServiceConfigurationService">
+	</bean>
+
+	<alias name="defaultcustomerWebServiceConfigurationFacade" alias="customerWebServiceConfigurationFacade" />
+	<bean id="defaultcustomerWebServiceConfigurationFacade"
+		class="de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.facade.impl.DefaultCustomerWebServiceConfigurationFacade">
 	</bean>
 
 	<bean id="priceConfigurationInterceptor"
 		class="de.hybris.platform.addons.wsclientgenerator.interceptors.PriceConfigurationEnabledInterceptor">
 		<property name="l10NService" ref="l10nService" />
 	</bean>
-	
+
 	<bean id="stockConfigurationInterceptor"
 		class="de.hybris.platform.addons.wsclientgenerator.interceptors.StockConfigurationEnabledInterceptor">
 		<property name="l10NService" ref="l10nService" />
 	</bean>
-	
-	<bean id="orderCreationInterceptor"
-		class="de.hybris.platform.addons.wsclientgenerator.interceptors.OrderCreationInterceptor">
-		<property name="l10NService" ref="l10nService" />
-	</bean>
+
 
 	<bean id="priceWebServiceConfigurationInterceptor"
 		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
@@ -123,7 +136,7 @@
 		<property name="typeCode"
 			value="PriceWebServiceConfiguration" />
 	</bean>
-	
+
 	<bean id="stockWebServiceConfigurationInterceptor"
 		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
 		<property name="interceptor"
@@ -131,16 +144,9 @@
 		<property name="typeCode"
 			value="StockWebServiceConfiguration" />
 	</bean>
-	
-	<bean id="orderInterceptor"
-		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
-		<property name="interceptor"
-			ref="orderCreationInterceptor" />
-		<property name="typeCode"
-			value="Order" />
-	</bean>
-	
-	
+
+
+
 
 
 </beans>

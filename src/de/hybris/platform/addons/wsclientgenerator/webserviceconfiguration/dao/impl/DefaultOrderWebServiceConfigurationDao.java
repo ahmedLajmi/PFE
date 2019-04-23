@@ -4,7 +4,6 @@
 package de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.impl;
 
 import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
-import de.hybris.platform.addons.wsclientgenerator.model.CustomerWebServiceConfigurationModel;
 import de.hybris.platform.addons.wsclientgenerator.model.OrderWebServiceConfigurationModel;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.OrderWebServiceConfigurationDao;
 import de.hybris.platform.jalo.enumeration.EnumerationValue;
@@ -31,7 +30,7 @@ public class DefaultOrderWebServiceConfigurationDao implements OrderWebServiceCo
 	public List<OrderWebServiceConfigurationModel> getAllConfigurations()
 	{
 		final StringBuilder builder = new StringBuilder(
-				"SELECT " + CustomerWebServiceConfigurationModel.PK + " FROM {CustomerWebServiceConfiguration AS s } ");
+				"SELECT " + OrderWebServiceConfigurationModel.PK + " FROM {OrderWebServiceConfiguration AS s } ");
 
 		final FlexibleSearchQuery query = new FlexibleSearchQuery(builder.toString());
 		final SearchResult<OrderWebServiceConfigurationModel> result = flexibleSearchService.search(query);
@@ -39,11 +38,10 @@ public class DefaultOrderWebServiceConfigurationDao implements OrderWebServiceCo
 	}
 
 	@Override
-	public OrderWebServiceConfigurationModel getConfigurationById(final OrderWebServiceConfigurationModel model)
+	public OrderWebServiceConfigurationModel findOrderWsConfiguration(final String id)
 	{
-		final StringBuilder builder = new StringBuilder(
-				"SELECT " + OrderWebServiceConfigurationModel.PK + " FROM {OrderWebServiceConfiguration AS s } WHERE {s."
-						+ OrderWebServiceConfigurationModel.PK + "}=" + model.getPk());
+		final StringBuilder builder = new StringBuilder("SELECT " + OrderWebServiceConfigurationModel.PK
+				+ " FROM {OrderWebServiceConfiguration AS s } WHERE {s." + OrderWebServiceConfigurationModel.PK + "}=" + id);
 
 		final FlexibleSearchQuery query = new FlexibleSearchQuery(builder.toString());
 		final SearchResult<OrderWebServiceConfigurationModel> result = flexibleSearchService.search(query);

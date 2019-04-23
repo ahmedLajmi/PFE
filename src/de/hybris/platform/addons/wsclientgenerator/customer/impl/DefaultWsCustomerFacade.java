@@ -314,11 +314,16 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 			}
 			else if (customerConfiguration.getContentType().equals(RequestType.XML))
 			{
-				//
+				response = wsinvoke.postRequest(customerConfiguration.getUrl(),
+						prepareXMLUpdateEmailRequest(newUid, customerConfiguration), customerConfiguration.getAccept(),
+						customerConfiguration.getContentType());
+				System.out.println(response);
 			}
 			else if (customerConfiguration.getContentType().equals(RequestType.FORM))
 			{
-				//
+				response = wsinvoke.postRequest(customerConfiguration.getUrl(),
+						prepareFORMUpdateEmailRequest(newUid, customerConfiguration), customerConfiguration.getAccept());
+				System.out.println(response);
 			}
 		}
 		catch (final CreateWsRequestException | InvokeWsException e)
@@ -411,6 +416,109 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 			throw new CreateWsRequestException("Error in creating JSON request! " + e.getMessage());
 		}
 	}
+
+	@Override
+	public String prepareXMLUpdateEmailRequest(final String newUid,
+			final CustomerWebServiceConfigurationModel customerConfiguration) throws CreateWsRequestException
+	{
+		try
+		{
+			final UserModel user = userService.getCurrentUser();
+			final DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
+			final DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
+			final Document document = documentBuilder.newDocument();
+			final TransformerFactory tf = TransformerFactory.newInstance();
+			final Transformer transformer = tf.newTransformer();
+			final StringWriter writer = new StringWriter();
+			final CustomerData customer = getCustomerConverter().convert(user);
+			final Element root = document.createElement("CustomerDetails");
+			Element elem;
+
+			for (final CustomerWebServiceParameterModel additionelParam : customerConfiguration.getParameters())
+			{
+				if (additionelParam.getValue().equals(CustomerParameter.CLIENTEMAIL))
+				{
+					elem = document.createElement(additionelParam.getKey());
+					elem.appendChild(document.createTextNode(newUid));
+					root.appendChild(elem);
+				}
+				else if (additionelParam.getValue().equals(CustomerParameter.CLIENTFIRSTNAME))
+				{
+					elem = document.createElement(additionelParam.getKey());
+					elem.appendChild(document.createTextNode(customer.getFirstName()));
+					root.appendChild(elem);
+				}
+				else if (additionelParam.getValue().equals(CustomerParameter.CLIENTLASTNAME))
+				{
+					elem = document.createElement(additionelParam.getKey());
+					elem.appendChild(document.createTextNode(customer.getLastName()));
+					root.appendChild(elem);
+				}
+				else if (additionelParam.getValue().equals(CustomerParameter.TITLECODE))
+				{
+					elem = document.createElement(additionelParam.getKey());
+					elem.appendChild(document.createTextNode(customer.getTitleCode()));
+					root.appendChild(elem);
+				}
+			}
+			for (final PersoWSParamModel persoParam : customerConfiguration.getPersonalisedParameters())
+			{
+				elem = document.createElement(persoParam.getKey());
+				elem.appendChild(document.createTextNode(persoParam.getValue()));
+				root.appendChild(elem);
+			}
+			for (final PersoWSParamModel securityParam : customerConfiguration.getSecurityParameters())
+			{
+				elem = document.createElement(securityParam.getKey());
+				elem.appendChild(document.createTextNode(securityParam.getValue()));
+				root.appendChild(elem);
+			}
+			transformer.transform(new DOMSource(root), new StreamResult(writer));
+			return writer.getBuffer().toString();
+		}
+		catch (ParserConfigurationException | TransformerException e)
+		{
+			throw new CreateWsRequestException("Error in creating XML request! " + e.getMessage());
+		}
+	}
+
+	@Override
+	public MultiValueMap<String, String> prepareFORMUpdateEmailRequest(final String newUid,
+			final CustomerWebServiceConfigurationModel customerConfiguration) throws CreateWsRequestException
+	{
+		final UserModel user = userService.getCurrentUser();
+		final CustomerData customer = getCustomerConverter().convert(user);
+		final MultiValueMap<String, String> request = new LinkedMultiValueMap<String, String>();
+		for (final CustomerWebServiceParameterModel additionelParam : customerConfiguration.getParameters())
+		{
+			if (additionelParam.getValue().equals(CustomerParameter.CLIENTEMAIL))
+			{
+				request.add(additionelParam.getKey(), newUid);
+			}
+			else if (additionelParam.getValue().equals(CustomerParameter.CLIENTFIRSTNAME))
+			{
+				request.add(additionelParam.getKey(), customer.getFirstName());
+			}
+			else if (additionelParam.getValue().equals(CustomerParameter.CLIENTLASTNAME))
+			{
+				request.add(additionelParam.getKey(), customer.getLastName());
+			}
+			else if (additionelParam.getValue().equals(CustomerParameter.TITLECODE))
+			{
+				request.add(additionelParam.getKey(), customer.getTitleCode());
+			}
+		}
+		for (final PersoWSParamModel persoParam : customerConfiguration.getPersonalisedParameters())
+		{
+			request.add(persoParam.getKey(), persoParam.getValue());
+		}
+		for (final PersoWSParamModel securityParam : customerConfiguration.getSecurityParameters())
+		{
+			request.add(securityParam.getKey(), securityParam.getValue());
+		}
+		return request;
+	}
+
 
 	@Override
 	public String prepareJSONProfilRequest(final CustomerData customerData,

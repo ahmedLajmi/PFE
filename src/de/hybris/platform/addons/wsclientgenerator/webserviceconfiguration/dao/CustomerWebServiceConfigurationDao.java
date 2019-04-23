@@ -19,6 +19,6 @@ public interface CustomerWebServiceConfigurationDao
 
 	public CustomerWebServiceConfigurationModel getWsEnabledConfiguration(final MethodType method);
 
-	public CustomerWebServiceConfigurationModel getConfigurationById(CustomerWebServiceConfigurationModel model);
+	public CustomerWebServiceConfigurationModel findCustomerWsConfiguration(final String id);
 
 }

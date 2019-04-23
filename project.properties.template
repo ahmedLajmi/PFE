@@ -31,5 +31,5 @@ storefront.supportedUiExperienceLevels.powertools=DESKTOP
 
 wsclientgenerator.javascript.paths.desktop=/desktop/common/js/wsclientgenerator.js
 wsclientgenerator.javascript.paths.mobile=/desktop/common/js/wsclientgenerator.js
-wsclientgenerator.css.paths.desktop=/desktop/common/css/wsclientgenerator.css
-wsclientgenerator.css.paths.mobile=/mobile/common/css/wsclientgenerator.css
+wsclientgenerator.css.paths.desktop=/desktop/common/css/wsclientgeneratoor.css
+wsclientgenerator.css.paths.mobile=/mobile/common/css/wsclientgeneratoor.css

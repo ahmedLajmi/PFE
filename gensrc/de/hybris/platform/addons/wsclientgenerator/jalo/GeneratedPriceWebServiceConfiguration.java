@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 19 avr. 2019 10:28:41                       ---
+ * --- Generated at 23 avr. 2019 09:55:57                       ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -39,6 +39,8 @@ public abstract class GeneratedPriceWebServiceConfiguration extends WebServiceCo
 	public static final String PRICEKEY = "priceKey";
 	/** Qualifier of the <code>PriceWebServiceConfiguration.currencyKey</code> attribute **/
 	public static final String CURRENCYKEY = "currencyKey";
+	/** Qualifier of the <code>PriceWebServiceConfiguration.productCode</code> attribute **/
+	public static final String PRODUCTCODE = "productCode";
 	/** Qualifier of the <code>PriceWebServiceConfiguration.parameters</code> attribute **/
 	public static final String PARAMETERS = "parameters";
 	/**
@@ -59,6 +61,7 @@ public abstract class GeneratedPriceWebServiceConfiguration extends WebServiceCo
 		final Map<String, AttributeMode> tmp = new HashMap<String, AttributeMode>(WebServiceConfiguration.DEFAULT_INITIAL_ATTRIBUTES);
 		tmp.put(PRICEKEY, AttributeMode.INITIAL);
 		tmp.put(CURRENCYKEY, AttributeMode.INITIAL);
+		tmp.put(PRODUCTCODE, AttributeMode.INITIAL);
 		DEFAULT_INITIAL_ATTRIBUTES = Collections.unmodifiableMap(tmp);
 	}
 	@Override
@@ -209,6 +212,79 @@ public abstract class GeneratedPriceWebServiceConfiguration extends WebServiceCo
 	public void setPriceKey(final String value)
 	{
 		setPriceKey( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>PriceWebServiceConfiguration.productCode</code> attribute.
+	 * @return the productCode
+	 */
+	public Boolean isProductCode(final SessionContext ctx)
+	{
+		return (Boolean)getProperty( ctx, PRODUCTCODE);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>PriceWebServiceConfiguration.productCode</code> attribute.
+	 * @return the productCode
+	 */
+	public Boolean isProductCode()
+	{
+		return isProductCode( getSession().getSessionContext() );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>PriceWebServiceConfiguration.productCode</code> attribute. 
+	 * @return the productCode
+	 */
+	public boolean isProductCodeAsPrimitive(final SessionContext ctx)
+	{
+		Boolean value = isProductCode( ctx );
+		return value != null ? value.booleanValue() : false;
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>PriceWebServiceConfiguration.productCode</code> attribute. 
+	 * @return the productCode
+	 */
+	public boolean isProductCodeAsPrimitive()
+	{
+		return isProductCodeAsPrimitive( getSession().getSessionContext() );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>PriceWebServiceConfiguration.productCode</code> attribute. 
+	 * @param value the productCode
+	 */
+	public void setProductCode(final SessionContext ctx, final Boolean value)
+	{
+		setProperty(ctx, PRODUCTCODE,value);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>PriceWebServiceConfiguration.productCode</code> attribute. 
+	 * @param value the productCode
+	 */
+	public void setProductCode(final Boolean value)
+	{
+		setProductCode( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>PriceWebServiceConfiguration.productCode</code> attribute. 
+	 * @param value the productCode
+	 */
+	public void setProductCode(final SessionContext ctx, final boolean value)
+	{
+		setProductCode( ctx,Boolean.valueOf( value ) );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>PriceWebServiceConfiguration.productCode</code> attribute. 
+	 * @param value the productCode
+	 */
+	public void setProductCode(final boolean value)
+	{
+		setProductCode( getSession().getSessionContext(), value );
 	}
 	
 }

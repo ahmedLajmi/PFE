@@ -42,4 +42,10 @@ public interface WSCustomerFacade
 			final CustomerWebServiceConfigurationModel customerConfiguration);
 
 	public String prepareUrl(final CustomerWebServiceConfigurationModel customerConfiguration, final UserModel model);
+
+	public String prepareXMLUpdateEmailRequest(final String newUid,
+			final CustomerWebServiceConfigurationModel customerConfiguration) throws CreateWsRequestException;
+
+	public MultiValueMap<String, String> prepareFORMUpdateEmailRequest(final String newUid,
+			final CustomerWebServiceConfigurationModel customerConfiguration) throws CreateWsRequestException;
 }

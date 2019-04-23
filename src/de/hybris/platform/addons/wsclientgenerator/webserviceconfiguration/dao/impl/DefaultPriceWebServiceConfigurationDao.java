@@ -55,13 +55,13 @@ public class DefaultPriceWebServiceConfigurationDao implements PriceWebServiceCo
 	}
 
 	@Override
-	public Integer getCountWsEnabledConfiguration()
+	public PriceWebServiceConfigurationModel findPriceWsConfiguration(final String id)
 	{
-		final StringBuilder builder = new StringBuilder("SELECT count(" + PriceWebServiceConfigurationModel.PK
-				+ ") FROM {PriceWebServiceConfiguration AS p } WHERE {p.enable} = true");
+		final StringBuilder builder = new StringBuilder("SELECT " + PriceWebServiceConfigurationModel.PK
+				+ " FROM {PriceWebServiceConfiguration AS s } WHERE {s." + PriceWebServiceConfigurationModel.PK + "}=" + id);
 
 		final FlexibleSearchQuery query = new FlexibleSearchQuery(builder.toString());
-		final SearchResult<Integer> result = flexibleSearchService.search(query);
+		final SearchResult<PriceWebServiceConfigurationModel> result = flexibleSearchService.search(query);
 		if (result != null && result.getTotalCount() != 0)
 		{
 			return result.getResult().get(0);
@@ -70,7 +70,6 @@ public class DefaultPriceWebServiceConfigurationDao implements PriceWebServiceCo
 		{
 			return null;
 		}
-
 	}
 
 }

@@ -19,6 +19,6 @@ public interface OrderWebServiceConfigurationDao
 
 	public OrderWebServiceConfigurationModel getWsEnabledConfiguration(final MethodType method);
 
-	public OrderWebServiceConfigurationModel getConfigurationById(OrderWebServiceConfigurationModel model);
+	public OrderWebServiceConfigurationModel findOrderWsConfiguration(String id);
 
 }
