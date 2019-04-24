@@ -4,6 +4,7 @@
 package de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.facade;
 
 import de.hybris.platform.addons.wsclientgenerator.data.CustomerWebServiceConfigurationData;
+import de.hybris.platform.addons.wsclientgenerator.data.WebServiceConfigurationData;
 
 import java.util.List;
 
@@ -14,5 +15,7 @@ import java.util.List;
  */
 public interface CustomerWebServiceConfigurationFacade
 {
-	public List<CustomerWebServiceConfigurationData> getCustomerConfigurations();
+	public CustomerWebServiceConfigurationData getCustomerConfigurationDetails(String id);
+
+	public List<WebServiceConfigurationData> getAllCustomerConfigurations();
 }

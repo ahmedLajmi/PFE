@@ -7,6 +7,8 @@ import de.hybris.platform.addons.wsclientgenerator.exceptions.ParseWsResponseExc
 import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceConfigurationModel;
 import de.hybris.platform.core.model.product.ProductModel;
 
+import java.util.Map;
+
 
 /**
  * @author Ahmed-LAJMI
@@ -18,6 +20,7 @@ public interface WSStockService
 
 	public Long xmlParseResponse(final String response) throws ParseWsResponseException;
 
-	public String prepareUrl(final StockWebServiceConfigurationModel stockConfiguration, final ProductModel model);
+	public Map<String, String> prepareRequestParams(final StockWebServiceConfigurationModel stockConfiguration,
+			final ProductModel model);
 
 }

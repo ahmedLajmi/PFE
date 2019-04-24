@@ -91,6 +91,10 @@ public class StockConfigurationEnabledInterceptor implements ValidateInterceptor
 					throw new InterceptorException(getL10NService().getLocalizedString("invalid.key"));
 				}
 			}
+			/*
+			 * if (stockConfiguration.getId() == null || stockConfiguration.getId().isEmpty()) {
+			 * stockConfiguration.setId(UUID.randomUUID().toString()); }
+			 */
 		}
 	}
 

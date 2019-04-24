@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 23 avr. 2019 09:55:57                       ---
+ * --- Generated at 24 avr. 2019 12:30:14                       ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -117,6 +117,8 @@ public class GeneratedWsclientgeneratorConstants
 		{
 			public static final String PRODUCTCODE = "productCode".intern();
 			public static final String CLIENTCODE = "clientCode".intern();
+			public static final String ORDERCODE = "orderCode".intern();
+			public static final String STOCKCODE = "stockCode".intern();
 		}
 	}
 	public static class Relations

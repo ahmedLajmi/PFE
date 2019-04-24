@@ -101,14 +101,10 @@
 							<attribute name="accept" />
 						</listlayout>
 					</section>
-					<section name="section.text">
-						<listlayout>
-							<attribute name="textSeperator" />
-						</listlayout>
-					</section>
 					<section name="section.param">
 						<listlayout>
 							<attribute name="productCode" />
+							<attribute name="rootKey" />
 							<attribute name="parameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
@@ -228,15 +224,10 @@
 							<attribute name="contentType" />
 						</listlayout>
 					</section>
-					<section name="section.text">
-						<listlayout>
-							<attribute name="textSeperator" />
-							<attribute name="textOperator" />
-						</listlayout>
-					</section>
 					<section name="section.param">
 						<listlayout>
 							<attribute name="productCode" />
+							<attribute name="rootKey" />
 							<attribute name="parameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
@@ -356,15 +347,10 @@
 							<attribute name="contentType" />
 						</listlayout>
 					</section>
-					<section name="section.text">
-						<listlayout>
-							<attribute name="textSeperator" />
-							<attribute name="textOperator" />
-						</listlayout>
-					</section>
 					<section name="section.param">
 						<listlayout>
 							<attribute name="orderCode" />
+							<attribute name="rootKey" />
 							<attribute name="parameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
@@ -484,15 +470,10 @@
 							<attribute name="contentType" />
 						</listlayout>
 					</section>
-					<section name="section.text">
-						<listlayout>
-							<attribute name="textSeperator" />
-							<attribute name="textOperator" />
-						</listlayout>
-					</section>
 					<section name="section.param">
 						<listlayout>
 							<attribute name="clientCode" />
+							<attribute name="rootKey" />
 							<attribute name="parameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
@@ -558,6 +539,7 @@
 					</section>
 					<section name="section.response">
 						<listlayout>
+							<attribute name="titleKey"/>
 							<attribute name="firstNameKey"/>
 							<attribute name="lastNameKey"/>
 							<attribute name="emailKey"/>

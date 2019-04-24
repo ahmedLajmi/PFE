@@ -51,6 +51,8 @@
 			generate="true" dynamic="true">
 			<value code="productCode" />
 			<value code="clientCode" />
+			<value code="orderCode" />
+			<value code="stockCode" />
 		</enumtype>
 		<enumtype code="CustomerParameter" autocreate="true"
 			generate="true" dynamic="true">
@@ -154,6 +156,11 @@
 		<itemtype code="WebServiceConfiguration" autocreate="true"
 			generate="true" abstract="true">
 			<attributes>
+				<attribute type="java.lang.String" qualifier="configID">
+					<modifiers read="true" write="true" search="true"
+						optional="true" />
+					<persistence type="property" />
+				</attribute>
 				<attribute type="java.lang.String" qualifier="name">
 					<modifiers read="true" write="true" search="true"
 						optional="false" />
@@ -210,6 +217,11 @@
 				</attribute>
 				<attribute type="java.lang.String"
 					qualifier="textSeperator">
+					<modifiers read="true" write="true" search="true"
+						optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute type="java.lang.String" qualifier="rootKey">
 					<modifiers read="true" write="true" search="true"
 						optional="true" />
 					<persistence type="property" />

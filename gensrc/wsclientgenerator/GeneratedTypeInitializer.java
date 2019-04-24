@@ -277,6 +277,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 
 	
 	
+				single_createattr_WebServiceConfiguration_configID();
+			
 				single_createattr_WebServiceConfiguration_name();
 			
 				single_createattr_WebServiceConfiguration_description();
@@ -298,6 +300,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				single_createattr_WebServiceConfiguration_responseTemplate();
 			
 				single_createattr_WebServiceConfiguration_textSeperator();
+			
+				single_createattr_WebServiceConfiguration_rootKey();
 			
 				single_createattr_WebServiceParameter_key();
 			
@@ -481,6 +485,23 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 	}
 
 	
+	public void single_createattr_WebServiceConfiguration_configID() throws JaloBusinessException
+	{
+		
+						Map sqlColumnDefinitions = null;
+					
+				createPropertyAttribute(
+					"WebServiceConfiguration", 
+					"configID",  
+					null,
+					"java.lang.String",
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					null,
+					sqlColumnDefinitions
+				);
+			
+	}
+	
 	public void single_createattr_WebServiceConfiguration_name() throws JaloBusinessException
 	{
 		
@@ -659,6 +680,23 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				createPropertyAttribute(
 					"WebServiceConfiguration", 
 					"textSeperator",  
+					null,
+					"java.lang.String",
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					null,
+					sqlColumnDefinitions
+				);
+			
+	}
+	
+	public void single_createattr_WebServiceConfiguration_rootKey() throws JaloBusinessException
+	{
+		
+						Map sqlColumnDefinitions = null;
+					
+				createPropertyAttribute(
+					"WebServiceConfiguration", 
+					"rootKey",  
 					null,
 					"java.lang.String",
 					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
@@ -1063,7 +1101,9 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			Arrays.asList( new String[] {
 			
 				"productCode",
-				"clientCode"
+				"clientCode",
+				"orderCode",
+				"stockCode"
 			} )
 		);
 	
@@ -1260,6 +1300,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				);
 				}
 			
+			single_setAttributeProperties_WebServiceConfiguration_configID();
+		
 			single_setAttributeProperties_WebServiceConfiguration_name();
 		
 			single_setAttributeProperties_WebServiceConfiguration_description();
@@ -1281,6 +1323,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			single_setAttributeProperties_WebServiceConfiguration_responseTemplate();
 		
 			single_setAttributeProperties_WebServiceConfiguration_textSeperator();
+		
+			single_setAttributeProperties_WebServiceConfiguration_rootKey();
 		
 				{
 				Map customPropsMap = new HashMap();
@@ -1544,6 +1588,28 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 
 
 		
+						public void single_setAttributeProperties_WebServiceConfiguration_configID() throws JaloBusinessException
+						{
+							
+							
+							
+							Map customPropsMap = new HashMap();
+							
+							setAttributeProperties(
+								"WebServiceConfiguration", 
+								"configID",
+								false, 
+								null,
+								null,
+								null,
+								true,
+								true,
+								null,
+								customPropsMap,
+								null
+							);
+						}
+					
 						public void single_setAttributeProperties_WebServiceConfiguration_name() throws JaloBusinessException
 						{
 							
@@ -1774,6 +1840,28 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 							setAttributeProperties(
 								"WebServiceConfiguration", 
 								"textSeperator",
+								false, 
+								null,
+								null,
+								null,
+								true,
+								true,
+								null,
+								customPropsMap,
+								null
+							);
+						}
+					
+						public void single_setAttributeProperties_WebServiceConfiguration_rootKey() throws JaloBusinessException
+						{
+							
+							
+							
+							Map customPropsMap = new HashMap();
+							
+							setAttributeProperties(
+								"WebServiceConfiguration", 
+								"rootKey",
 								false, 
 								null,
 								null,

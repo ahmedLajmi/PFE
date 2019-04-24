@@ -4,7 +4,6 @@
 package de.hybris.platform.addons.wsclientgenerator.order.impl;
 
 import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
-import de.hybris.platform.addons.wsclientgenerator.enums.RequestType;
 import de.hybris.platform.addons.wsclientgenerator.enums.StockParameter;
 import de.hybris.platform.addons.wsclientgenerator.exceptions.CreateWsRequestException;
 import de.hybris.platform.addons.wsclientgenerator.exceptions.InvokeWsException;
@@ -24,28 +23,14 @@ import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.order.InvalidCartException;
 import de.hybris.platform.servicelayer.user.UserService;
 
-import java.io.IOException;
-import java.io.StringWriter;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.node.ObjectNode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 
 
@@ -103,27 +88,9 @@ public class DefaultWsCheckoutService extends DefaultCommerceCheckoutService imp
 			{
 				try
 				{
-					if (stockConfiguration.getContentType().equals(RequestType.XML))
-					{
-
-						response = wsinvoke.postRequest(stockConfiguration.getUrl(), prepareXMLRequest(entry),
-								stockConfiguration.getAccept(), stockConfiguration.getContentType());
-						System.out.println(response.getBody());
-
-					}
-					else if (stockConfiguration.getContentType().equals(RequestType.JSON))
-					{
-						response = wsinvoke.postRequest(stockConfiguration.getUrl(), prepareJSONRequest(entry),
-								stockConfiguration.getAccept(), stockConfiguration.getContentType());
-						System.out.println(response.getBody());
-
-					}
-					else if (stockConfiguration.getContentType().equals(RequestType.FORM))
-					{
-						response = wsinvoke.postRequest(stockConfiguration.getUrl(), prepareFORMRequest(entry),
-								stockConfiguration.getAccept());
-						System.out.println(response.getBody());
-					}
+					response = wsinvoke.postRequest(stockConfiguration.getUrl(), prepareRequest(entry), stockConfiguration.getAccept(),
+							stockConfiguration.getContentType());
+					System.out.println(response.getBody());
 				}
 				catch (final CreateWsRequestException | InvokeWsException e)
 				{
@@ -133,113 +100,27 @@ public class DefaultWsCheckoutService extends DefaultCommerceCheckoutService imp
 		}
 	}
 
-	@Override
-	public String prepareXMLRequest(final AbstractOrderEntryModel entry) throws CreateWsRequestException
-	{
-		try
-		{
-			final DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
-			final DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
-			final Document document = documentBuilder.newDocument();
-			final TransformerFactory tf = TransformerFactory.newInstance();
-			final Transformer transformer = tf.newTransformer();
-			final StringWriter writer = new StringWriter();
-			final Element root = document.createElement("StockInformations");
-			Element elem = document.createElement(stockConfiguration.getStockKey());
-
-			elem.appendChild(document.createTextNode(entry.getQuantity().toString()));
-			root.appendChild(elem);
-			for (final StockWebServiceParameterModel additionelParam : stockConfiguration.getParameters())
-			{
-				if (additionelParam.getValue().equals(StockParameter.PRODUCTCODE))
-				{
-					elem = document.createElement(additionelParam.getKey());
-					elem.appendChild(document.createTextNode(entry.getProduct().getCode()));
-					root.appendChild(elem);
-				}
-				if (additionelParam.getValue().equals(StockParameter.CLIENTCODE))
-				{
-					if (!userService.isAnonymousUser(userService.getCurrentUser()))
-					{
-						elem = document.createElement(additionelParam.getKey());
-						elem.appendChild(document.createTextNode(userService.getCurrentUser().getUid()));
-						root.appendChild(elem);
-					}
-				}
-			}
-			for (final PersoWSParamModel persoParam : stockConfiguration.getPersonalisedParameters())
-			{
-				elem = document.createElement(persoParam.getKey());
-				elem.appendChild(document.createTextNode(persoParam.getValue()));
-				root.appendChild(elem);
-			}
-			for (final PersoWSParamModel securityParam : stockConfiguration.getSecurityParameters())
-			{
-				elem = document.createElement(securityParam.getKey());
-				elem.appendChild(document.createTextNode(securityParam.getValue()));
-				root.appendChild(elem);
-			}
-			transformer.transform(new DOMSource(root), new StreamResult(writer));
-			return writer.getBuffer().toString();
-		}
-		catch (ParserConfigurationException | TransformerException e)
-		{
-			throw new CreateWsRequestException("Error in creating XML request! " + e.getMessage());
-		}
-	}
 
 	@Override
-	public String prepareJSONRequest(final AbstractOrderEntryModel entry) throws CreateWsRequestException
+	public MultiValueMap<String, String> prepareRequest(final AbstractOrderEntryModel entry)
 	{
-
-		final ObjectMapper mapper = new ObjectMapper();
-		final ObjectNode rootNode = mapper.createObjectNode();
-		rootNode.put(stockConfiguration.getStockKey(), entry.getQuantity().toString());
-		for (final StockWebServiceParameterModel additionelParam : stockConfiguration.getParameters())
-		{
-			if (additionelParam.getValue().equals(StockParameter.PRODUCTCODE))
-			{
-				rootNode.put(additionelParam.getKey(), entry.getProduct().getCode());
-			}
-			if (additionelParam.getValue().equals(StockParameter.CLIENTCODE))
-			{
-				if (!userService.isAnonymousUser(userService.getCurrentUser()))
-				{
-					rootNode.put(additionelParam.getKey(), userService.getCurrentUser().getUid());
-				}
-			}
-		}
-		for (final PersoWSParamModel persoParam : stockConfiguration.getPersonalisedParameters())
-		{
-			rootNode.put(persoParam.getKey(), persoParam.getValue());
-		}
-		for (final PersoWSParamModel securityParam : stockConfiguration.getSecurityParameters())
-		{
-			rootNode.put(securityParam.getKey(), securityParam.getValue());
-		}
-		try
-		{
-			return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(rootNode);
-		}
-		catch (final IOException e)
-		{
-			throw new CreateWsRequestException("Error in creating JSON request! " + e.getMessage());
-		}
-	}
-
-	@Override
-	public MultiValueMap<String, String> prepareFORMRequest(final AbstractOrderEntryModel entry)
-	{
-
 		final MultiValueMap<String, String> request = new LinkedMultiValueMap<String, String>();
-		request.add(stockConfiguration.getStockKey(), entry.getQuantity().toString());
 		for (final StockWebServiceParameterModel additionelParam : stockConfiguration.getParameters())
 		{
-			if (additionelParam.getValue().equals(StockParameter.PRODUCTCODE))
+			if (additionelParam.getValue().equals(StockParameter.STOCKCODE))
+			{
+				request.add(additionelParam.getKey(), entry.getQuantity().toString());
+
+			}
+			else if (additionelParam.getValue().equals(StockParameter.PRODUCTCODE))
 			{
 				request.add(additionelParam.getKey(), entry.getProduct().getCode());
 			}
-			if (additionelParam.getValue().equals(StockParameter.CLIENTCODE))
+			else if (additionelParam.getValue().equals(StockParameter.ORDERCODE))
+			{
+				request.add(additionelParam.getKey(), entry.getOrder().getCode());
+			}
+			else if (additionelParam.getValue().equals(StockParameter.CLIENTCODE))
 			{
 				if (!userService.isAnonymousUser(userService.getCurrentUser()))
 				{
@@ -255,8 +136,11 @@ public class DefaultWsCheckoutService extends DefaultCommerceCheckoutService imp
 		{
 			request.add(securityParam.getKey(), securityParam.getValue());
 		}
+		if (stockConfiguration.getRootKey() != null)
+		{
+			request.add("root", stockConfiguration.getRootKey());
+		}
 		return request;
 	}
-
 
 }

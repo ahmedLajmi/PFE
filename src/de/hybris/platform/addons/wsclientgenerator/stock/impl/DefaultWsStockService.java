@@ -25,6 +25,8 @@ import de.hybris.platform.storelocator.model.PointOfServiceModel;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -35,7 +37,6 @@ import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.util.UriComponentsBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -75,9 +76,8 @@ public class DefaultWsStockService extends DefaultCommerceStockService implement
 			try
 			{
 
-				final ResponseEntity<String> response = wsinvoke.get(prepareUrl(stockConfiguration, product),
-						stockConfiguration.getAccept());
-				System.out.println(prepareUrl(stockConfiguration, product));
+				final ResponseEntity<String> response = wsinvoke.getRequest(stockConfiguration.getUrl(),
+						prepareRequestParams(stockConfiguration, product), stockConfiguration.getAccept());
 				System.out.println(response.getBody());
 				if (stockConfiguration.getAccept().equals(ResponseType.JSON))
 				{
@@ -114,10 +114,8 @@ public class DefaultWsStockService extends DefaultCommerceStockService implement
 			Long stock = new Long(0);
 			try
 			{
-
-				final ResponseEntity<String> response = wsinvoke.get(prepareUrl(stockConfiguration, product),
-						stockConfiguration.getAccept());
-				System.out.println(prepareUrl(stockConfiguration, product));
+				final ResponseEntity<String> response = wsinvoke.getRequest(stockConfiguration.getUrl(),
+						prepareRequestParams(stockConfiguration, product), stockConfiguration.getAccept());
 				System.out.println(response.getBody());
 				if (stockConfiguration.getAccept().equals(ResponseType.JSON))
 				{
@@ -195,9 +193,10 @@ public class DefaultWsStockService extends DefaultCommerceStockService implement
 	}
 
 	@Override
-	public String prepareUrl(final StockWebServiceConfigurationModel stockConfiguration, final ProductModel model)
+	public Map<String, String> prepareRequestParams(final StockWebServiceConfigurationModel stockConfiguration,
+			final ProductModel model)
 	{
-		final UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(stockConfiguration.getUrl());
+		final Map<String, String> params = new HashMap<>();
 		final Collection<PersoWSParamModel> persoParams = stockConfiguration.getPersonalisedParameters();
 		final Collection<PersoWSParamModel> securityParams = stockConfiguration.getSecurityParameters();
 		final Collection<StockWebServiceParameterModel> additionelParams = stockConfiguration.getParameters();
@@ -207,13 +206,13 @@ public class DefaultWsStockService extends DefaultCommerceStockService implement
 			{
 				if (additionelParam.getValue().equals(StockParameter.PRODUCTCODE))
 				{
-					uriBuilder.queryParam(additionelParam.getKey(), model.getCode());
+					params.put(additionelParam.getKey(), model.getCode());
 				}
 				if (additionelParam.getValue().equals(StockParameter.CLIENTCODE))
 				{
 					if (!userService.isAnonymousUser(userService.getCurrentUser()))
 					{
-						uriBuilder.queryParam(additionelParam.getKey(), userService.getCurrentUser().getUid());
+						params.put(additionelParam.getKey(), userService.getCurrentUser().getUid());
 					}
 				}
 			}
@@ -222,7 +221,7 @@ public class DefaultWsStockService extends DefaultCommerceStockService implement
 		{
 			for (final PersoWSParamModel securityParam : securityParams)
 			{
-				uriBuilder.queryParam(securityParam.getKey(), securityParam.getValue());
+				params.put(securityParam.getKey(), securityParam.getValue());
 			}
 		}
 		{
@@ -230,11 +229,11 @@ public class DefaultWsStockService extends DefaultCommerceStockService implement
 			{
 				for (final PersoWSParamModel persoParam : persoParams)
 				{
-					uriBuilder.queryParam(persoParam.getKey(), persoParam.getValue());
+					params.put(persoParam.getKey(), persoParam.getValue());
 				}
 			}
 		}
-		return uriBuilder.toUriString();
+		return params;
 	}
 
 

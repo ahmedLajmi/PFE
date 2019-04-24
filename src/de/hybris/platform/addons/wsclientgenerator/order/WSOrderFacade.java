@@ -10,6 +10,7 @@ import de.hybris.platform.core.enums.OrderStatus;
 import de.hybris.platform.core.model.order.OrderModel;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -27,7 +28,8 @@ public interface WSOrderFacade
 
 	public String xmlParseResponse(final String response) throws ParseWsResponseException;
 
-	public String prepareUrl(final OrderWebServiceConfigurationModel orderConfiguration, final OrderModel model);
+	public Map<String, String> prepareRequestParams(final OrderWebServiceConfigurationModel orderConfiguration,
+			final OrderModel model);
 
 	public OrderStatus validateStatuses(final String value);
 

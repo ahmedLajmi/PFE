@@ -23,7 +23,8 @@ public interface WSPriceService
 	public Map<String, String> textParseResponse(final String response, final PriceWebServiceConfigurationModel priceConfiguration)
 			throws ParseWsResponseException;
 
-	public String prepareUrl(final PriceWebServiceConfigurationModel priceConfiguration, final ProductModel model);
+	public Map<String, String> prepareRequestParams(final PriceWebServiceConfigurationModel priceConfiguration,
+			final ProductModel model);
 
 	public boolean validateCurrency(final String currency);
 

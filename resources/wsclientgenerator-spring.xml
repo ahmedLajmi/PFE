@@ -113,10 +113,18 @@
 		class="de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.service.impl.DefaultOrderWebServiceConfigurationService">
 	</bean>
 
-	<alias name="defaultcustomerWebServiceConfigurationFacade" alias="customerWebServiceConfigurationFacade" />
-	<bean id="defaultcustomerWebServiceConfigurationFacade"
+	<bean id="customerWebServiceConfigurationFacade"
 		class="de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.facade.impl.DefaultCustomerWebServiceConfigurationFacade">
 	</bean>
+	
+	<bean id="orderWebServiceConfigurationFacade"
+		class="de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.facade.impl.DefaultOrderWebServiceConfigurationFacade">
+	</bean>
+	
+	<bean id="priceWebServiceConfigurationFacade"
+		class="de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.facade.impl.DefaultPriceWebServiceConfigurationFacade">
+	</bean>
+
 
 	<bean id="priceConfigurationInterceptor"
 		class="de.hybris.platform.addons.wsclientgenerator.interceptors.PriceConfigurationEnabledInterceptor">
@@ -127,7 +135,16 @@
 		class="de.hybris.platform.addons.wsclientgenerator.interceptors.StockConfigurationEnabledInterceptor">
 		<property name="l10NService" ref="l10nService" />
 	</bean>
-
+	
+	<bean id="customerConfigurationInterceptor"
+		class="de.hybris.platform.addons.wsclientgenerator.interceptors.CustomerConfigurationInterceptor">
+		<property name="l10NService" ref="l10nService" />
+	</bean>
+	
+	<bean id="orderConfigurationInterceptor"
+		class="de.hybris.platform.addons.wsclientgenerator.interceptors.OrderConfigurationInterceptor">
+		<property name="l10NService" ref="l10nService" />
+	</bean>
 
 	<bean id="priceWebServiceConfigurationInterceptor"
 		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
@@ -143,6 +160,22 @@
 			ref="stockConfigurationInterceptor" />
 		<property name="typeCode"
 			value="StockWebServiceConfiguration" />
+	</bean>
+	
+	<bean id="customerWebServiceConfigurationInterceptor"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor"
+			ref="customerConfigurationInterceptor" />
+		<property name="typeCode"
+			value="CustomerWebServiceConfiguration" />
+	</bean>
+	
+	<bean id="orderWebServiceConfigurationInterceptor"
+		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor"
+			ref="orderConfigurationInterceptor" />
+		<property name="typeCode"
+			value="OrderWebServiceConfiguration" />
 	</bean>
 
 

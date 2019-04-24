@@ -26,13 +26,65 @@
 	</bean>
 	-->
 	
+	
+	<bean class="de.hybris.platform.addons.wsclientgenerator.data.WebServiceParameterData">
+        <description>Data object for CustomerWebServiceConfiguration which has no equivalent on the type system</description>
+        <property name="key" type="String"/>
+        <property name="value" type="String"/>
+    </bean>
+	
+	<bean class="de.hybris.platform.addons.wsclientgenerator.data.WebServiceConfigurationData">
+        <description>Data object for CustomerWebServiceConfiguration which has no equivalent on the type system</description>
+        <property name="id" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+	
 	<bean class="de.hybris.platform.addons.wsclientgenerator.data.CustomerWebServiceConfigurationData">
         <description>Data object for CustomerWebServiceConfiguration which has no equivalent on the type system</description>
+        <property name="id" type="String"/>
         <property name="name" type="String"/>
         <property name="description" type="String"/>
         <property name="url" type="String"/>
         <property name="method" type="String"/>
         <property name="enable" type="boolean"/>
+        <property name="persoData"
+		          type="java.util.List&lt;de.hybris.platform.addons.wsclientgenerator.data.WebServiceParameterData>"/>
+    </bean>
+    
+    <bean class="de.hybris.platform.addons.wsclientgenerator.data.PriceWebServiceConfigurationData">
+        <description>Data object for PriceWebServiceConfigurationData which has no equivalent on the type system</description>
+        <property name="id" type="String"/>
+        <property name="name" type="String"/>
+        <property name="description" type="String"/>
+        <property name="url" type="String"/>
+        <property name="method" type="String"/>
+        <property name="enable" type="boolean"/>
+        <property name="persoData"
+		          type="java.util.List&lt;de.hybris.platform.addons.wsclientgenerator.data.WebServiceParameterData>"/>
+    </bean>
+    
+    <bean class="de.hybris.platform.addons.wsclientgenerator.data.OrderWebServiceConfigurationData">
+        <description>Data object for OrderWebServiceConfigurationData which has no equivalent on the type system</description>
+        <property name="id" type="String"/>
+        <property name="name" type="String"/>
+        <property name="description" type="String"/>
+        <property name="url" type="String"/>
+        <property name="method" type="String"/>
+        <property name="enable" type="boolean"/>
+        <property name="persoData"
+		          type="java.util.List&lt;de.hybris.platform.addons.wsclientgenerator.data.WebServiceParameterData>"/>
+    </bean>
+    
+    <bean class="de.hybris.platform.addons.wsclientgenerator.data.StockWebServiceConfigurationData">
+        <description>Data object for StockWebServiceConfigurationData which has no equivalent on the type system</description>
+        <property name="id" type="String"/>
+        <property name="name" type="String"/>
+        <property name="description" type="String"/>
+        <property name="url" type="String"/>
+        <property name="method" type="String"/>
+        <property name="enable" type="boolean"/>
+        <property name="persoData"
+		          type="java.util.List&lt;de.hybris.platform.addons.wsclientgenerator.data.WebServiceParameterData>"/>
     </bean>
 
 </beans>

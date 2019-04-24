@@ -41,7 +41,6 @@ import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.util.UriComponentsBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -86,9 +85,8 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 			final WSInvoke wsinvoke = new WSInvoke();
 			try
 			{
-				final ResponseEntity<String> response = wsinvoke.get(prepareUrl(priceConfiguration, model),
-						priceConfiguration.getAccept());
-				System.out.println(prepareUrl(priceConfiguration, model));
+				final ResponseEntity<String> response = wsinvoke.getRequest(priceConfiguration.getUrl(),
+						prepareRequestParams(priceConfiguration, model), priceConfiguration.getAccept());
 				System.out.println(response.getBody());
 
 				if (priceConfiguration.getAccept().equals(ResponseType.JSON))
@@ -274,25 +272,26 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 	}
 
 	@Override
-	public String prepareUrl(final PriceWebServiceConfigurationModel priceConfiguration, final ProductModel model)
+	public Map<String, String> prepareRequestParams(final PriceWebServiceConfigurationModel priceConfiguration,
+			final ProductModel model)
 	{
-		final UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(priceConfiguration.getUrl());
 		final Collection<PersoWSParamModel> persoParams = priceConfiguration.getPersonalisedParameters();
 		final Collection<PersoWSParamModel> securityParams = priceConfiguration.getSecurityParameters();
 		final Collection<PriceWebServiceParameterModel> additionelParams = priceConfiguration.getParameters();
+		final Map<String, String> params = new HashMap<>();
 		if (additionelParams != null && !additionelParams.isEmpty())
 		{
 			for (final PriceWebServiceParameterModel additionelParam : additionelParams)
 			{
 				if (additionelParam.getValue().equals(PriceParameter.PRODUCTCODE))
 				{
-					uriBuilder.queryParam(additionelParam.getKey(), model.getCode());
+					params.put(additionelParam.getKey(), model.getCode());
 				}
 				if (additionelParam.getValue().equals(PriceParameter.CLIENTCODE))
 				{
 					if (!userService.isAnonymousUser(userService.getCurrentUser()))
 					{
-						uriBuilder.queryParam(additionelParam.getKey(), userService.getCurrentUser().getUid());
+						params.put(additionelParam.getKey(), userService.getCurrentUser().getUid());
 					}
 				}
 				else if (additionelParam.getValue().equals(PriceParameter.CATEGORIECODE))
@@ -302,7 +301,7 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 						final Collection<CategoryModel> categories = model.getSupercategories();
 						if (categories != null && !categories.isEmpty())
 						{
-							uriBuilder.queryParam(additionelParam.getKey(), categories.toArray().toString());
+							params.put(additionelParam.getKey(), categories.toArray().toString());
 						}
 					}
 				}
@@ -312,17 +311,17 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 		{
 			for (final PersoWSParamModel securityParam : securityParams)
 			{
-				uriBuilder.queryParam(securityParam.getKey(), securityParam.getValue());
+				params.put(securityParam.getKey(), securityParam.getValue());
 			}
 		}
 		if (persoParams != null && !persoParams.isEmpty())
 		{
 			for (final PersoWSParamModel persoParam : persoParams)
 			{
-				uriBuilder.queryParam(persoParam.getKey(), persoParam.getValue());
+				params.put(persoParam.getKey(), persoParam.getValue());
 			}
 		}
-		return uriBuilder.toUriString();
+		return params;
 	}
 
 	@Override

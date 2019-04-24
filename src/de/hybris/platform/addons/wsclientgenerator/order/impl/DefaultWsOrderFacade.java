@@ -34,7 +34,9 @@ import de.hybris.platform.store.BaseStoreModel;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -45,7 +47,6 @@ import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.util.UriComponentsBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -218,8 +219,8 @@ public class DefaultWsOrderFacade extends DefaultOrderFacade implements WSOrderF
 		final WSInvoke wsInvoke = new WSInvoke();
 		String result = "";
 
-		final ResponseEntity<String> response = wsInvoke.get(prepareUrl(orderConfiguration, order), orderConfiguration.getAccept());
-		System.out.println(prepareUrl(orderConfiguration, order));
+		final ResponseEntity<String> response = wsInvoke.getRequest(orderConfiguration.getUrl(),
+				prepareRequestParams(orderConfiguration, order), orderConfiguration.getAccept());
 		System.out.println(response.getBody());
 
 		if (orderConfiguration.getAccept().equals(ResponseType.JSON))
@@ -297,9 +298,10 @@ public class DefaultWsOrderFacade extends DefaultOrderFacade implements WSOrderF
 	}
 
 	@Override
-	public String prepareUrl(final OrderWebServiceConfigurationModel orderConfiguration, final OrderModel model)
+	public Map<String, String> prepareRequestParams(final OrderWebServiceConfigurationModel orderConfiguration,
+			final OrderModel model)
 	{
-		final UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(orderConfiguration.getUrl());
+		final Map<String, String> params = new HashMap<>();
 		final Collection<PersoWSParamModel> persoParams = orderConfiguration.getPersonalisedParameters();
 		final Collection<PersoWSParamModel> securityParams = orderConfiguration.getSecurityParameters();
 		final Collection<OrderWebServiceParameterModel> additionelParams = orderConfiguration.getParameters();
@@ -309,22 +311,22 @@ public class DefaultWsOrderFacade extends DefaultOrderFacade implements WSOrderF
 			{
 				if (additionelParam.getValue().equals(OrderParameter.ORDERCODE))
 				{
-					uriBuilder.queryParam(additionelParam.getKey(), model.getCode());
+					params.put(additionelParam.getKey(), model.getCode());
 				}
 				if (additionelParam.getValue().equals(OrderParameter.CLIENTCODE))
 				{
 					if (!userService.isAnonymousUser(userService.getCurrentUser()))
 					{
-						uriBuilder.queryParam(additionelParam.getKey(), userService.getCurrentUser().getUid());
+						params.put(additionelParam.getKey(), userService.getCurrentUser().getUid());
 					}
 				}
 				else if (additionelParam.getValue().equals(OrderParameter.ORDERDATE))
 				{
-					uriBuilder.queryParam(additionelParam.getKey(), model.getDate());
+					params.put(additionelParam.getKey(), model.getDate().toString());
 				}
 				else if (additionelParam.getValue().equals(OrderParameter.CURRENCYCODE))
 				{
-					uriBuilder.queryParam(additionelParam.getKey(), model.getCurrency().getIsocode());
+					params.put(additionelParam.getKey(), model.getCurrency().getIsocode());
 				}
 			}
 		}
@@ -332,17 +334,17 @@ public class DefaultWsOrderFacade extends DefaultOrderFacade implements WSOrderF
 		{
 			for (final PersoWSParamModel securityParam : securityParams)
 			{
-				uriBuilder.queryParam(securityParam.getKey(), securityParam.getValue());
+				params.put(securityParam.getKey(), securityParam.getValue());
 			}
 		}
 		if (persoParams != null && !persoParams.isEmpty())
 		{
 			for (final PersoWSParamModel persoParam : persoParams)
 			{
-				uriBuilder.queryParam(persoParam.getKey(), persoParam.getValue());
+				params.put(persoParam.getKey(), persoParam.getValue());
 			}
 		}
-		return uriBuilder.toUriString();
+		return params;
 	}
 
 	@Override

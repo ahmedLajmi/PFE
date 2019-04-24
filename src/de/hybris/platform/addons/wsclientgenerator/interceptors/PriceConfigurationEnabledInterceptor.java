@@ -50,6 +50,7 @@ public class PriceConfigurationEnabledInterceptor implements ValidateInterceptor
 					throw new InterceptorException(getL10NService().getLocalizedString("unique.configuration"));
 				}
 			}
+
 			if (priceConfiguration.getAccept().equals(ResponseType.TEXT))
 			{
 				if (priceConfiguration.getTextSeperator() == null || priceConfiguration.getTextSeperator().isEmpty())
@@ -73,6 +74,11 @@ public class PriceConfigurationEnabledInterceptor implements ValidateInterceptor
 					throw new InterceptorException(getL10NService().getLocalizedString("invalid.key"));
 				}
 			}
+
+			/*
+			 * if (priceConfiguration.getId() == null || priceConfiguration.getId().isEmpty()) {
+			 * priceConfiguration.setId(UUID.randomUUID().toString()); }
+			 */
 		}
 	}
 

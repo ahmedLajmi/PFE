@@ -29,23 +29,14 @@ public interface WSCustomerFacade
 	public void wsCreateUpdateProfil(final CustomerWebServiceConfigurationModel customerConfiguration,
 			final CustomerData customerData);
 
-	public String prepareJSONUpdateEmailRequest(final String newUid,
-			final CustomerWebServiceConfigurationModel customerConfiguration) throws CreateWsRequestException;
 
-	public String prepareJSONProfilRequest(final CustomerData customerData,
-			final CustomerWebServiceConfigurationModel customerConfiguration) throws CreateWsRequestException;
+	public Map<String, String> prepareRequestParams(final CustomerWebServiceConfigurationModel customerConfiguration,
+			final UserModel model);
 
-	public String prepareXMLProfilRequest(final CustomerData customerData,
-			final CustomerWebServiceConfigurationModel customerConfiguration) throws CreateWsRequestException;
 
-	public MultiValueMap<String, String> prepareFORMProfilRequest(final CustomerData customerData,
+	public MultiValueMap<String, String> prepareProfilRequest(final CustomerData customerData,
 			final CustomerWebServiceConfigurationModel customerConfiguration);
 
-	public String prepareUrl(final CustomerWebServiceConfigurationModel customerConfiguration, final UserModel model);
-
-	public String prepareXMLUpdateEmailRequest(final String newUid,
-			final CustomerWebServiceConfigurationModel customerConfiguration) throws CreateWsRequestException;
-
-	public MultiValueMap<String, String> prepareFORMUpdateEmailRequest(final String newUid,
+	public MultiValueMap<String, String> prepareUpdateEmailRequest(final String newUid,
 			final CustomerWebServiceConfigurationModel customerConfiguration) throws CreateWsRequestException;
 }
