@@ -12,7 +12,7 @@ import java.util.List;
  * @author Ahmed-LAJMI
  *
  */
-public interface PriceWebServiceConfigurationService
+public interface PriceWebServiceConfigurationService extends WebServiceConfigurationService
 {
 	public List<PriceWebServiceConfigurationModel> getAllConfigurations();
 

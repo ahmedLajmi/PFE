@@ -46,11 +46,16 @@
 		<organizer>
 			<search mode="replace">
 				<condition attribute="url" />
+				<condition attribute="method" />
 			</search>
 			<result>
 				<listview mode="replace">
 					<itemlayout>
-						<attribute name="url" />
+						<attribute name="name" width="200" />
+						<attribute name="enable" width="200" />
+						<attribute name="url" width="200" />
+						<attribute name="method" width="200" />
+						<attribute name="description" width="200" />
 					</itemlayout>
 				</listview>
 			</result>
@@ -68,6 +73,8 @@
 				<tab name="tab.PriceWebServiceConfiguration">
 					<section name="section.security">
 						<listlayout>
+							<attribute name="login" />
+							<attribute name="password" />
 							<attribute name="SecurityParameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
@@ -93,7 +100,6 @@
 					<section name="section.order">
 						<listlayout>
 							<attribute name="mode" />
-							<attribute name="order" />
 						</listlayout>
 					</section>
 					<section name="section.meta">
@@ -104,7 +110,6 @@
 					<section name="section.param">
 						<listlayout>
 							<attribute name="productCode" />
-							<attribute name="rootKey" />
 							<attribute name="parameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
@@ -149,8 +154,8 @@
 					</section>
 					<section name="section.response">
 						<listlayout>
-							<attribute name="priceKey"/>
-							<attribute name="currencyKey"/>
+							<attribute name="priceKey" />
+							<attribute name="currencyKey" />
 							<attribute name="responseTemplate">
 								<textareaeditor />
 							</attribute>
@@ -170,8 +175,11 @@
 			<result>
 				<listview mode="replace">
 					<itemlayout>
-						<attribute name="url" />
-						<attribute name="method" />
+						<attribute name="name" width="200" />
+						<attribute name="enable" width="200" />
+						<attribute name="url" width="200" />
+						<attribute name="method" width="200" />
+						<attribute name="description" width="200" />
 					</itemlayout>
 				</listview>
 			</result>
@@ -190,6 +198,8 @@
 				<tab name="tab.StockWebServiceConfiguration">
 					<section name="section.security">
 						<listlayout>
+							<attribute name="login" />
+							<attribute name="password" />
 							<attribute name="SecurityParameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
@@ -215,7 +225,6 @@
 					<section name="section.order">
 						<listlayout>
 							<attribute name="mode" />
-							<attribute name="order" />
 						</listlayout>
 					</section>
 					<section name="section.meta">
@@ -273,7 +282,7 @@
 					</section>
 					<section name="section.response">
 						<listlayout>
-							<attribute name="stockKey"/>
+							<attribute name="stockKey" />
 							<attribute name="responseTemplate">
 								<textareaeditor />
 							</attribute>
@@ -293,8 +302,11 @@
 			<result>
 				<listview mode="replace">
 					<itemlayout>
-						<attribute name="url" />
-						<attribute name="method" />
+						<attribute name="name" width="200" />
+						<attribute name="enable" width="200" />
+						<attribute name="url" width="200" />
+						<attribute name="method" width="200" />
+						<attribute name="description" width="200" />
 					</itemlayout>
 				</listview>
 			</result>
@@ -313,6 +325,8 @@
 				<tab name="tab.OrderWebServiceConfiguration">
 					<section name="section.security">
 						<listlayout>
+							<attribute name="login" />
+							<attribute name="password" />
 							<attribute name="SecurityParameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
@@ -338,7 +352,6 @@
 					<section name="section.order">
 						<listlayout>
 							<attribute name="mode" />
-							<attribute name="order" />
 						</listlayout>
 					</section>
 					<section name="section.meta">
@@ -396,7 +409,7 @@
 					</section>
 					<section name="section.response">
 						<listlayout>
-							<attribute name="statusKey"/>
+							<attribute name="statusKey" />
 							<attribute name="responseTemplate">
 								<textareaeditor />
 							</attribute>
@@ -416,8 +429,11 @@
 			<result>
 				<listview mode="replace">
 					<itemlayout>
-						<attribute name="url" />
-						<attribute name="method" />
+						<attribute name="name" width="200" />
+						<attribute name="enable" width="200" />
+						<attribute name="url" width="200" />
+						<attribute name="method" width="200" />
+						<attribute name="description" width="200" />
 					</itemlayout>
 				</listview>
 			</result>
@@ -436,6 +452,8 @@
 				<tab name="tab.CustomerWebServiceConfiguration">
 					<section name="section.security">
 						<listlayout>
+							<attribute name="login" />
+							<attribute name="password" />
 							<attribute name="SecurityParameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
@@ -461,7 +479,6 @@
 					<section name="section.order">
 						<listlayout>
 							<attribute name="mode" />
-							<attribute name="order" />
 						</listlayout>
 					</section>
 					<section name="section.meta">
@@ -475,26 +492,6 @@
 							<attribute name="clientCode" />
 							<attribute name="rootKey" />
 							<attribute name="parameters">
-								<referencecollectioneditor
-									editable="true" externalcreate="false" remove="true"
-									create="true" autosave="true">
-									<itemeditorlayout>
-										<attribute name="key" width="77">
-											<editor
-												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
-												<parameter key="align" value="right" />
-											</editor>
-										</attribute>
-										<attribute name="value" width="80">
-										</attribute>
-									</itemeditorlayout>
-								</referencecollectioneditor>
-							</attribute>
-						</listlayout>
-					</section>
-					<section name="section.emailparam">
-						<listlayout>
-							<attribute name="emailParameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
 									create="true" autosave="true">
@@ -539,10 +536,10 @@
 					</section>
 					<section name="section.response">
 						<listlayout>
-							<attribute name="titleKey"/>
-							<attribute name="firstNameKey"/>
-							<attribute name="lastNameKey"/>
-							<attribute name="emailKey"/>
+							<attribute name="titleKey" />
+							<attribute name="firstNameKey" />
+							<attribute name="lastNameKey" />
+							<attribute name="emailKey" />
 							<attribute name="responseTemplate">
 								<textareaeditor />
 							</attribute>

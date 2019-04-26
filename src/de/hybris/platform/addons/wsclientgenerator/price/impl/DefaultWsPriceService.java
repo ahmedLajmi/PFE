@@ -13,7 +13,7 @@ import de.hybris.platform.addons.wsclientgenerator.model.PriceWebServiceConfigur
 import de.hybris.platform.addons.wsclientgenerator.model.PriceWebServiceParameterModel;
 import de.hybris.platform.addons.wsclientgenerator.price.WSPriceService;
 import de.hybris.platform.addons.wsclientgenerator.tools.WSInvoke;
-import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.PriceWebServiceConfigurationDao;
+import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.service.PriceWebServiceConfigurationService;
 import de.hybris.platform.category.model.CategoryModel;
 import de.hybris.platform.commercefacades.storesession.data.CurrencyData;
 import de.hybris.platform.commerceservices.price.impl.NetPriceService;
@@ -58,8 +58,8 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 	@Resource(name = "timeService")
 	private TimeService timeService;
 
-	@Resource(name = "priceWebServiceConfigurationDao")
-	private PriceWebServiceConfigurationDao priceWebServiceConfigurationDao;
+	@Resource(name = "priceWebServiceConfigurationService")
+	private PriceWebServiceConfigurationService priceWebServiceConfigurationService;
 
 	@Resource(name = "userService")
 	private UserService userService;
@@ -72,7 +72,7 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 	@Override
 	public List<PriceInformation> getPriceInformationsForProduct(final ProductModel model)
 	{
-		priceConfiguration = priceWebServiceConfigurationDao.getWsEnabledConfiguration();
+		priceConfiguration = priceWebServiceConfigurationService.getWsEnabledConfiguration();
 		if (priceConfiguration == null)
 		{
 			return super.getPriceInformationsForProduct(model);
@@ -109,7 +109,7 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 			catch (final ParseWsResponseException | InvokeWsException e)
 			{
 				LOG.error(e.getMessage());
-				if (priceConfiguration.getMode().equals(ModeType.WEBSERVICEWITHNATIVE))
+				if (!priceConfiguration.getMode().equals(ModeType.ONLYWITHWEBSERVICE))
 				{
 					return super.getPriceInformationsForProduct(model);
 				}
@@ -121,7 +121,7 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 			catch (final NumberFormatException e)
 			{
 				LOG.error("Incorrect result format" + e.getMessage());
-				if (priceConfiguration.getMode().equals(ModeType.WEBSERVICEWITHNATIVE))
+				if (!priceConfiguration.getMode().equals(ModeType.ONLYWITHWEBSERVICE))
 				{
 					return super.getPriceInformationsForProduct(model);
 				}
@@ -160,6 +160,7 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 						currency = userService.getCurrentUser().getSessionCurrency().getIsocode().toUpperCase();
 					}
 				}
+
 				result.put("price", price);
 				result.put("currency", currency);
 				return result;
@@ -276,7 +277,6 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 			final ProductModel model)
 	{
 		final Collection<PersoWSParamModel> persoParams = priceConfiguration.getPersonalisedParameters();
-		final Collection<PersoWSParamModel> securityParams = priceConfiguration.getSecurityParameters();
 		final Collection<PriceWebServiceParameterModel> additionelParams = priceConfiguration.getParameters();
 		final Map<String, String> params = new HashMap<>();
 		if (additionelParams != null && !additionelParams.isEmpty())
@@ -307,20 +307,7 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 				}
 			}
 		}
-		if (securityParams != null && !securityParams.isEmpty())
-		{
-			for (final PersoWSParamModel securityParam : securityParams)
-			{
-				params.put(securityParam.getKey(), securityParam.getValue());
-			}
-		}
-		if (persoParams != null && !persoParams.isEmpty())
-		{
-			for (final PersoWSParamModel persoParam : persoParams)
-			{
-				params.put(persoParam.getKey(), persoParam.getValue());
-			}
-		}
+		params.putAll(priceWebServiceConfigurationService.preparePersoParams(priceConfiguration));
 		return params;
 	}
 

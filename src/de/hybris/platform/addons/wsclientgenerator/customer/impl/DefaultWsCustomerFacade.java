@@ -9,7 +9,7 @@ import de.hybris.platform.addons.wsclientgenerator.customer.WSCustomerFacade;
 import de.hybris.platform.addons.wsclientgenerator.enums.CustomerParameter;
 import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
 import de.hybris.platform.addons.wsclientgenerator.enums.ModeType;
-import de.hybris.platform.addons.wsclientgenerator.enums.OrderType;
+import de.hybris.platform.addons.wsclientgenerator.enums.RequestType;
 import de.hybris.platform.addons.wsclientgenerator.enums.ResponseType;
 import de.hybris.platform.addons.wsclientgenerator.exceptions.CreateWsRequestException;
 import de.hybris.platform.addons.wsclientgenerator.exceptions.InvokeWsException;
@@ -92,14 +92,17 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 				{
 					result = xmlParseResponse(response.getBody());
 				}
+
 				customer.setFirstName(result.get("firstName"));
 				customer.setLastName(result.get("lastName"));
 				customer.setDisplayUid(result.get("mail"));
+				customer.setTitleCode(result.get("title"));
+
 			}
 			catch (final ParseWsResponseException | InvokeWsException e)
 			{
 				LOG.error(e.getMessage());
-				if (customerConfiguration.getMode().equals(ModeType.WEBSERVICEWITHNATIVE))
+				if (!customerConfiguration.getMode().equals(ModeType.ONLYWITHWEBSERVICE))
 				{
 					return customer;
 				}
@@ -108,6 +111,8 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 					customer.setFirstName("");
 					customer.setLastName("");
 					customer.setDisplayUid("");
+					customer.setTitle("");
+					customer.setTitleCode("");
 					return customer;
 				}
 			}
@@ -151,25 +156,22 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 			{
 				wsCreateUpdateProfil(customerConfiguration, customerData);
 			}
-			else if (customerConfiguration.getMode().equals(ModeType.WEBSERVICEWITHNATIVE))
+			else if (customerConfiguration.getMode().equals(ModeType.NATIVEWEBSERVICE))
 			{
-				if (customerConfiguration.getOrder().equals(OrderType.NATIVEWEBSERVICE))
-				{
-					super.updateProfile(customerData);
-					wsCreateUpdateProfil(customerConfiguration, customerData);
-				}
-				else if (customerConfiguration.getOrder().equals(OrderType.WEBSERVICENATIVE))
-				{
-					wsCreateUpdateProfil(customerConfiguration, customerData);
-					super.updateProfile(customerData);
-				}
+
+				super.updateProfile(customerData);
+				wsCreateUpdateProfil(customerConfiguration, customerData);
 			}
 			else
 			{
+				wsCreateUpdateProfil(customerConfiguration, customerData);
 				super.updateProfile(customerData);
 			}
 		}
-
+		else
+		{
+			super.updateProfile(customerData);
+		}
 	}
 
 	@Override
@@ -190,7 +192,7 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 		customerConfiguration = customerWebServiceConfigurationDao.getWsEnabledConfiguration(MethodType.POST);
 		if (customerConfiguration != null)
 		{
-			if (customerConfiguration.getOrder() != null && customerConfiguration.getOrder().equals(OrderType.WEBSERVICENATIVE))
+			if (customerConfiguration.getMode().equals(ModeType.WEBSERVICENATIVE))
 			{
 				wsCreateUpdateProfil(customerConfiguration, customerData);
 				super.register(registerData);
@@ -212,7 +214,7 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 	{
 		final Map<String, String> result = new HashMap<>();
 		final ObjectMapper mapper = new ObjectMapper();
-		final String firstName, lastName, mail;
+		final String firstName, lastName, mail, title;
 		try
 		{
 			final JsonNode root = mapper.readTree(response);
@@ -222,6 +224,7 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 				firstName = root.path(customerConfiguration.getFirstNameKey()).asText();
 				lastName = root.path(customerConfiguration.getLastNameKey()).asText();
 				mail = root.path(customerConfiguration.getEmailKey()).asText();
+				title = root.path(customerConfiguration.getTitleKey()).asText();
 			}
 			else
 			{
@@ -235,6 +238,7 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 		result.put("firstName", firstName);
 		result.put("lastName", lastName);
 		result.put("mail", mail);
+		result.put("mail", title);
 		return result;
 	}
 
@@ -242,7 +246,7 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 	public Map<String, String> xmlParseResponse(final String response) throws ParseWsResponseException
 	{
 		final Map<String, String> result = new HashMap<>();
-		String firstName = "", lastName = "", mail = "";
+		String firstName = "", lastName = "", mail = "", title = "";
 		Document doc;
 		try
 		{
@@ -267,6 +271,10 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 					{
 						mail = elem.getFirstChild().getNodeValue();
 					}
+					else if (StringUtils.equals(customerConfiguration.getTitleKey(), elem.getTagName()))
+					{
+						title = elem.getFirstChild().getNodeValue();
+					}
 				}
 			}
 			if (firstName.isEmpty() || lastName.isEmpty() || mail.isEmpty())
@@ -278,6 +286,7 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 				result.put("firstName", firstName);
 				result.put("lastName", lastName);
 				result.put("mail", mail);
+				result.put("title", title);
 				return result;
 			}
 		}
@@ -333,9 +342,13 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 		final MultiValueMap<String, String> request = new LinkedMultiValueMap<String, String>();
 		for (final CustomerWebServiceParameterModel additionelParam : customerConfiguration.getParameters())
 		{
-			if (additionelParam.getValue().equals(CustomerParameter.CLIENTEMAIL))
+			if (additionelParam.getValue().equals(CustomerParameter.CLIENTNEWEMAIL))
 			{
 				request.add(additionelParam.getKey(), newUid);
+			}
+			else if (additionelParam.getValue().equals(CustomerParameter.CLIENTOLDEMAIL))
+			{
+				request.add(additionelParam.getKey(), user.getUid());
 			}
 			else if (additionelParam.getValue().equals(CustomerParameter.CLIENTFIRSTNAME))
 			{
@@ -354,11 +367,7 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 		{
 			request.add(persoParam.getKey(), persoParam.getValue());
 		}
-		for (final PersoWSParamModel securityParam : customerConfiguration.getSecurityParameters())
-		{
-			request.add(securityParam.getKey(), securityParam.getValue());
-		}
-		if (customerConfiguration.getRootKey() != null)
+		if (customerConfiguration.getContentType().equals(RequestType.XML) && customerConfiguration.getRootKey() != null)
 		{
 			request.add("root", customerConfiguration.getRootKey());
 		}
@@ -373,7 +382,7 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 		final MultiValueMap<String, String> request = new LinkedMultiValueMap<String, String>();
 		for (final CustomerWebServiceParameterModel additionelParam : customerConfiguration.getParameters())
 		{
-			if (additionelParam.getValue().equals(CustomerParameter.CLIENTEMAIL))
+			if (additionelParam.getValue().equals(CustomerParameter.CLIENTCODE))
 			{
 				request.add(additionelParam.getKey(), customerData.getUid());
 			}
@@ -398,7 +407,7 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 		{
 			request.add(securityParam.getKey(), securityParam.getValue());
 		}
-		if (customerConfiguration.getRootKey() != null)
+		if (customerConfiguration.getContentType().equals(RequestType.XML) && customerConfiguration.getRootKey() != null)
 		{
 			request.add("root", customerConfiguration.getRootKey());
 		}
@@ -419,10 +428,6 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 			for (final CustomerWebServiceParameterModel additionelParam : additionelParams)
 			{
 				if (additionelParam.getValue().equals(CustomerParameter.CLIENTCODE))
-				{
-					params.put(additionelParam.getKey(), model.getPk().toString());
-				}
-				if (additionelParam.getValue().equals(CustomerParameter.CLIENTEMAIL))
 				{
 					params.put(additionelParam.getKey(), model.getUid());
 				}

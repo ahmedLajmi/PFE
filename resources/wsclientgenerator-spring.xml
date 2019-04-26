@@ -124,6 +124,10 @@
 	<bean id="priceWebServiceConfigurationFacade"
 		class="de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.facade.impl.DefaultPriceWebServiceConfigurationFacade">
 	</bean>
+	
+	<bean id="stockWebServiceConfigurationFacade"
+		class="de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.facade.impl.DefaultStockWebServiceConfigurationFacade">
+	</bean>
 
 
 	<bean id="priceConfigurationInterceptor"

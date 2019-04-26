@@ -19,6 +19,5 @@ public interface WsclientgeneratorControllerConstants
 {
 	// implement here controller constants used by this extension
 	final String ADDON_PREFIX = "addon:/wsclientgenerator/";
-	String Test = ADDON_PREFIX + "pages/test";
-	String FORM_PAGE = ADDON_PREFIX + "pages/formpage";
+	String SIMULATION_PAGE = ADDON_PREFIX + "pages/wsCallSimulation";
 }

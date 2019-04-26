@@ -4,7 +4,6 @@
 package de.hybris.platform.addons.wsclientgenerator.interceptors;
 
 import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
-import de.hybris.platform.addons.wsclientgenerator.enums.ModeType;
 import de.hybris.platform.addons.wsclientgenerator.enums.ResponseType;
 import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceConfigurationModel;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.StockWebServiceConfigurationDao;
@@ -53,12 +52,6 @@ public class StockConfigurationEnabledInterceptor implements ValidateInterceptor
 				{
 					throw new InterceptorException(getL10NService().getLocalizedString("unique.configuration"));
 				}
-			}
-
-			if (stockConfiguration.getMode() != null && stockConfiguration.getMode().equals(ModeType.WEBSERVICEWITHNATIVE)
-					&& stockConfiguration.getOrder() == null)
-			{
-				throw new InterceptorException(getL10NService().getLocalizedString("empty.order"));
 			}
 
 			if (stockConfiguration.getMethod() != null && stockConfiguration.getMethod().equals(MethodType.GET)

@@ -44,6 +44,43 @@ import org.w3c.dom.Element;
 public class WSInvoke
 {
 
+	public ResponseEntity<String> getRequest(final String url, final Map<String, String> params,
+			final Map<String, String> headersParam, final ResponseType accept) throws InvokeWsException
+	{
+		final HttpHeaders headers = new HttpHeaders();
+		if (accept.equals(ResponseType.JSON))
+		{
+			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+		}
+		else if (accept.equals(ResponseType.XML))
+		{
+			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_XML));
+		}
+		else if (accept.equals(ResponseType.TEXT))
+		{
+			headers.setAccept(Collections.singletonList(MediaType.TEXT_PLAIN));
+		}
+		for (final String key : headersParam.keySet())
+		{
+			headers.add(key, headersParam.get(key));
+		}
+
+		final HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+		final RestTemplate restTemplate = new RestTemplate();
+		try
+		{
+			final ResponseEntity<String> response = restTemplate.exchange(prepareUrl(url, params), HttpMethod.GET, entity,
+					String.class);
+			System.out.println(prepareUrl(url, params));
+			return response;
+		}
+		catch (final Exception e)
+		{
+			throw new InvokeWsException("Error in invoking web service!! " + e.getMessage());
+		}
+
+	}
+
 	public ResponseEntity<String> getRequest(final String url, final Map<String, String> params, final ResponseType accept)
 			throws InvokeWsException
 	{
@@ -60,6 +97,8 @@ public class WSInvoke
 		{
 			headers.setAccept(Collections.singletonList(MediaType.TEXT_PLAIN));
 		}
+
+
 		final HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 		final RestTemplate restTemplate = new RestTemplate();
 		try

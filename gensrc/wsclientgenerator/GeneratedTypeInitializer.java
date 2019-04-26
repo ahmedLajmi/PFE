@@ -117,16 +117,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 		);
 	
 		createItemType(
-			"CustomerEmailWebServiceParameter",
-			"WebServiceParameter",
-			de.hybris.platform.addons.wsclientgenerator.jalo.CustomerEmailWebServiceParameter.class,
-			null,
-			false,
-			null,
-			false
-		);
-	
-		createItemType(
 			"PriceWebServiceConfiguration",
 			"WebServiceConfiguration",
 			de.hybris.platform.addons.wsclientgenerator.jalo.PriceWebServiceConfiguration.class,
@@ -202,12 +192,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			true
 		);
 	
-		createRelationType(
-			"CustomerEmailWebServiceConfigurationParameterRelation",
-			null,
-			true
-		);
-	
 		createEnumerationType(
 			"RequestType",
 			null
@@ -244,17 +228,7 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 		);
 	
 		createEnumerationType(
-			"CustomerEmailParameter",
-			null
-		);
-	
-		createEnumerationType(
 			"ModeType",
-			null
-		);
-	
-		createEnumerationType(
-			"OrderType",
 			null
 		);
 	
@@ -289,8 +263,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 				single_createattr_WebServiceConfiguration_mode();
 			
-				single_createattr_WebServiceConfiguration_order();
-			
 				single_createattr_WebServiceConfiguration_enable();
 			
 				single_createattr_WebServiceConfiguration_accept();
@@ -303,6 +275,10 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 				single_createattr_WebServiceConfiguration_rootKey();
 			
+				single_createattr_WebServiceConfiguration_login();
+			
+				single_createattr_WebServiceConfiguration_password();
+			
 				single_createattr_WebServiceParameter_key();
 			
 				single_createattr_PersoWSParam_value();
@@ -314,8 +290,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				single_createattr_StockWebServiceParameter_value();
 			
 				single_createattr_CustomerWebServiceParameter_value();
-			
-				single_createattr_CustomerEmailWebServiceParameter_value();
 			
 				single_createattr_PriceWebServiceConfiguration_priceKey();
 			
@@ -461,26 +435,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			CollectionType.COLLECTION
 		);
 	
-		createRelationAttributes(
-			"CustomerEmailWebServiceConfigurationParameterRelation", 
-			false, 
-
-			"configuration", 
-			"CustomerWebServiceConfiguration", 
-			true,
-			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
-			false,
-			false,
-			CollectionType.COLLECTION,
-			"emailParameters", 
-			"CustomerEmailWebServiceParameter", 
-			true,
-			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
-			true,
-			false,
-			CollectionType.COLLECTION
-		);
-	
 
 	}
 
@@ -581,23 +535,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 					null,
 					"ModeType",
 					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
-					null,
-					sqlColumnDefinitions
-				);
-			
-	}
-	
-	public void single_createattr_WebServiceConfiguration_order() throws JaloBusinessException
-	{
-		
-						Map sqlColumnDefinitions = null;
-					
-				createPropertyAttribute(
-					"WebServiceConfiguration", 
-					"order",  
-					null,
-					"OrderType",
-					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
 					null,
 					sqlColumnDefinitions
 				);
@@ -706,6 +643,40 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 	}
 	
+	public void single_createattr_WebServiceConfiguration_login() throws JaloBusinessException
+	{
+		
+						Map sqlColumnDefinitions = null;
+					
+				createPropertyAttribute(
+					"WebServiceConfiguration", 
+					"login",  
+					null,
+					"java.lang.String",
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					null,
+					sqlColumnDefinitions
+				);
+			
+	}
+	
+	public void single_createattr_WebServiceConfiguration_password() throws JaloBusinessException
+	{
+		
+						Map sqlColumnDefinitions = null;
+					
+				createPropertyAttribute(
+					"WebServiceConfiguration", 
+					"password",  
+					null,
+					"java.lang.String",
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					null,
+					sqlColumnDefinitions
+				);
+			
+	}
+	
 	public void single_createattr_WebServiceParameter_key() throws JaloBusinessException
 	{
 		
@@ -801,23 +772,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 					"value",  
 					null,
 					"CustomerParameter",
-					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
-					null,
-					sqlColumnDefinitions
-				);
-			
-	}
-	
-	public void single_createattr_CustomerEmailWebServiceParameter_value() throws JaloBusinessException
-	{
-		
-						Map sqlColumnDefinitions = null;
-					
-				createPropertyAttribute(
-					"CustomerEmailWebServiceParameter", 
-					"value",  
-					null,
-					"CustomerEmailParameter",
 					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
 					null,
 					sqlColumnDefinitions
@@ -1115,19 +1069,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				"clientCode",
 				"clientFirstName",
 				"clientLastName",
-				"clientEmail",
-				"titleCode"
-			} )
-		);
-	
-		createEnumerationValues(
-			"CustomerEmailParameter",
-			true,
-			Arrays.asList( new String[] {
-			
-				"clientCode",
-				"clientFirstName",
-				"clientLastName",
 				"clientOldEmail",
 				"clientNewEmail",
 				"titleCode"
@@ -1140,15 +1081,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			Arrays.asList( new String[] {
 			
 				"onlyWithWebService",
-				"webServiceWithNative"
-			} )
-		);
-	
-		createEnumerationValues(
-			"OrderType",
-			true,
-			Arrays.asList( new String[] {
-			
 				"webServiceNative",
 				"NativeWebService"
 			} )
@@ -1166,8 +1098,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 	
 		single_setRelAttributeProperties_CustomerWebServiceConfigurationParameterRelation_source();
 	
-		single_setRelAttributeProperties_CustomerEmailWebServiceConfigurationParameterRelation_source();
-	
 		single_setRelAttributeProperties_WebServiceConfigurationParameterRelation_target();
 	
 		single_setRelAttributeProperties_WebServiceConfigurationSecurityParameterRelation_target();
@@ -1179,8 +1109,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 		single_setRelAttributeProperties_StockWebServiceConfigurationParameterRelation_target();
 	
 		single_setRelAttributeProperties_CustomerWebServiceConfigurationParameterRelation_target();
-	
-		single_setRelAttributeProperties_CustomerEmailWebServiceConfigurationParameterRelation_target();
 	
 		connectRelation(
 			"WebServiceConfigurationParameterRelation", 
@@ -1272,21 +1200,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			true
 		);
 	
-		connectRelation(
-			"CustomerEmailWebServiceConfigurationParameterRelation", 
-			false, 
-			"configuration", 
-			"CustomerWebServiceConfiguration", 
-			true,
-			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
-			"emailParameters", 
-			"CustomerEmailWebServiceParameter", 
-			true,
-			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
-			true,
-			true
-		);
-	
 				{
 				Map customPropsMap = new HashMap();
 				
@@ -1312,8 +1225,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 		
 			single_setAttributeProperties_WebServiceConfiguration_mode();
 		
-			single_setAttributeProperties_WebServiceConfiguration_order();
-		
 			single_setAttributeProperties_WebServiceConfiguration_enable();
 		
 			single_setAttributeProperties_WebServiceConfiguration_accept();
@@ -1325,6 +1236,10 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			single_setAttributeProperties_WebServiceConfiguration_textSeperator();
 		
 			single_setAttributeProperties_WebServiceConfiguration_rootKey();
+		
+			single_setAttributeProperties_WebServiceConfiguration_login();
+		
+			single_setAttributeProperties_WebServiceConfiguration_password();
 		
 				{
 				Map customPropsMap = new HashMap();
@@ -1415,21 +1330,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				}
 			
 			single_setAttributeProperties_CustomerWebServiceParameter_value();
-		
-				{
-				Map customPropsMap = new HashMap();
-				
-				setItemTypeProperties(
-					"CustomerEmailWebServiceParameter",
-					false,
-					true,
-					true,
-					null,
-					customPropsMap
-				);
-				}
-			
-			single_setAttributeProperties_CustomerEmailWebServiceParameter_value();
 		
 				{
 				Map customPropsMap = new HashMap();
@@ -1564,21 +1464,7 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				);
 			
 				setDefaultProperties(
-					"CustomerEmailParameter",
-					true,
-					true,
-					null
-				);
-			
-				setDefaultProperties(
 					"ModeType",
-					true,
-					true,
-					null
-				);
-			
-				setDefaultProperties(
-					"OrderType",
 					true,
 					true,
 					null
@@ -1720,28 +1606,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 							);
 						}
 					
-						public void single_setAttributeProperties_WebServiceConfiguration_order() throws JaloBusinessException
-						{
-							
-							
-							
-							Map customPropsMap = new HashMap();
-							
-							setAttributeProperties(
-								"WebServiceConfiguration", 
-								"order",
-								false, 
-								null,
-								null,
-								null,
-								true,
-								true,
-								null,
-								customPropsMap,
-								null
-							);
-						}
-					
 						public void single_setAttributeProperties_WebServiceConfiguration_enable() throws JaloBusinessException
 						{
 							
@@ -1874,6 +1738,50 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 							);
 						}
 					
+						public void single_setAttributeProperties_WebServiceConfiguration_login() throws JaloBusinessException
+						{
+							
+							
+							
+							Map customPropsMap = new HashMap();
+							
+							setAttributeProperties(
+								"WebServiceConfiguration", 
+								"login",
+								false, 
+								null,
+								null,
+								null,
+								true,
+								true,
+								null,
+								customPropsMap,
+								null
+							);
+						}
+					
+						public void single_setAttributeProperties_WebServiceConfiguration_password() throws JaloBusinessException
+						{
+							
+							
+							
+							Map customPropsMap = new HashMap();
+							
+							setAttributeProperties(
+								"WebServiceConfiguration", 
+								"password",
+								false, 
+								null,
+								null,
+								null,
+								true,
+								true,
+								null,
+								customPropsMap,
+								null
+							);
+						}
+					
 						public void single_setAttributeProperties_WebServiceParameter_key() throws JaloBusinessException
 						{
 							
@@ -1993,28 +1901,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 							
 							setAttributeProperties(
 								"CustomerWebServiceParameter", 
-								"value",
-								false, 
-								null,
-								null,
-								null,
-								true,
-								true,
-								null,
-								customPropsMap,
-								null
-							);
-						}
-					
-						public void single_setAttributeProperties_CustomerEmailWebServiceParameter_value() throws JaloBusinessException
-						{
-							
-							
-							
-							Map customPropsMap = new HashMap();
-							
-							setAttributeProperties(
-								"CustomerEmailWebServiceParameter", 
 								"value",
 								false, 
 								null,
@@ -2532,48 +2418,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 									setAttributeProperties(
 										"CustomerWebServiceConfiguration", 
 										"parameters",
-										false, 
-										null,
-										null,
-										null,
-										true,
-										true,
-										null,
-										customPropsMap,
-										null
-									);
-								}
-							
-								public void single_setRelAttributeProperties_CustomerEmailWebServiceConfigurationParameterRelation_source() throws JaloBusinessException
-								{
-									
-									Map customPropsMap = new HashMap();
-									
-
-									setAttributeProperties(
-										"CustomerEmailWebServiceParameter", 
-										"configuration",
-										false, 
-										null,
-										null,
-										null,
-										true,
-										true,
-										null,
-										customPropsMap,
-										null
-									);
-								}
-							
-								public void single_setRelAttributeProperties_CustomerEmailWebServiceConfigurationParameterRelation_target() throws JaloBusinessException
-								{
-									
-									Map customPropsMap = new HashMap();
-									
-
-									setAttributeProperties(
-										"CustomerWebServiceConfiguration", 
-										"emailParameters",
 										false, 
 										null,
 										null,

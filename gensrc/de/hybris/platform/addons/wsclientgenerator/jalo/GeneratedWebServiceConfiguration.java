@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 24 avr. 2019 12:30:14                       ---
+ * --- Generated at 26 avr. 2019 09:34:26                       ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -48,8 +48,6 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	public static final String METHOD = "method";
 	/** Qualifier of the <code>WebServiceConfiguration.mode</code> attribute **/
 	public static final String MODE = "mode";
-	/** Qualifier of the <code>WebServiceConfiguration.order</code> attribute **/
-	public static final String ORDER = "order";
 	/** Qualifier of the <code>WebServiceConfiguration.enable</code> attribute **/
 	public static final String ENABLE = "enable";
 	/** Qualifier of the <code>WebServiceConfiguration.accept</code> attribute **/
@@ -62,6 +60,10 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	public static final String TEXTSEPERATOR = "textSeperator";
 	/** Qualifier of the <code>WebServiceConfiguration.rootKey</code> attribute **/
 	public static final String ROOTKEY = "rootKey";
+	/** Qualifier of the <code>WebServiceConfiguration.login</code> attribute **/
+	public static final String LOGIN = "login";
+	/** Qualifier of the <code>WebServiceConfiguration.password</code> attribute **/
+	public static final String PASSWORD = "password";
 	/** Qualifier of the <code>WebServiceConfiguration.personalisedParameters</code> attribute **/
 	public static final String PERSONALISEDPARAMETERS = "personalisedParameters";
 	/** Qualifier of the <code>WebServiceConfiguration.SecurityParameters</code> attribute **/
@@ -100,13 +102,14 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 		tmp.put(URL, AttributeMode.INITIAL);
 		tmp.put(METHOD, AttributeMode.INITIAL);
 		tmp.put(MODE, AttributeMode.INITIAL);
-		tmp.put(ORDER, AttributeMode.INITIAL);
 		tmp.put(ENABLE, AttributeMode.INITIAL);
 		tmp.put(ACCEPT, AttributeMode.INITIAL);
 		tmp.put(CONTENTTYPE, AttributeMode.INITIAL);
 		tmp.put(RESPONSETEMPLATE, AttributeMode.INITIAL);
 		tmp.put(TEXTSEPERATOR, AttributeMode.INITIAL);
 		tmp.put(ROOTKEY, AttributeMode.INITIAL);
+		tmp.put(LOGIN, AttributeMode.INITIAL);
+		tmp.put(PASSWORD, AttributeMode.INITIAL);
 		DEFAULT_INITIAL_ATTRIBUTES = Collections.unmodifiableMap(tmp);
 	}
 	@Override
@@ -333,6 +336,42 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	}
 	
 	/**
+	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.login</code> attribute.
+	 * @return the login
+	 */
+	public String getLogin(final SessionContext ctx)
+	{
+		return (String)getProperty( ctx, LOGIN);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.login</code> attribute.
+	 * @return the login
+	 */
+	public String getLogin()
+	{
+		return getLogin( getSession().getSessionContext() );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>WebServiceConfiguration.login</code> attribute. 
+	 * @param value the login
+	 */
+	public void setLogin(final SessionContext ctx, final String value)
+	{
+		setProperty(ctx, LOGIN,value);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>WebServiceConfiguration.login</code> attribute. 
+	 * @param value the login
+	 */
+	public void setLogin(final String value)
+	{
+		setLogin( getSession().getSessionContext(), value );
+	}
+	
+	/**
 	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.method</code> attribute.
 	 * @return the method
 	 */
@@ -441,39 +480,39 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	}
 	
 	/**
-	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.order</code> attribute.
-	 * @return the order
+	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.password</code> attribute.
+	 * @return the password
 	 */
-	public EnumerationValue getOrder(final SessionContext ctx)
+	public String getPassword(final SessionContext ctx)
 	{
-		return (EnumerationValue)getProperty( ctx, ORDER);
+		return (String)getProperty( ctx, PASSWORD);
 	}
 	
 	/**
-	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.order</code> attribute.
-	 * @return the order
+	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.password</code> attribute.
+	 * @return the password
 	 */
-	public EnumerationValue getOrder()
+	public String getPassword()
 	{
-		return getOrder( getSession().getSessionContext() );
+		return getPassword( getSession().getSessionContext() );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Setter of the <code>WebServiceConfiguration.order</code> attribute. 
-	 * @param value the order
+	 * <i>Generated method</i> - Setter of the <code>WebServiceConfiguration.password</code> attribute. 
+	 * @param value the password
 	 */
-	public void setOrder(final SessionContext ctx, final EnumerationValue value)
+	public void setPassword(final SessionContext ctx, final String value)
 	{
-		setProperty(ctx, ORDER,value);
+		setProperty(ctx, PASSWORD,value);
 	}
 	
 	/**
-	 * <i>Generated method</i> - Setter of the <code>WebServiceConfiguration.order</code> attribute. 
-	 * @param value the order
+	 * <i>Generated method</i> - Setter of the <code>WebServiceConfiguration.password</code> attribute. 
+	 * @param value the password
 	 */
-	public void setOrder(final EnumerationValue value)
+	public void setPassword(final String value)
 	{
-		setOrder( getSession().getSessionContext(), value );
+		setPassword( getSession().getSessionContext(), value );
 	}
 	
 	/**

@@ -16,7 +16,6 @@ import de.hybris.platform.acceleratorstorefrontcommons.forms.validation.EmailVal
 import de.hybris.platform.acceleratorstorefrontcommons.forms.validation.PasswordValidator;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.validation.ProfileValidator;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.verification.AddressVerificationResultHandler;
-import de.hybris.platform.addons.wsclientgenerator.controllers.WsclientgeneratorControllerConstants;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.commercefacades.address.AddressVerificationFacade;
 import de.hybris.platform.commercefacades.address.data.AddressVerificationResult;
@@ -917,13 +916,6 @@ public class AccountPageController extends AbstractSearchPageController
 		model.addAttribute("breadcrumbs", accountBreadcrumbBuilder.getBreadcrumbs("text.account.paymentDetails"));
 		model.addAttribute(ThirdPartyConstants.SeoRobots.META_ROBOTS, ThirdPartyConstants.SeoRobots.NOINDEX_NOFOLLOW);
 		return getViewForPage(model);
-	}
-
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	@RequireHardLogIn
-	public String test(final Model model)
-	{
-		return WsclientgeneratorControllerConstants.Test;
 	}
 
 	@RequestMapping(value = "/set-default-payment-details", method = RequestMethod.POST)

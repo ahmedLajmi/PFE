@@ -91,7 +91,7 @@ public class DefaultWsStockService extends DefaultCommerceStockService implement
 			catch (final ParseWsResponseException | InvokeWsException e)
 			{
 				LOG.error(e.getMessage());
-				if (stockConfiguration.getMode().equals(ModeType.WEBSERVICEWITHNATIVE))
+				if (!stockConfiguration.getMode().equals(ModeType.ONLYWITHWEBSERVICE))
 				{
 					return super.getStockLevelForProductAndBaseStore(product, baseStore);
 				}
@@ -129,7 +129,7 @@ public class DefaultWsStockService extends DefaultCommerceStockService implement
 			catch (final ParseWsResponseException | InvokeWsException e)
 			{
 				LOG.error(e.getMessage());
-				if (stockConfiguration.getMode().equals(ModeType.WEBSERVICEWITHNATIVE))
+				if (!stockConfiguration.getMode().equals(ModeType.ONLYWITHWEBSERVICE))
 				{
 					return super.getStockLevelForProductAndPointOfService(product, pointOfService);
 				}

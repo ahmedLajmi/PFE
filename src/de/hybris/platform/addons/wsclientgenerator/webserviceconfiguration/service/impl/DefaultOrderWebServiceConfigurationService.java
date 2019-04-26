@@ -18,7 +18,8 @@ import javax.annotation.Resource;
  * @author Ahmed-LAJMI
  *
  */
-public class DefaultOrderWebServiceConfigurationService implements OrderWebServiceConfigurationService
+public class DefaultOrderWebServiceConfigurationService extends WebServiceConfigurationService
+		implements OrderWebServiceConfigurationService
 {
 
 	@Resource(name = "flexibleSearchService")

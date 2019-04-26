@@ -17,7 +17,8 @@ import javax.annotation.Resource;
  * @author Ahmed-LAJMI
  *
  */
-public class DefaultPriceWebServiceConfigurationService implements PriceWebServiceConfigurationService
+public class DefaultPriceWebServiceConfigurationService extends WebServiceConfigurationService
+		implements PriceWebServiceConfigurationService
 {
 
 	@Resource(name = "flexibleSearchService")

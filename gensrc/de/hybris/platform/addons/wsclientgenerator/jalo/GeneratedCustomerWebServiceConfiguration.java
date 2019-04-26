@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 24 avr. 2019 12:30:14                       ---
+ * --- Generated at 26 avr. 2019 09:34:26                       ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -18,7 +18,6 @@
 package de.hybris.platform.addons.wsclientgenerator.jalo;
 
 import de.hybris.platform.addons.wsclientgenerator.constants.WsclientgeneratorConstants;
-import de.hybris.platform.addons.wsclientgenerator.jalo.CustomerEmailWebServiceParameter;
 import de.hybris.platform.addons.wsclientgenerator.jalo.CustomerWebServiceParameter;
 import de.hybris.platform.addons.wsclientgenerator.jalo.WebServiceConfiguration;
 import de.hybris.platform.jalo.Item.AttributeMode;
@@ -48,25 +47,11 @@ public abstract class GeneratedCustomerWebServiceConfiguration extends WebServic
 	public static final String CLIENTCODE = "clientCode";
 	/** Qualifier of the <code>CustomerWebServiceConfiguration.parameters</code> attribute **/
 	public static final String PARAMETERS = "parameters";
-	/** Qualifier of the <code>CustomerWebServiceConfiguration.emailParameters</code> attribute **/
-	public static final String EMAILPARAMETERS = "emailParameters";
 	/**
 	* {@link OneToManyHandler} for handling 1:n PARAMETERS's relation attributes from 'many' side.
 	**/
 	protected static final OneToManyHandler<CustomerWebServiceParameter> PARAMETERSHANDLER = new OneToManyHandler<CustomerWebServiceParameter>(
 	WsclientgeneratorConstants.TC.CUSTOMERWEBSERVICEPARAMETER,
-	false,
-	"configuration",
-	null,
-	false,
-	true,
-	CollectionType.COLLECTION
-	);
-	/**
-	* {@link OneToManyHandler} for handling 1:n EMAILPARAMETERS's relation attributes from 'many' side.
-	**/
-	protected static final OneToManyHandler<CustomerEmailWebServiceParameter> EMAILPARAMETERSHANDLER = new OneToManyHandler<CustomerEmailWebServiceParameter>(
-	WsclientgeneratorConstants.TC.CUSTOMEREMAILWEBSERVICEPARAMETER,
 	false,
 	"configuration",
 	null,
@@ -198,78 +183,6 @@ public abstract class GeneratedCustomerWebServiceConfiguration extends WebServic
 	public void setEmailKey(final String value)
 	{
 		setEmailKey( getSession().getSessionContext(), value );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Getter of the <code>CustomerWebServiceConfiguration.emailParameters</code> attribute.
-	 * @return the emailParameters
-	 */
-	public Collection<CustomerEmailWebServiceParameter> getEmailParameters(final SessionContext ctx)
-	{
-		return EMAILPARAMETERSHANDLER.getValues( ctx, this );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Getter of the <code>CustomerWebServiceConfiguration.emailParameters</code> attribute.
-	 * @return the emailParameters
-	 */
-	public Collection<CustomerEmailWebServiceParameter> getEmailParameters()
-	{
-		return getEmailParameters( getSession().getSessionContext() );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Setter of the <code>CustomerWebServiceConfiguration.emailParameters</code> attribute. 
-	 * @param value the emailParameters
-	 */
-	public void setEmailParameters(final SessionContext ctx, final Collection<CustomerEmailWebServiceParameter> value)
-	{
-		EMAILPARAMETERSHANDLER.setValues( ctx, this, value );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Setter of the <code>CustomerWebServiceConfiguration.emailParameters</code> attribute. 
-	 * @param value the emailParameters
-	 */
-	public void setEmailParameters(final Collection<CustomerEmailWebServiceParameter> value)
-	{
-		setEmailParameters( getSession().getSessionContext(), value );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Adds <code>value</code> to emailParameters. 
-	 * @param value the item to add to emailParameters
-	 */
-	public void addToEmailParameters(final SessionContext ctx, final CustomerEmailWebServiceParameter value)
-	{
-		EMAILPARAMETERSHANDLER.addValue( ctx, this, value );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Adds <code>value</code> to emailParameters. 
-	 * @param value the item to add to emailParameters
-	 */
-	public void addToEmailParameters(final CustomerEmailWebServiceParameter value)
-	{
-		addToEmailParameters( getSession().getSessionContext(), value );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Removes <code>value</code> from emailParameters. 
-	 * @param value the item to remove from emailParameters
-	 */
-	public void removeFromEmailParameters(final SessionContext ctx, final CustomerEmailWebServiceParameter value)
-	{
-		EMAILPARAMETERSHANDLER.removeValue( ctx, this, value );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Removes <code>value</code> from emailParameters. 
-	 * @param value the item to remove from emailParameters
-	 */
-	public void removeFromEmailParameters(final CustomerEmailWebServiceParameter value)
-	{
-		removeFromEmailParameters( getSession().getSessionContext(), value );
 	}
 	
 	/**

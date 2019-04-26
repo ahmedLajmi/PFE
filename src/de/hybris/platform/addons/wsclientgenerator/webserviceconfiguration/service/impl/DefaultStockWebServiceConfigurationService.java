@@ -6,6 +6,7 @@ package de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.serv
 import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
 import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceConfigurationModel;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.StockWebServiceConfigurationDao;
+import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.service.StockWebServiceConfigurationService;
 import de.hybris.platform.servicelayer.search.FlexibleSearchService;
 
 import java.util.List;
@@ -17,7 +18,8 @@ import javax.annotation.Resource;
  * @author Ahmed-LAJMI
  *
  */
-public class DefaultStockWebServiceConfigurationService implements StockWebServiceConfigurationDao
+public class DefaultStockWebServiceConfigurationService extends WebServiceConfigurationService
+		implements StockWebServiceConfigurationService
 {
 
 	@Resource(name = "flexibleSearchService")

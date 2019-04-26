@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 24 avr. 2019 12:30:14                       ---
+ * --- Generated at 26 avr. 2019 09:34:26                       ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -18,7 +18,6 @@
 package de.hybris.platform.addons.wsclientgenerator.jalo;
 
 import de.hybris.platform.addons.wsclientgenerator.constants.WsclientgeneratorConstants;
-import de.hybris.platform.addons.wsclientgenerator.jalo.CustomerEmailWebServiceParameter;
 import de.hybris.platform.addons.wsclientgenerator.jalo.CustomerWebServiceConfiguration;
 import de.hybris.platform.addons.wsclientgenerator.jalo.CustomerWebServiceParameter;
 import de.hybris.platform.addons.wsclientgenerator.jalo.OrderWebServiceConfiguration;
@@ -61,32 +60,6 @@ public abstract class GeneratedWsclientgeneratorManager extends Extension
 			ret.putAll(attr);
 		}
 		return ret;
-	}
-	
-	public CustomerEmailWebServiceParameter createCustomerEmailWebServiceParameter(final SessionContext ctx, final Map attributeValues)
-	{
-		try
-		{
-			ComposedType type = getTenant().getJaloConnection().getTypeManager().getComposedType( WsclientgeneratorConstants.TC.CUSTOMEREMAILWEBSERVICEPARAMETER );
-			return (CustomerEmailWebServiceParameter)type.newInstance( ctx, attributeValues );
-		}
-		catch( JaloGenericCreationException e)
-		{
-			final Throwable cause = e.getCause();
-			throw (cause instanceof RuntimeException ?
-			(RuntimeException)cause
-			:
-			new JaloSystemException( cause, cause.getMessage(), e.getErrorCode() ) );
-		}
-		catch( JaloBusinessException e )
-		{
-			throw new JaloSystemException( e ,"error creating CustomerEmailWebServiceParameter : "+e.getMessage(), 0 );
-		}
-	}
-	
-	public CustomerEmailWebServiceParameter createCustomerEmailWebServiceParameter(final Map attributeValues)
-	{
-		return createCustomerEmailWebServiceParameter( getSession().getSessionContext(), attributeValues );
 	}
 	
 	public CustomerWebServiceConfiguration createCustomerWebServiceConfiguration(final SessionContext ctx, final Map attributeValues)

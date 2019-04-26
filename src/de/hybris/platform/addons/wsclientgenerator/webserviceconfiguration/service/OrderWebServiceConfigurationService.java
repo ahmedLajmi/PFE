@@ -13,7 +13,7 @@ import java.util.List;
  * @author Ahmed-LAJMI
  *
  */
-public interface OrderWebServiceConfigurationService
+public interface OrderWebServiceConfigurationService extends WebServiceConfigurationService
 {
 	public List<OrderWebServiceConfigurationModel> getAllConfigurations();
 

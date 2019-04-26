@@ -18,7 +18,8 @@ import javax.annotation.Resource;
  * @author Ahmed-LAJMI
  *
  */
-public class DefaultCustomerWebServiceConfigurationService implements CustomerWebServiceConfigurationService
+public class DefaultCustomerWebServiceConfigurationService extends WebServiceConfigurationService
+		implements CustomerWebServiceConfigurationService
 {
 
 	@Resource(name = "flexibleSearchService")
@@ -44,4 +45,5 @@ public class DefaultCustomerWebServiceConfigurationService implements CustomerWe
 	{
 		return customerWebServiceConfigurationDao.getWsEnabledConfiguration(method);
 	}
+
 }

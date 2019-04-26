@@ -59,14 +59,6 @@
 			<value code="clientCode" />
 			<value code="clientFirstName" />
 			<value code="clientLastName" />
-			<value code="clientEmail" />
-			<value code="titleCode" />
-		</enumtype>
-		<enumtype code="CustomerEmailParameter" autocreate="true"
-			generate="true" dynamic="true">
-			<value code="clientCode" />
-			<value code="clientFirstName" />
-			<value code="clientLastName" />
 			<value code="clientOldEmail" />
 			<value code="clientNewEmail" />
 			<value code="titleCode" />
@@ -74,10 +66,6 @@
 		<enumtype code="ModeType" autocreate="true" generate="true"
 			dynamic="true">
 			<value code="onlyWithWebService" />
-			<value code="webServiceWithNative" />
-		</enumtype>
-		<enumtype code="OrderType" autocreate="true" generate="true"
-			dynamic="true">
 			<value code="webServiceNative" />
 			<value code="NativeWebService" />
 		</enumtype>
@@ -136,15 +124,6 @@
 			<targetElement type="CustomerWebServiceParameter"
 				qualifier="parameters" cardinality="many" />
 		</relation>
-		
-		<relation
-			code="CustomerEmailWebServiceConfigurationParameterRelation"
-			localized="false" generate="true" autocreate="true">
-			<sourceElement type="CustomerWebServiceConfiguration"
-				qualifier="configuration" cardinality="one" />
-			<targetElement type="CustomerEmailWebServiceParameter"
-				qualifier="emailParameters" cardinality="many" />
-		</relation>
 
 	</relations>
 
@@ -189,11 +168,6 @@
 					<persistence type="property" />
 					<defaultvalue>em().getEnumerationValue("ModeType","onlyWithWebService")</defaultvalue>
 				</attribute>
-				<attribute type="OrderType" qualifier="order">
-					<modifiers read="true" write="true" search="true"
-						optional="true" />
-					<persistence type="property" />
-				</attribute>
 				<attribute type="java.lang.Boolean" qualifier="enable">
 					<modifiers read="true" write="true" search="true"
 						optional="false" />
@@ -222,6 +196,16 @@
 					<persistence type="property" />
 				</attribute>
 				<attribute type="java.lang.String" qualifier="rootKey">
+					<modifiers read="true" write="true" search="true"
+						optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute type="java.lang.String" qualifier="login">
+					<modifiers read="true" write="true" search="true"
+						optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute type="java.lang.String" qualifier="password">
 					<modifiers read="true" write="true" search="true"
 						optional="true" />
 					<persistence type="property" />
@@ -294,17 +278,7 @@
 				</attribute>
 			</attributes>
 		</itemtype>
-		
-		<itemtype code="CustomerEmailWebServiceParameter"
-			autocreate="true" generate="true" extends="WebServiceParameter">
-			<attributes>
-				<attribute type="CustomerEmailParameter" qualifier="value">
-					<modifiers read="true" write="true" search="true"
-						optional="false" />
-					<persistence type="property" />
-				</attribute>
-			</attributes>
-		</itemtype>
+
 
 		<itemtype code="PriceWebServiceConfiguration"
 			autocreate="true" generate="true" extends="WebServiceConfiguration">
@@ -320,7 +294,8 @@
 						optional="true" />
 					<persistence type="property" />
 				</attribute>
-				<attribute type="java.lang.Boolean" qualifier="productCode">
+				<attribute type="java.lang.Boolean"
+					qualifier="productCode">
 					<modifiers read="true" write="true" search="true"
 						optional="false" />
 					<persistence type="property" />
@@ -336,7 +311,8 @@
 						optional="false" />
 					<persistence type="property" />
 				</attribute>
-				<attribute type="java.lang.Boolean" qualifier="productCode">
+				<attribute type="java.lang.Boolean"
+					qualifier="productCode">
 					<modifiers read="true" write="true" search="true"
 						optional="false" />
 					<persistence type="property" />
@@ -347,8 +323,7 @@
 		<itemtype code="OrderWebServiceConfiguration"
 			autocreate="true" generate="true" extends="WebServiceConfiguration">
 			<attributes>
-				<attribute qualifier="statusKey"
-					type="java.lang.String">
+				<attribute qualifier="statusKey" type="java.lang.String">
 					<modifiers read="true" write="true" search="true"
 						optional="false" />
 					<persistence type="property" />

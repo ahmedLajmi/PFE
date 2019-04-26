@@ -4,10 +4,16 @@
 package de.hybris.platform.addons.wsclientgenerator.controllers.admin;
 
 import de.hybris.merchandise.storefront.util.CSRFTokenManager;
+import de.hybris.platform.acceleratorstorefrontcommons.annotations.RequireHardLogIn;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractPageController;
 import de.hybris.platform.addons.wsclientgenerator.controllers.WsclientgeneratorControllerConstants;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
+import de.hybris.platform.core.model.security.PrincipalGroupModel;
+import de.hybris.platform.servicelayer.user.UserService;
 
+import java.util.Set;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -25,28 +31,48 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/admin")
 public class WebServicesCallController extends AbstractPageController
 {
-	@RequestMapping(value = "/wscallform", method = RequestMethod.GET)
-	public String getWsCallForm(final Model model)
-	{
-		return WsclientgeneratorControllerConstants.FORM_PAGE;
-	}
+	@Resource(name = "userService")
+	private UserService userService;
 
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	public static final String FORWARD_PREFIX = "forward:";
+
+
+	@RequireHardLogIn
+	@RequestMapping(value = "/wsClientGeneratorSimulator", method = RequestMethod.GET)
 	public String test(final Model model, final HttpServletRequest request)
 	{
-
-		try
+		final Set<PrincipalGroupModel> groups = userService.getCurrentUser().getAllgroups();
+		if (checkAutorization(groups))
 		{
-			storeCmsPageInModel(model, getContentPageForLabelOrId("wsCallContentPage"));
+			try
+			{
+				storeCmsPageInModel(model, getContentPageForLabelOrId("wsCallContentPage"));
+			}
+			catch (final CMSItemNotFoundException e)
+			{
+				e.printStackTrace();
+			}
+
+			model.addAttribute("CSRFToken", CSRFTokenManager.getTokenForSession(request.getSession()));
+			return WsclientgeneratorControllerConstants.SIMULATION_PAGE;
 		}
-		catch (final CMSItemNotFoundException e)
+		else
 		{
-			// YTODO Auto-generated catch block
-			e.printStackTrace();
+			return FORWARD_PREFIX + "/404";
 		}
 
-		model.addAttribute("CSRFToken", CSRFTokenManager.getTokenForSession(request.getSession()));
-		return WsclientgeneratorControllerConstants.Test;
+	}
+
+	private boolean checkAutorization(final Set<PrincipalGroupModel> groups)
+	{
+		for (final PrincipalGroupModel group : groups)
+		{
+			if (group.getUid().equalsIgnoreCase("webServiceClientGroup"))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 

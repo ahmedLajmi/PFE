@@ -4,6 +4,7 @@
 package de.hybris.platform.addons.wsclientgenerator.order.impl;
 
 import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
+import de.hybris.platform.addons.wsclientgenerator.enums.RequestType;
 import de.hybris.platform.addons.wsclientgenerator.enums.StockParameter;
 import de.hybris.platform.addons.wsclientgenerator.exceptions.CreateWsRequestException;
 import de.hybris.platform.addons.wsclientgenerator.exceptions.InvokeWsException;
@@ -136,7 +137,7 @@ public class DefaultWsCheckoutService extends DefaultCommerceCheckoutService imp
 		{
 			request.add(securityParam.getKey(), securityParam.getValue());
 		}
-		if (stockConfiguration.getRootKey() != null)
+		if (stockConfiguration.getContentType().equals(RequestType.XML) && stockConfiguration.getRootKey() != null)
 		{
 			request.add("root", stockConfiguration.getRootKey());
 		}
