@@ -117,7 +117,8 @@ public class DefaultStockWebServiceConfigurationFacade implements StockWebServic
 		{
 			if (pm.getMethod().equals(MethodType.GET))
 			{
-				wsResponse = wsInvoke.getRequest(pm.getUrl(), params, pm.getAccept());
+				wsResponse = wsInvoke.getRequest(pm.getUrl(), params, stockWebServiceConfigurationService.prepareHeadersParams(pm),
+						pm.getAccept());
 			}
 			else if (pm.getMethod().equals(MethodType.POST))
 			{

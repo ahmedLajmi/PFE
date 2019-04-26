@@ -115,7 +115,8 @@ public class DefaultCustomerWebServiceConfigurationFacade implements CustomerWeb
 		{
 			if (cm.getMethod().equals(MethodType.GET))
 			{
-				wsResponse = wsInvoke.getRequest(cm.getUrl(), params, cm.getAccept());
+				wsResponse = wsInvoke.getRequest(cm.getUrl(), params, customerWebServiceConfigurationService.prepareHeadersParams(cm),
+						cm.getAccept());
 			}
 			else if (cm.getMethod().equals(MethodType.POST))
 			{

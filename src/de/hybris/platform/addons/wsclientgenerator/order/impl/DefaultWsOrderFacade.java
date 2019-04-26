@@ -15,7 +15,7 @@ import de.hybris.platform.addons.wsclientgenerator.model.OrderWebServiceParamete
 import de.hybris.platform.addons.wsclientgenerator.model.PersoWSParamModel;
 import de.hybris.platform.addons.wsclientgenerator.order.WSOrderFacade;
 import de.hybris.platform.addons.wsclientgenerator.tools.WSInvoke;
-import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.OrderWebServiceConfigurationDao;
+import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.service.OrderWebServiceConfigurationService;
 import de.hybris.platform.commercefacades.order.data.OrderData;
 import de.hybris.platform.commercefacades.order.data.OrderHistoryData;
 import de.hybris.platform.commercefacades.order.impl.DefaultOrderFacade;
@@ -63,8 +63,8 @@ public class DefaultWsOrderFacade extends DefaultOrderFacade implements WSOrderF
 {
 	private static final String ORDER_NOT_FOUND_FOR_USER_AND_BASE_STORE = "Order with guid %s not found for current user in current BaseStore";
 
-	@Resource(name = "orderWebServiceConfigurationDao")
-	private OrderWebServiceConfigurationDao orderWebServiceConfigurationDao;
+	@Resource(name = "orderWebServiceConfigurationService")
+	private OrderWebServiceConfigurationService orderWebServiceConfigurationService;
 
 	@Resource(name = "userService")
 	private UserService userService;
@@ -105,7 +105,7 @@ public class DefaultWsOrderFacade extends DefaultOrderFacade implements WSOrderF
 		}
 
 		// custom treatment
-		orderConfiguration = orderWebServiceConfigurationDao.getWsEnabledConfiguration(MethodType.GET);
+		orderConfiguration = orderWebServiceConfigurationService.getWsEnabledConfiguration(MethodType.GET);
 
 		if (orderConfiguration != null)
 		{
@@ -154,7 +154,7 @@ public class DefaultWsOrderFacade extends DefaultOrderFacade implements WSOrderF
 		final BaseStoreModel currentBaseStore = getBaseStoreService().getCurrentBaseStore();
 		List<OrderModel> orderList = getCustomerAccountService().getOrderList(currentCustomer, currentBaseStore, statuses);
 
-		orderConfiguration = orderWebServiceConfigurationDao.getWsEnabledConfiguration(MethodType.GET);
+		orderConfiguration = orderWebServiceConfigurationService.getWsEnabledConfiguration(MethodType.GET);
 		if (orderConfiguration != null)
 		{
 			orderList = updateStatuses(orderList, orderConfiguration);
@@ -173,7 +173,7 @@ public class DefaultWsOrderFacade extends DefaultOrderFacade implements WSOrderF
 		final SearchPageData<OrderModel> orderResults = getCustomerAccountService().getOrderList(currentCustomer, currentBaseStore,
 				statuses, pageableData);
 
-		orderConfiguration = orderWebServiceConfigurationDao.getWsEnabledConfiguration(MethodType.GET);
+		orderConfiguration = orderWebServiceConfigurationService.getWsEnabledConfiguration(MethodType.GET);
 
 		if (orderConfiguration != null)
 		{
@@ -220,7 +220,8 @@ public class DefaultWsOrderFacade extends DefaultOrderFacade implements WSOrderF
 		String result = "";
 
 		final ResponseEntity<String> response = wsInvoke.getRequest(orderConfiguration.getUrl(),
-				prepareRequestParams(orderConfiguration, order), orderConfiguration.getAccept());
+				prepareRequestParams(orderConfiguration, order),
+				orderWebServiceConfigurationService.prepareHeadersParams(orderConfiguration), orderConfiguration.getAccept());
 		System.out.println(response.getBody());
 
 		if (orderConfiguration.getAccept().equals(ResponseType.JSON))

@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  * @author Ahmed-LAJMI
  *
  */
-public class DefaultPriceWebServiceConfigurationService extends WebServiceConfigurationService
+public class DefaultPriceWebServiceConfigurationService extends AbstractWebServiceConfigurationService
 		implements PriceWebServiceConfigurationService
 {
 
@@ -26,7 +26,6 @@ public class DefaultPriceWebServiceConfigurationService extends WebServiceConfig
 
 	@Resource(name = "priceWebServiceConfigurationDao")
 	private PriceWebServiceConfigurationDao priceWebServiceConfigurationDao;
-
 
 	@Override
 	public List<PriceWebServiceConfigurationModel> getAllConfigurations()
@@ -45,17 +44,5 @@ public class DefaultPriceWebServiceConfigurationService extends WebServiceConfig
 	{
 		return priceWebServiceConfigurationDao.findPriceWsConfiguration(id);
 	}
-
-	/*
-	 * @Override public Integer getCountWsEnabledConfiguration() { final StringBuilder builder = new
-	 * StringBuilder("SELECT count(" + PriceWebServiceConfigurationModel.PK +
-	 * ") FROM {PriceWebServiceConfiguration AS p } WHERE {p.enable} = true");
-	 *
-	 * final FlexibleSearchQuery query = new FlexibleSearchQuery(builder.toString()); final SearchResult<Integer> result
-	 * = flexibleSearchService.search(query); if (result != null && result.getTotalCount() != 0) { return
-	 * result.getResult().get(0); } else { return null; }
-	 *
-	 * }
-	 */
 
 }

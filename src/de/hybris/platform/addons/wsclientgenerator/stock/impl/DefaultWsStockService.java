@@ -15,7 +15,7 @@ import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceParamete
 import de.hybris.platform.addons.wsclientgenerator.price.impl.DefaultWsPriceService;
 import de.hybris.platform.addons.wsclientgenerator.stock.WSStockService;
 import de.hybris.platform.addons.wsclientgenerator.tools.WSInvoke;
-import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.StockWebServiceConfigurationDao;
+import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.service.StockWebServiceConfigurationService;
 import de.hybris.platform.commerceservices.stock.impl.DefaultCommerceStockService;
 import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.servicelayer.user.UserService;
@@ -51,8 +51,8 @@ import org.xml.sax.SAXException;
 public class DefaultWsStockService extends DefaultCommerceStockService implements WSStockService
 {
 
-	@Resource(name = "stockWebServiceConfigurationDao")
-	private StockWebServiceConfigurationDao stockWebServiceConfigurationDao;
+	@Resource(name = "stockWebServiceConfigurationService")
+	private StockWebServiceConfigurationService stockWebServiceConfigurationService;
 
 	@Resource(name = "userService")
 	private UserService userService;
@@ -64,7 +64,7 @@ public class DefaultWsStockService extends DefaultCommerceStockService implement
 	@Override
 	public Long getStockLevelForProductAndBaseStore(final ProductModel product, final BaseStoreModel baseStore)
 	{
-		stockConfiguration = stockWebServiceConfigurationDao.getWsEnabledConfiguration(MethodType.GET);
+		stockConfiguration = stockWebServiceConfigurationService.getWsEnabledConfiguration(MethodType.GET);
 		if (stockConfiguration == null)
 		{
 			return super.getStockLevelForProductAndBaseStore(product, baseStore);
@@ -77,7 +77,8 @@ public class DefaultWsStockService extends DefaultCommerceStockService implement
 			{
 
 				final ResponseEntity<String> response = wsinvoke.getRequest(stockConfiguration.getUrl(),
-						prepareRequestParams(stockConfiguration, product), stockConfiguration.getAccept());
+						prepareRequestParams(stockConfiguration, product),
+						stockWebServiceConfigurationService.prepareHeadersParams(stockConfiguration), stockConfiguration.getAccept());
 				System.out.println(response.getBody());
 				if (stockConfiguration.getAccept().equals(ResponseType.JSON))
 				{
@@ -103,7 +104,7 @@ public class DefaultWsStockService extends DefaultCommerceStockService implement
 	@Override
 	public Long getStockLevelForProductAndPointOfService(final ProductModel product, final PointOfServiceModel pointOfService)
 	{
-		stockConfiguration = stockWebServiceConfigurationDao.getWsEnabledConfiguration(MethodType.GET);
+		stockConfiguration = stockWebServiceConfigurationService.getWsEnabledConfiguration(MethodType.GET);
 		if (stockConfiguration == null)
 		{
 			return super.getStockLevelForProductAndPointOfService(product, pointOfService);
@@ -115,7 +116,8 @@ public class DefaultWsStockService extends DefaultCommerceStockService implement
 			try
 			{
 				final ResponseEntity<String> response = wsinvoke.getRequest(stockConfiguration.getUrl(),
-						prepareRequestParams(stockConfiguration, product), stockConfiguration.getAccept());
+						prepareRequestParams(stockConfiguration, product),
+						stockWebServiceConfigurationService.prepareHeadersParams(stockConfiguration), stockConfiguration.getAccept());
 				System.out.println(response.getBody());
 				if (stockConfiguration.getAccept().equals(ResponseType.JSON))
 				{

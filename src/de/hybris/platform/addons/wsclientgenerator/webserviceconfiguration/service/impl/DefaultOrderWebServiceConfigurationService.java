@@ -18,7 +18,7 @@ import javax.annotation.Resource;
  * @author Ahmed-LAJMI
  *
  */
-public class DefaultOrderWebServiceConfigurationService extends WebServiceConfigurationService
+public class DefaultOrderWebServiceConfigurationService extends AbstractWebServiceConfigurationService
 		implements OrderWebServiceConfigurationService
 {
 

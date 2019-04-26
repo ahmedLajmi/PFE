@@ -8,7 +8,6 @@ import de.hybris.platform.addons.wsclientgenerator.enums.PriceParameter;
 import de.hybris.platform.addons.wsclientgenerator.enums.ResponseType;
 import de.hybris.platform.addons.wsclientgenerator.exceptions.InvokeWsException;
 import de.hybris.platform.addons.wsclientgenerator.exceptions.ParseWsResponseException;
-import de.hybris.platform.addons.wsclientgenerator.model.PersoWSParamModel;
 import de.hybris.platform.addons.wsclientgenerator.model.PriceWebServiceConfigurationModel;
 import de.hybris.platform.addons.wsclientgenerator.model.PriceWebServiceParameterModel;
 import de.hybris.platform.addons.wsclientgenerator.price.WSPriceService;
@@ -86,7 +85,8 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 			try
 			{
 				final ResponseEntity<String> response = wsinvoke.getRequest(priceConfiguration.getUrl(),
-						prepareRequestParams(priceConfiguration, model), priceConfiguration.getAccept());
+						prepareGetRequestParams(priceConfiguration, model),
+						priceWebServiceConfigurationService.prepareHeadersParams(priceConfiguration), priceConfiguration.getAccept());
 				System.out.println(response.getBody());
 
 				if (priceConfiguration.getAccept().equals(ResponseType.JSON))
@@ -273,10 +273,9 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 	}
 
 	@Override
-	public Map<String, String> prepareRequestParams(final PriceWebServiceConfigurationModel priceConfiguration,
+	public Map<String, String> prepareGetRequestParams(final PriceWebServiceConfigurationModel priceConfiguration,
 			final ProductModel model)
 	{
-		final Collection<PersoWSParamModel> persoParams = priceConfiguration.getPersonalisedParameters();
 		final Collection<PriceWebServiceParameterModel> additionelParams = priceConfiguration.getParameters();
 		final Map<String, String> params = new HashMap<>();
 		if (additionelParams != null && !additionelParams.isEmpty())

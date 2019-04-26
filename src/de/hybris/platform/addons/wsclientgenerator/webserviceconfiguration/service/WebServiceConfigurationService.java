@@ -14,8 +14,8 @@ import java.util.Map;
  */
 public interface WebServiceConfigurationService
 {
-	public Map<String, String> prepareSecurityParams(final WebServiceConfigurationModel configuration);
+	public Map<String, String> prepareHeadersParams(WebServiceConfigurationModel configuration);
 
-	public Map<String, String> preparePersoParams(final WebServiceConfigurationModel configuration);
+	public Map<String, String> preparePersoParams(WebServiceConfigurationModel configuration);
 
 }

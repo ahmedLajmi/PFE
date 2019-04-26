@@ -18,7 +18,7 @@ import de.hybris.platform.addons.wsclientgenerator.model.CustomerWebServiceConfi
 import de.hybris.platform.addons.wsclientgenerator.model.CustomerWebServiceParameterModel;
 import de.hybris.platform.addons.wsclientgenerator.model.PersoWSParamModel;
 import de.hybris.platform.addons.wsclientgenerator.tools.WSInvoke;
-import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.CustomerWebServiceConfigurationDao;
+import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.service.CustomerWebServiceConfigurationService;
 import de.hybris.platform.commercefacades.customer.impl.DefaultCustomerFacade;
 import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commercefacades.user.data.RegisterData;
@@ -62,8 +62,8 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 	@Resource(name = "userService")
 	private UserService userService;
 
-	@Resource(name = "customerWebServiceConfigurationDao")
-	private CustomerWebServiceConfigurationDao customerWebServiceConfigurationDao;
+	@Resource(name = "customerWebServiceConfigurationService")
+	private CustomerWebServiceConfigurationService customerWebServiceConfigurationService;
 
 	private CustomerWebServiceConfigurationModel customerConfiguration;
 
@@ -75,7 +75,7 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 		final UserModel user = userService.getCurrentUser();
 		final CustomerData customer = getCustomerConverter().convert(user);
 
-		customerConfiguration = customerWebServiceConfigurationDao.getWsEnabledConfiguration(MethodType.GET);
+		customerConfiguration = customerWebServiceConfigurationService.getWsEnabledConfiguration(MethodType.GET);
 		if (customerConfiguration != null)
 		{
 			Map<String, String> result = new HashMap<>();
@@ -83,7 +83,9 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 			try
 			{
 				final ResponseEntity<String> response = wsinvoke.getRequest(customerConfiguration.getUrl(),
-						prepareRequestParams(customerConfiguration, user), customerConfiguration.getAccept());
+						prepareRequestParams(customerConfiguration, user),
+						customerWebServiceConfigurationService.prepareHeadersParams(customerConfiguration),
+						customerConfiguration.getAccept());
 				if (customerConfiguration.getAccept().equals(ResponseType.JSON))
 				{
 					result = jsonParseResponse(response.getBody());
@@ -133,7 +135,7 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 			throw new PasswordMismatchException(pse);
 		}
 
-		customerConfiguration = customerWebServiceConfigurationDao.getWsEnabledConfiguration(MethodType.POST);
+		customerConfiguration = customerWebServiceConfigurationService.getWsEnabledConfiguration(MethodType.POST);
 		if (customerConfiguration != null)
 		{
 			super.changeUid(newUid, currentPassword);
@@ -149,7 +151,7 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 	public void updateProfile(final CustomerData customerData) throws DuplicateUidException
 	{
 		validateDataBeforeUpdate(customerData);
-		customerConfiguration = customerWebServiceConfigurationDao.getWsEnabledConfiguration(MethodType.POST);
+		customerConfiguration = customerWebServiceConfigurationService.getWsEnabledConfiguration(MethodType.POST);
 		if (customerConfiguration != null)
 		{
 			if (customerConfiguration.getMode().equals(ModeType.ONLYWITHWEBSERVICE))
@@ -189,7 +191,7 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 		customerData.setDisplayUid(registerData.getLogin());
 		customerData.setUid(registerData.getLogin());
 
-		customerConfiguration = customerWebServiceConfigurationDao.getWsEnabledConfiguration(MethodType.POST);
+		customerConfiguration = customerWebServiceConfigurationService.getWsEnabledConfiguration(MethodType.POST);
 		if (customerConfiguration != null)
 		{
 			if (customerConfiguration.getMode().equals(ModeType.WEBSERVICENATIVE))

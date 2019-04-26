@@ -116,7 +116,8 @@ public class DefaultOrderWebServiceConfigurationFacade implements OrderWebServic
 		{
 			if (om.getMethod().equals(MethodType.GET))
 			{
-				wsResponse = wsInvoke.getRequest(om.getUrl(), params, om.getAccept());
+				wsResponse = wsInvoke.getRequest(om.getUrl(), params, orderWebServiceConfigurationService.prepareHeadersParams(om),
+						om.getAccept());
 			}
 			else if (om.getMethod().equals(MethodType.POST))
 			{

@@ -23,7 +23,7 @@ public abstract class AbstractWebServiceConfigurationService implements WebServi
 {
 
 	@Override
-	public Map<String, String> prepareSecurityParams(final WebServiceConfigurationModel configuration)
+	public Map<String, String> prepareHeadersParams(final WebServiceConfigurationModel configuration)
 	{
 		final Collection<PersoWSParamModel> extraSecurityParams = configuration.getSecurityParameters();
 		final Map<String, String> response = new HashMap<>();
@@ -52,7 +52,6 @@ public abstract class AbstractWebServiceConfigurationService implements WebServi
 		}
 		return response;
 	}
-
 
 
 }

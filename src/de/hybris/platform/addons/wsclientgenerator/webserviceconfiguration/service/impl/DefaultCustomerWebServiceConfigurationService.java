@@ -18,7 +18,7 @@ import javax.annotation.Resource;
  * @author Ahmed-LAJMI
  *
  */
-public class DefaultCustomerWebServiceConfigurationService extends WebServiceConfigurationService
+public class DefaultCustomerWebServiceConfigurationService extends AbstractWebServiceConfigurationService
 		implements CustomerWebServiceConfigurationService
 {
 

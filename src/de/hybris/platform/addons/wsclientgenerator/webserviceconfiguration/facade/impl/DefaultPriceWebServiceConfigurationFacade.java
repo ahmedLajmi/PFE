@@ -116,7 +116,8 @@ public class DefaultPriceWebServiceConfigurationFacade implements PriceWebServic
 		{
 			if (pm.getMethod().equals(MethodType.GET))
 			{
-				wsResponse = wsInvoke.getRequest(pm.getUrl(), params, pm.getAccept());
+				wsResponse = wsInvoke.getRequest(pm.getUrl(), params, priceWebServiceConfigurationService.prepareHeadersParams(pm),
+						pm.getAccept());
 			}
 			else if (pm.getMethod().equals(MethodType.POST))
 			{
