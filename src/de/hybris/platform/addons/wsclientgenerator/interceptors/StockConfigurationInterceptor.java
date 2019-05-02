@@ -4,14 +4,12 @@
 package de.hybris.platform.addons.wsclientgenerator.interceptors;
 
 import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
-import de.hybris.platform.addons.wsclientgenerator.enums.ResponseType;
+import de.hybris.platform.addons.wsclientgenerator.enums.RequestType;
 import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceConfigurationModel;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.StockWebServiceConfigurationDao;
-import de.hybris.platform.servicelayer.event.EventService;
 import de.hybris.platform.servicelayer.i18n.L10NService;
 import de.hybris.platform.servicelayer.interceptor.InterceptorContext;
 import de.hybris.platform.servicelayer.interceptor.InterceptorException;
-import de.hybris.platform.servicelayer.interceptor.PrepareInterceptor;
 import de.hybris.platform.servicelayer.interceptor.ValidateInterceptor;
 
 import javax.annotation.Resource;
@@ -24,11 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Ahmed-LAJMI
  *
  */
-public class StockConfigurationEnabledInterceptor implements ValidateInterceptor, PrepareInterceptor
+public class StockConfigurationInterceptor implements ValidateInterceptor
 {
-
-	@Autowired
-	private EventService eventService;
 
 	private L10NService l10NService;
 
@@ -53,49 +48,18 @@ public class StockConfigurationEnabledInterceptor implements ValidateInterceptor
 					throw new InterceptorException(getL10NService().getLocalizedString("unique.configuration"));
 				}
 			}
-
-			if (stockConfiguration.getMethod() != null && stockConfiguration.getMethod().equals(MethodType.GET)
-					&& StringUtils.isEmpty(stockConfiguration.getStockKey()))
+			if (stockConfiguration.getMethod().equals(MethodType.POST))
 			{
-				throw new InterceptorException(getL10NService().getLocalizedString("empty.key"));
-			}
-
-			if (stockConfiguration.getMethod() != null && stockConfiguration.getMethod().equals(MethodType.POST)
-					&& stockConfiguration.getContentType() == null)
-			{
-				throw new InterceptorException(getL10NService().getLocalizedString("empty.contentType"));
-			}
-			if (stockConfiguration.getAccept().equals(ResponseType.TEXT))
-			{
-				if (stockConfiguration.getTextSeperator() == null || stockConfiguration.getTextSeperator().isEmpty())
+				if (stockConfiguration.getContentType() == null)
 				{
-					throw new InterceptorException(getL10NService().getLocalizedString("empty.seperator"));
+					throw new InterceptorException(getL10NService().getLocalizedString("empty.contentType"));
 				}
-				else if (stockConfiguration.getTextSeperator().length() > 1)
+				else if (stockConfiguration.getContentType().equals(RequestType.XML) && stockConfiguration.getRootKey() == null)
 				{
-					throw new InterceptorException(getL10NService().getLocalizedString("invalid.seperator"));
-				}
-				try
-				{
-					Integer.parseInt(stockConfiguration.getStockKey());
-				}
-				catch (final Exception e)
-				{
-					throw new InterceptorException(getL10NService().getLocalizedString("invalid.key"));
+					throw new InterceptorException(getL10NService().getLocalizedString("empty.rootKey"));
 				}
 			}
-			/*
-			 * if (stockConfiguration.getId() == null || stockConfiguration.getId().isEmpty()) {
-			 * stockConfiguration.setId(UUID.randomUUID().toString()); }
-			 */
 		}
-	}
-
-
-	@Override
-	public void onPrepare(final Object model, final InterceptorContext ctx) throws InterceptorException
-	{
-		//
 	}
 
 	private L10NService getL10NService()

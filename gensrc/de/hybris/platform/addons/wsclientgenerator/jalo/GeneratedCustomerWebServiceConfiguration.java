@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 26 avr. 2019 11:07:06                       ---
+ * --- Generated at 2 mai 2019 13:28:40                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -19,6 +19,7 @@ package de.hybris.platform.addons.wsclientgenerator.jalo;
 
 import de.hybris.platform.addons.wsclientgenerator.constants.WsclientgeneratorConstants;
 import de.hybris.platform.addons.wsclientgenerator.jalo.CustomerWebServiceParameter;
+import de.hybris.platform.addons.wsclientgenerator.jalo.CustomerWebServiceResponse;
 import de.hybris.platform.addons.wsclientgenerator.jalo.WebServiceConfiguration;
 import de.hybris.platform.jalo.Item.AttributeMode;
 import de.hybris.platform.jalo.SessionContext;
@@ -35,18 +36,12 @@ import java.util.Map;
 @SuppressWarnings({"deprecation","unused","cast","PMD"})
 public abstract class GeneratedCustomerWebServiceConfiguration extends WebServiceConfiguration
 {
-	/** Qualifier of the <code>CustomerWebServiceConfiguration.firstNameKey</code> attribute **/
-	public static final String FIRSTNAMEKEY = "firstNameKey";
-	/** Qualifier of the <code>CustomerWebServiceConfiguration.lastNameKey</code> attribute **/
-	public static final String LASTNAMEKEY = "lastNameKey";
-	/** Qualifier of the <code>CustomerWebServiceConfiguration.emailKey</code> attribute **/
-	public static final String EMAILKEY = "emailKey";
-	/** Qualifier of the <code>CustomerWebServiceConfiguration.titleKey</code> attribute **/
-	public static final String TITLEKEY = "titleKey";
-	/** Qualifier of the <code>CustomerWebServiceConfiguration.clientCode</code> attribute **/
-	public static final String CLIENTCODE = "clientCode";
 	/** Qualifier of the <code>CustomerWebServiceConfiguration.parameters</code> attribute **/
 	public static final String PARAMETERS = "parameters";
+	/** Qualifier of the <code>CustomerWebServiceConfiguration.pathParameters</code> attribute **/
+	public static final String PATHPARAMETERS = "pathParameters";
+	/** Qualifier of the <code>CustomerWebServiceConfiguration.responseMapping</code> attribute **/
+	public static final String RESPONSEMAPPING = "responseMapping";
 	/**
 	* {@link OneToManyHandler} for handling 1:n PARAMETERS's relation attributes from 'many' side.
 	**/
@@ -59,202 +54,40 @@ public abstract class GeneratedCustomerWebServiceConfiguration extends WebServic
 	true,
 	CollectionType.COLLECTION
 	);
+	/**
+	* {@link OneToManyHandler} for handling 1:n PATHPARAMETERS's relation attributes from 'many' side.
+	**/
+	protected static final OneToManyHandler<CustomerWebServiceParameter> PATHPARAMETERSHANDLER = new OneToManyHandler<CustomerWebServiceParameter>(
+	WsclientgeneratorConstants.TC.CUSTOMERWEBSERVICEPARAMETER,
+	false,
+	"customerConfiguration",
+	null,
+	false,
+	true,
+	CollectionType.COLLECTION
+	);
+	/**
+	* {@link OneToManyHandler} for handling 1:n RESPONSEMAPPING's relation attributes from 'many' side.
+	**/
+	protected static final OneToManyHandler<CustomerWebServiceResponse> RESPONSEMAPPINGHANDLER = new OneToManyHandler<CustomerWebServiceResponse>(
+	WsclientgeneratorConstants.TC.CUSTOMERWEBSERVICERESPONSE,
+	false,
+	"customerConfiguration",
+	null,
+	false,
+	true,
+	CollectionType.COLLECTION
+	);
 	protected static final Map<String, AttributeMode> DEFAULT_INITIAL_ATTRIBUTES;
 	static
 	{
 		final Map<String, AttributeMode> tmp = new HashMap<String, AttributeMode>(WebServiceConfiguration.DEFAULT_INITIAL_ATTRIBUTES);
-		tmp.put(FIRSTNAMEKEY, AttributeMode.INITIAL);
-		tmp.put(LASTNAMEKEY, AttributeMode.INITIAL);
-		tmp.put(EMAILKEY, AttributeMode.INITIAL);
-		tmp.put(TITLEKEY, AttributeMode.INITIAL);
-		tmp.put(CLIENTCODE, AttributeMode.INITIAL);
 		DEFAULT_INITIAL_ATTRIBUTES = Collections.unmodifiableMap(tmp);
 	}
 	@Override
 	protected Map<String, AttributeMode> getDefaultAttributeModes()
 	{
 		return DEFAULT_INITIAL_ATTRIBUTES;
-	}
-	
-	/**
-	 * <i>Generated method</i> - Getter of the <code>CustomerWebServiceConfiguration.clientCode</code> attribute.
-	 * @return the clientCode
-	 */
-	public Boolean isClientCode(final SessionContext ctx)
-	{
-		return (Boolean)getProperty( ctx, CLIENTCODE);
-	}
-	
-	/**
-	 * <i>Generated method</i> - Getter of the <code>CustomerWebServiceConfiguration.clientCode</code> attribute.
-	 * @return the clientCode
-	 */
-	public Boolean isClientCode()
-	{
-		return isClientCode( getSession().getSessionContext() );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Getter of the <code>CustomerWebServiceConfiguration.clientCode</code> attribute. 
-	 * @return the clientCode
-	 */
-	public boolean isClientCodeAsPrimitive(final SessionContext ctx)
-	{
-		Boolean value = isClientCode( ctx );
-		return value != null ? value.booleanValue() : false;
-	}
-	
-	/**
-	 * <i>Generated method</i> - Getter of the <code>CustomerWebServiceConfiguration.clientCode</code> attribute. 
-	 * @return the clientCode
-	 */
-	public boolean isClientCodeAsPrimitive()
-	{
-		return isClientCodeAsPrimitive( getSession().getSessionContext() );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Setter of the <code>CustomerWebServiceConfiguration.clientCode</code> attribute. 
-	 * @param value the clientCode
-	 */
-	public void setClientCode(final SessionContext ctx, final Boolean value)
-	{
-		setProperty(ctx, CLIENTCODE,value);
-	}
-	
-	/**
-	 * <i>Generated method</i> - Setter of the <code>CustomerWebServiceConfiguration.clientCode</code> attribute. 
-	 * @param value the clientCode
-	 */
-	public void setClientCode(final Boolean value)
-	{
-		setClientCode( getSession().getSessionContext(), value );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Setter of the <code>CustomerWebServiceConfiguration.clientCode</code> attribute. 
-	 * @param value the clientCode
-	 */
-	public void setClientCode(final SessionContext ctx, final boolean value)
-	{
-		setClientCode( ctx,Boolean.valueOf( value ) );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Setter of the <code>CustomerWebServiceConfiguration.clientCode</code> attribute. 
-	 * @param value the clientCode
-	 */
-	public void setClientCode(final boolean value)
-	{
-		setClientCode( getSession().getSessionContext(), value );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Getter of the <code>CustomerWebServiceConfiguration.emailKey</code> attribute.
-	 * @return the emailKey
-	 */
-	public String getEmailKey(final SessionContext ctx)
-	{
-		return (String)getProperty( ctx, EMAILKEY);
-	}
-	
-	/**
-	 * <i>Generated method</i> - Getter of the <code>CustomerWebServiceConfiguration.emailKey</code> attribute.
-	 * @return the emailKey
-	 */
-	public String getEmailKey()
-	{
-		return getEmailKey( getSession().getSessionContext() );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Setter of the <code>CustomerWebServiceConfiguration.emailKey</code> attribute. 
-	 * @param value the emailKey
-	 */
-	public void setEmailKey(final SessionContext ctx, final String value)
-	{
-		setProperty(ctx, EMAILKEY,value);
-	}
-	
-	/**
-	 * <i>Generated method</i> - Setter of the <code>CustomerWebServiceConfiguration.emailKey</code> attribute. 
-	 * @param value the emailKey
-	 */
-	public void setEmailKey(final String value)
-	{
-		setEmailKey( getSession().getSessionContext(), value );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Getter of the <code>CustomerWebServiceConfiguration.firstNameKey</code> attribute.
-	 * @return the firstNameKey
-	 */
-	public String getFirstNameKey(final SessionContext ctx)
-	{
-		return (String)getProperty( ctx, FIRSTNAMEKEY);
-	}
-	
-	/**
-	 * <i>Generated method</i> - Getter of the <code>CustomerWebServiceConfiguration.firstNameKey</code> attribute.
-	 * @return the firstNameKey
-	 */
-	public String getFirstNameKey()
-	{
-		return getFirstNameKey( getSession().getSessionContext() );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Setter of the <code>CustomerWebServiceConfiguration.firstNameKey</code> attribute. 
-	 * @param value the firstNameKey
-	 */
-	public void setFirstNameKey(final SessionContext ctx, final String value)
-	{
-		setProperty(ctx, FIRSTNAMEKEY,value);
-	}
-	
-	/**
-	 * <i>Generated method</i> - Setter of the <code>CustomerWebServiceConfiguration.firstNameKey</code> attribute. 
-	 * @param value the firstNameKey
-	 */
-	public void setFirstNameKey(final String value)
-	{
-		setFirstNameKey( getSession().getSessionContext(), value );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Getter of the <code>CustomerWebServiceConfiguration.lastNameKey</code> attribute.
-	 * @return the lastNameKey
-	 */
-	public String getLastNameKey(final SessionContext ctx)
-	{
-		return (String)getProperty( ctx, LASTNAMEKEY);
-	}
-	
-	/**
-	 * <i>Generated method</i> - Getter of the <code>CustomerWebServiceConfiguration.lastNameKey</code> attribute.
-	 * @return the lastNameKey
-	 */
-	public String getLastNameKey()
-	{
-		return getLastNameKey( getSession().getSessionContext() );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Setter of the <code>CustomerWebServiceConfiguration.lastNameKey</code> attribute. 
-	 * @param value the lastNameKey
-	 */
-	public void setLastNameKey(final SessionContext ctx, final String value)
-	{
-		setProperty(ctx, LASTNAMEKEY,value);
-	}
-	
-	/**
-	 * <i>Generated method</i> - Setter of the <code>CustomerWebServiceConfiguration.lastNameKey</code> attribute. 
-	 * @param value the lastNameKey
-	 */
-	public void setLastNameKey(final String value)
-	{
-		setLastNameKey( getSession().getSessionContext(), value );
 	}
 	
 	/**
@@ -330,39 +163,147 @@ public abstract class GeneratedCustomerWebServiceConfiguration extends WebServic
 	}
 	
 	/**
-	 * <i>Generated method</i> - Getter of the <code>CustomerWebServiceConfiguration.titleKey</code> attribute.
-	 * @return the titleKey
+	 * <i>Generated method</i> - Getter of the <code>CustomerWebServiceConfiguration.pathParameters</code> attribute.
+	 * @return the pathParameters
 	 */
-	public String getTitleKey(final SessionContext ctx)
+	public Collection<CustomerWebServiceParameter> getPathParameters(final SessionContext ctx)
 	{
-		return (String)getProperty( ctx, TITLEKEY);
+		return PATHPARAMETERSHANDLER.getValues( ctx, this );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Getter of the <code>CustomerWebServiceConfiguration.titleKey</code> attribute.
-	 * @return the titleKey
+	 * <i>Generated method</i> - Getter of the <code>CustomerWebServiceConfiguration.pathParameters</code> attribute.
+	 * @return the pathParameters
 	 */
-	public String getTitleKey()
+	public Collection<CustomerWebServiceParameter> getPathParameters()
 	{
-		return getTitleKey( getSession().getSessionContext() );
+		return getPathParameters( getSession().getSessionContext() );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Setter of the <code>CustomerWebServiceConfiguration.titleKey</code> attribute. 
-	 * @param value the titleKey
+	 * <i>Generated method</i> - Setter of the <code>CustomerWebServiceConfiguration.pathParameters</code> attribute. 
+	 * @param value the pathParameters
 	 */
-	public void setTitleKey(final SessionContext ctx, final String value)
+	public void setPathParameters(final SessionContext ctx, final Collection<CustomerWebServiceParameter> value)
 	{
-		setProperty(ctx, TITLEKEY,value);
+		PATHPARAMETERSHANDLER.setValues( ctx, this, value );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Setter of the <code>CustomerWebServiceConfiguration.titleKey</code> attribute. 
-	 * @param value the titleKey
+	 * <i>Generated method</i> - Setter of the <code>CustomerWebServiceConfiguration.pathParameters</code> attribute. 
+	 * @param value the pathParameters
 	 */
-	public void setTitleKey(final String value)
+	public void setPathParameters(final Collection<CustomerWebServiceParameter> value)
 	{
-		setTitleKey( getSession().getSessionContext(), value );
+		setPathParameters( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Adds <code>value</code> to pathParameters. 
+	 * @param value the item to add to pathParameters
+	 */
+	public void addToPathParameters(final SessionContext ctx, final CustomerWebServiceParameter value)
+	{
+		PATHPARAMETERSHANDLER.addValue( ctx, this, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Adds <code>value</code> to pathParameters. 
+	 * @param value the item to add to pathParameters
+	 */
+	public void addToPathParameters(final CustomerWebServiceParameter value)
+	{
+		addToPathParameters( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Removes <code>value</code> from pathParameters. 
+	 * @param value the item to remove from pathParameters
+	 */
+	public void removeFromPathParameters(final SessionContext ctx, final CustomerWebServiceParameter value)
+	{
+		PATHPARAMETERSHANDLER.removeValue( ctx, this, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Removes <code>value</code> from pathParameters. 
+	 * @param value the item to remove from pathParameters
+	 */
+	public void removeFromPathParameters(final CustomerWebServiceParameter value)
+	{
+		removeFromPathParameters( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>CustomerWebServiceConfiguration.responseMapping</code> attribute.
+	 * @return the responseMapping
+	 */
+	public Collection<CustomerWebServiceResponse> getResponseMapping(final SessionContext ctx)
+	{
+		return RESPONSEMAPPINGHANDLER.getValues( ctx, this );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>CustomerWebServiceConfiguration.responseMapping</code> attribute.
+	 * @return the responseMapping
+	 */
+	public Collection<CustomerWebServiceResponse> getResponseMapping()
+	{
+		return getResponseMapping( getSession().getSessionContext() );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>CustomerWebServiceConfiguration.responseMapping</code> attribute. 
+	 * @param value the responseMapping
+	 */
+	public void setResponseMapping(final SessionContext ctx, final Collection<CustomerWebServiceResponse> value)
+	{
+		RESPONSEMAPPINGHANDLER.setValues( ctx, this, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>CustomerWebServiceConfiguration.responseMapping</code> attribute. 
+	 * @param value the responseMapping
+	 */
+	public void setResponseMapping(final Collection<CustomerWebServiceResponse> value)
+	{
+		setResponseMapping( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Adds <code>value</code> to responseMapping. 
+	 * @param value the item to add to responseMapping
+	 */
+	public void addToResponseMapping(final SessionContext ctx, final CustomerWebServiceResponse value)
+	{
+		RESPONSEMAPPINGHANDLER.addValue( ctx, this, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Adds <code>value</code> to responseMapping. 
+	 * @param value the item to add to responseMapping
+	 */
+	public void addToResponseMapping(final CustomerWebServiceResponse value)
+	{
+		addToResponseMapping( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Removes <code>value</code> from responseMapping. 
+	 * @param value the item to remove from responseMapping
+	 */
+	public void removeFromResponseMapping(final SessionContext ctx, final CustomerWebServiceResponse value)
+	{
+		RESPONSEMAPPINGHANDLER.removeValue( ctx, this, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Removes <code>value</code> from responseMapping. 
+	 * @param value the item to remove from responseMapping
+	 */
+	public void removeFromResponseMapping(final CustomerWebServiceResponse value)
+	{
+		removeFromResponseMapping( getSession().getSessionContext(), value );
 	}
 	
 }

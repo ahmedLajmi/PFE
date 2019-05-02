@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 26 avr. 2019 11:07:06                       ---
+ * --- Generated at 2 mai 2019 13:28:40                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -42,6 +42,8 @@ public abstract class GeneratedCustomerWebServiceParameter extends WebServicePar
 	public static final String VALUE = "value";
 	/** Qualifier of the <code>CustomerWebServiceParameter.configuration</code> attribute **/
 	public static final String CONFIGURATION = "configuration";
+	/** Qualifier of the <code>CustomerWebServiceParameter.customerConfiguration</code> attribute **/
+	public static final String CUSTOMERCONFIGURATION = "customerConfiguration";
 	/**
 	* {@link BidirectionalOneToManyHandler} for handling 1:n CONFIGURATION's relation attributes from 'one' side.
 	**/
@@ -54,12 +56,25 @@ public abstract class GeneratedCustomerWebServiceParameter extends WebServicePar
 	true,
 	CollectionType.COLLECTION
 	);
+	/**
+	* {@link BidirectionalOneToManyHandler} for handling 1:n CUSTOMERCONFIGURATION's relation attributes from 'one' side.
+	**/
+	protected static final BidirectionalOneToManyHandler<GeneratedCustomerWebServiceParameter> CUSTOMERCONFIGURATIONHANDLER = new BidirectionalOneToManyHandler<GeneratedCustomerWebServiceParameter>(
+	WsclientgeneratorConstants.TC.CUSTOMERWEBSERVICEPARAMETER,
+	false,
+	"customerConfiguration",
+	null,
+	false,
+	true,
+	CollectionType.COLLECTION
+	);
 	protected static final Map<String, AttributeMode> DEFAULT_INITIAL_ATTRIBUTES;
 	static
 	{
 		final Map<String, AttributeMode> tmp = new HashMap<String, AttributeMode>(WebServiceParameter.DEFAULT_INITIAL_ATTRIBUTES);
 		tmp.put(VALUE, AttributeMode.INITIAL);
 		tmp.put(CONFIGURATION, AttributeMode.INITIAL);
+		tmp.put(CUSTOMERCONFIGURATION, AttributeMode.INITIAL);
 		DEFAULT_INITIAL_ATTRIBUTES = Collections.unmodifiableMap(tmp);
 	}
 	@Override
@@ -108,7 +123,44 @@ public abstract class GeneratedCustomerWebServiceParameter extends WebServicePar
 	protected Item createItem(final SessionContext ctx, final ComposedType type, final ItemAttributeMap allAttributes) throws JaloBusinessException
 	{
 		CONFIGURATIONHANDLER.newInstance(ctx, allAttributes);
+		CUSTOMERCONFIGURATIONHANDLER.newInstance(ctx, allAttributes);
 		return super.createItem( ctx, type, allAttributes );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>CustomerWebServiceParameter.customerConfiguration</code> attribute.
+	 * @return the customerConfiguration
+	 */
+	public CustomerWebServiceConfiguration getCustomerConfiguration(final SessionContext ctx)
+	{
+		return (CustomerWebServiceConfiguration)getProperty( ctx, CUSTOMERCONFIGURATION);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>CustomerWebServiceParameter.customerConfiguration</code> attribute.
+	 * @return the customerConfiguration
+	 */
+	public CustomerWebServiceConfiguration getCustomerConfiguration()
+	{
+		return getCustomerConfiguration( getSession().getSessionContext() );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>CustomerWebServiceParameter.customerConfiguration</code> attribute. 
+	 * @param value the customerConfiguration
+	 */
+	public void setCustomerConfiguration(final SessionContext ctx, final CustomerWebServiceConfiguration value)
+	{
+		CUSTOMERCONFIGURATIONHANDLER.addValue( ctx, value, this  );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>CustomerWebServiceParameter.customerConfiguration</code> attribute. 
+	 * @param value the customerConfiguration
+	 */
+	public void setCustomerConfiguration(final CustomerWebServiceConfiguration value)
+	{
+		setCustomerConfiguration( getSession().getSessionContext(), value );
 	}
 	
 	/**

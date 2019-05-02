@@ -75,7 +75,17 @@
 						<listlayout>
 							<attribute name="login" />
 							<attribute name="password" />
-							<attribute name="SecurityParameters">
+						</listlayout>
+					</section>
+					<section name="section.order">
+						<listlayout>
+							<attribute name="mode" />
+						</listlayout>
+					</section>
+					<section name="section.headers">
+						<listlayout>
+							<attribute name="accept" />
+							<attribute name="headersParameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
 									create="true" autosave="true">
@@ -87,29 +97,14 @@
 											</editor>
 										</attribute>
 										<attribute name="value" width="80">
-											<editor
-												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
-												<parameter key="align" value="right" />
-											</editor>
 										</attribute>
 									</itemeditorlayout>
 								</referencecollectioneditor>
 							</attribute>
 						</listlayout>
 					</section>
-					<section name="section.order">
-						<listlayout>
-							<attribute name="mode" />
-						</listlayout>
-					</section>
-					<section name="section.meta">
-						<listlayout>
-							<attribute name="accept" />
-						</listlayout>
-					</section>
 					<section name="section.param">
 						<listlayout>
-							<attribute name="productCode" />
 							<attribute name="parameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
@@ -154,8 +149,22 @@
 					</section>
 					<section name="section.response">
 						<listlayout>
-							<attribute name="priceKey" />
-							<attribute name="currencyKey" />
+							<attribute name="responseMapping">
+								<referencecollectioneditor
+									editable="true" externalcreate="false" remove="true"
+									create="true" autosave="true">
+									<itemeditorlayout>
+										<attribute name="key" width="77">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+										<attribute name="value" width="80">
+										</attribute>
+									</itemeditorlayout>
+								</referencecollectioneditor>
+							</attribute>
 							<attribute name="responseTemplate">
 								<textareaeditor />
 							</attribute>
@@ -200,7 +209,18 @@
 						<listlayout>
 							<attribute name="login" />
 							<attribute name="password" />
-							<attribute name="SecurityParameters">
+						</listlayout>
+					</section>
+					<section name="section.order">
+						<listlayout>
+							<attribute name="mode" />
+						</listlayout>
+					</section>
+					<section name="section.headers">
+						<listlayout>
+							<attribute name="accept" />
+							<attribute name="contentType" />
+							<attribute name="headersParameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
 									create="true" autosave="true">
@@ -212,30 +232,14 @@
 											</editor>
 										</attribute>
 										<attribute name="value" width="80">
-											<editor
-												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
-												<parameter key="align" value="right" />
-											</editor>
 										</attribute>
 									</itemeditorlayout>
 								</referencecollectioneditor>
 							</attribute>
 						</listlayout>
 					</section>
-					<section name="section.order">
-						<listlayout>
-							<attribute name="mode" />
-						</listlayout>
-					</section>
-					<section name="section.meta">
-						<listlayout>
-							<attribute name="accept" />
-							<attribute name="contentType" />
-						</listlayout>
-					</section>
 					<section name="section.param">
 						<listlayout>
-							<attribute name="productCode" />
 							<attribute name="rootKey" />
 							<attribute name="parameters">
 								<referencecollectioneditor
@@ -282,7 +286,23 @@
 					</section>
 					<section name="section.response">
 						<listlayout>
-							<attribute name="stockKey" />
+							<attribute name="responseMapping">
+								<referencecollectioneditor
+									editable="true" externalcreate="false" remove="true"
+									create="true" autosave="true">
+									<itemeditorlayout>
+
+										<attribute name="key" width="77">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+										<attribute name="value" width="80">
+										</attribute>
+									</itemeditorlayout>
+								</referencecollectioneditor>
+							</attribute>
 							<attribute name="responseTemplate">
 								<textareaeditor />
 							</attribute>
@@ -327,7 +347,18 @@
 						<listlayout>
 							<attribute name="login" />
 							<attribute name="password" />
-							<attribute name="SecurityParameters">
+						</listlayout>
+					</section>
+					<section name="section.order">
+						<listlayout>
+							<attribute name="mode" />
+						</listlayout>
+					</section>
+					<section name="section.headers">
+						<listlayout>
+							<attribute name="accept" />
+							<attribute name="contentType" />
+							<attribute name="headersParameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
 									create="true" autosave="true">
@@ -339,30 +370,14 @@
 											</editor>
 										</attribute>
 										<attribute name="value" width="80">
-											<editor
-												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
-												<parameter key="align" value="right" />
-											</editor>
 										</attribute>
 									</itemeditorlayout>
 								</referencecollectioneditor>
 							</attribute>
 						</listlayout>
 					</section>
-					<section name="section.order">
-						<listlayout>
-							<attribute name="mode" />
-						</listlayout>
-					</section>
-					<section name="section.meta">
-						<listlayout>
-							<attribute name="accept" />
-							<attribute name="contentType" />
-						</listlayout>
-					</section>
 					<section name="section.param">
 						<listlayout>
-							<attribute name="orderCode" />
 							<attribute name="rootKey" />
 							<attribute name="parameters">
 								<referencecollectioneditor
@@ -409,7 +424,23 @@
 					</section>
 					<section name="section.response">
 						<listlayout>
-							<attribute name="statusKey" />
+							<attribute name="responseMapping">
+								<referencecollectioneditor
+									editable="true" externalcreate="false" remove="true"
+									create="true" autosave="true">
+									<itemeditorlayout>
+
+										<attribute name="key" width="77">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+										<attribute name="value" width="80">
+										</attribute>
+									</itemeditorlayout>
+								</referencecollectioneditor>
+							</attribute>
 							<attribute name="responseTemplate">
 								<textareaeditor />
 							</attribute>
@@ -447,6 +478,22 @@
 						<attribute name="url" />
 						<attribute name="method" />
 						<attribute name="enable" />
+						<attribute name="pathParameters">
+							<referencecollectioneditor
+								editable="true" externalcreate="false" remove="true"
+								create="true" autosave="true">
+								<itemeditorlayout>
+									<attribute name="key" width="77">
+										<editor
+											classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+											<parameter key="align" value="right" />
+										</editor>
+									</attribute>
+									<attribute name="value" width="80">
+									</attribute>
+								</itemeditorlayout>
+							</referencecollectioneditor>
+						</attribute>
 					</listlayout>
 				</essentials>
 				<tab name="tab.CustomerWebServiceConfiguration">
@@ -454,7 +501,18 @@
 						<listlayout>
 							<attribute name="login" />
 							<attribute name="password" />
-							<attribute name="SecurityParameters">
+						</listlayout>
+					</section>
+					<section name="section.order">
+						<listlayout>
+							<attribute name="mode" />
+						</listlayout>
+					</section>
+					<section name="section.headers">
+						<listlayout>
+							<attribute name="accept" />
+							<attribute name="contentType" />
+							<attribute name="headersParameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
 									create="true" autosave="true">
@@ -476,20 +534,8 @@
 							</attribute>
 						</listlayout>
 					</section>
-					<section name="section.order">
-						<listlayout>
-							<attribute name="mode" />
-						</listlayout>
-					</section>
-					<section name="section.meta">
-						<listlayout>
-							<attribute name="accept" />
-							<attribute name="contentType" />
-						</listlayout>
-					</section>
 					<section name="section.param">
 						<listlayout>
-							<attribute name="clientCode" />
 							<attribute name="rootKey" />
 							<attribute name="parameters">
 								<referencecollectioneditor
@@ -536,10 +582,23 @@
 					</section>
 					<section name="section.response">
 						<listlayout>
-							<attribute name="titleKey" />
-							<attribute name="firstNameKey" />
-							<attribute name="lastNameKey" />
-							<attribute name="emailKey" />
+							<attribute name="responseMapping">
+								<referencecollectioneditor
+									editable="true" externalcreate="false" remove="true"
+									create="true" autosave="true">
+									<itemeditorlayout>
+
+										<attribute name="key" width="77">
+											<editor
+												classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+												<parameter key="align" value="right" />
+											</editor>
+										</attribute>
+										<attribute name="value" width="80">
+										</attribute>
+									</itemeditorlayout>
+								</referencecollectioneditor>
+							</attribute>
 							<attribute name="responseTemplate">
 								<textareaeditor />
 							</attribute>

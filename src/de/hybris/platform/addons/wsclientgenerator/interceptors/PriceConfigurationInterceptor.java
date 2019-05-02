@@ -3,14 +3,12 @@
  */
 package de.hybris.platform.addons.wsclientgenerator.interceptors;
 
-import de.hybris.platform.addons.wsclientgenerator.enums.ResponseType;
 import de.hybris.platform.addons.wsclientgenerator.model.PriceWebServiceConfigurationModel;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.PriceWebServiceConfigurationDao;
 import de.hybris.platform.servicelayer.event.EventService;
 import de.hybris.platform.servicelayer.i18n.L10NService;
 import de.hybris.platform.servicelayer.interceptor.InterceptorContext;
 import de.hybris.platform.servicelayer.interceptor.InterceptorException;
-import de.hybris.platform.servicelayer.interceptor.PrepareInterceptor;
 import de.hybris.platform.servicelayer.interceptor.ValidateInterceptor;
 
 import javax.annotation.Resource;
@@ -23,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Ahmed-LAJMI
  *
  */
-public class PriceConfigurationEnabledInterceptor implements ValidateInterceptor, PrepareInterceptor
+public class PriceConfigurationInterceptor implements ValidateInterceptor
 {
 
 	@Autowired
@@ -51,41 +49,8 @@ public class PriceConfigurationEnabledInterceptor implements ValidateInterceptor
 				}
 			}
 
-			if (priceConfiguration.getAccept().equals(ResponseType.TEXT))
-			{
-				if (priceConfiguration.getTextSeperator() == null || priceConfiguration.getTextSeperator().isEmpty())
-				{
-					throw new InterceptorException(getL10NService().getLocalizedString("empty.seperator"));
-				}
-				else if (priceConfiguration.getTextSeperator().length() > 1)
-				{
-					throw new InterceptorException(getL10NService().getLocalizedString("invalid.seperator"));
-				}
-				try
-				{
-					Integer.parseInt(priceConfiguration.getPriceKey());
-					if (priceConfiguration.getCurrencyKey() != null)
-					{
-						Integer.parseInt(priceConfiguration.getCurrencyKey());
-					}
-				}
-				catch (final Exception e)
-				{
-					throw new InterceptorException(getL10NService().getLocalizedString("invalid.key"));
-				}
-			}
 
-			/*
-			 * if (priceConfiguration.getId() == null || priceConfiguration.getId().isEmpty()) {
-			 * priceConfiguration.setId(UUID.randomUUID().toString()); }
-			 */
 		}
-	}
-
-	@Override
-	public void onPrepare(final Object model, final InterceptorContext ctx) throws InterceptorException
-	{
-		//
 	}
 
 	private L10NService getL10NService()

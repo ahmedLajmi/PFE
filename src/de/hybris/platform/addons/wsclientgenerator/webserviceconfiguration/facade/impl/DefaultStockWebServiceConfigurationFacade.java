@@ -16,17 +16,18 @@ import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceParamete
 import de.hybris.platform.addons.wsclientgenerator.tools.WSInvoke;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.facade.StockWebServiceConfigurationFacade;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.service.StockWebServiceConfigurationService;
+import de.hybris.platform.enumeration.EnumerationService;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
 
 
 /**
@@ -37,7 +38,10 @@ public class DefaultStockWebServiceConfigurationFacade implements StockWebServic
 {
 
 	@Resource(name = "stockWebServiceConfigurationService")
-	private StockWebServiceConfigurationService stockWebServiceConfigurationService;
+	private StockWebServiceConfigurationService stockWsConfService;
+
+	@Resource(name = "enumerationService")
+	private EnumerationService enumerationService;
 
 	private static final Logger LOG = Logger.getLogger(DefaultStockWebServiceConfigurationFacade.class);
 
@@ -45,26 +49,38 @@ public class DefaultStockWebServiceConfigurationFacade implements StockWebServic
 	@Override
 	public WebServiceConfigurationDetailsData getConfigurationDetails(final String id)
 	{
-		final StockWebServiceConfigurationModel sm = stockWebServiceConfigurationService.findStockWsConfiguration(id);
+		final StockWebServiceConfigurationModel sm = stockWsConfService.findStockWsConfiguration(id);
 		final WebServiceConfigurationDetailsData cd = new WebServiceConfigurationDetailsData();
 		cd.setId(sm.getPk().toString());
 		cd.setName(sm.getName());
 
 		cd.setUrl(sm.getUrl());
 		cd.setDescription(sm.getDescription());
-		cd.setMethod(sm.getMethod().toString());
+		cd.setMethod(enumerationService.getEnumerationName(sm.getMethod()));
 		cd.setEnable(sm.getEnable().booleanValue());
-		final List<WebServiceParameterData> params = new ArrayList<>();
+		final List<WebServiceParameterData> pathParams = new ArrayList<>();
+		final List<WebServiceParameterData> queryParams = new ArrayList<>();
 		final List<WebServiceParameterData> persoParams = new ArrayList<>();
 		final List<WebServiceParameterData> securityParams = new ArrayList<>();
+
 		for (final StockWebServiceParameterModel param : sm.getParameters())
 		{
 			final WebServiceParameterData pd = new WebServiceParameterData();
 			pd.setKey(param.getKey());
 			pd.setValue(param.getValue().toString());
-			params.add(pd);
+			queryParams.add(pd);
 		}
-		cd.setParameters(params);
+		cd.setQueryParameters(queryParams);
+
+		for (final StockWebServiceParameterModel param : sm.getPathParameters())
+		{
+			final WebServiceParameterData pd = new WebServiceParameterData();
+			pd.setKey(param.getKey());
+			pd.setValue(param.getValue().toString());
+			pathParams.add(pd);
+		}
+		cd.setPathParameters(pathParams);
+
 		for (final PersoWSParamModel param : sm.getPersonalisedParameters())
 		{
 			final WebServiceParameterData pd = new WebServiceParameterData();
@@ -73,18 +89,24 @@ public class DefaultStockWebServiceConfigurationFacade implements StockWebServic
 			persoParams.add(pd);
 		}
 		cd.setPersoParameters(persoParams);
-		for (final PersoWSParamModel param : sm.getSecurityParameters())
+
+		if (sm.getLogin() != null && !StringUtils.isEmpty(sm.getLogin()))
 		{
-			final WebServiceParameterData pd = new WebServiceParameterData();
-			pd.setKey(param.getKey());
-			pd.setValue(param.getValue().toString());
-			securityParams.add(pd);
+			final WebServiceParameterData login = new WebServiceParameterData();
+			final WebServiceParameterData password = new WebServiceParameterData();
+			login.setKey("login");
+			login.setValue(sm.getLogin());
+			password.setKey("password");
+			password.setValue(sm.getPassword());
+			securityParams.add(login);
+			securityParams.add(password);
+			cd.setSecurityParameters(securityParams);
 		}
-		cd.setSecurityParameters(securityParams);
-		cd.setAccept(sm.getAccept().toString());
+
+		cd.setAccept(enumerationService.getEnumerationName(sm.getAccept()));
 		if (sm.getContentType() != null)
 		{
-			cd.setContentType(sm.getContentType().toString());
+			cd.setContentType(enumerationService.getEnumerationName(sm.getContentType()));
 		}
 
 		return cd;
@@ -93,8 +115,7 @@ public class DefaultStockWebServiceConfigurationFacade implements StockWebServic
 	@Override
 	public List<WebServiceConfigurationData> getAllConfigurations()
 	{
-		final List<StockWebServiceConfigurationModel> stockConfigModels = stockWebServiceConfigurationService
-				.getAllConfigurations();
+		final List<StockWebServiceConfigurationModel> stockConfigModels = stockWsConfService.getAllConfigurations();
 		final List<WebServiceConfigurationData> stockWsConfigData = new ArrayList<WebServiceConfigurationData>();
 		for (final StockWebServiceConfigurationModel sm : stockConfigModels)
 		{
@@ -107,27 +128,29 @@ public class DefaultStockWebServiceConfigurationFacade implements StockWebServic
 	}
 
 	@Override
-	public WebServiceResponseData wsConfigurationCall(final String id, final Map<String, String> params)
+	public WebServiceResponseData wsConfigurationCall(final String id, final Map<String, String> queryParams,
+			final Map<String, String> pathParams)
 	{
-		final StockWebServiceConfigurationModel pm = stockWebServiceConfigurationService.findStockWsConfiguration(id);
+		final StockWebServiceConfigurationModel sm = stockWsConfService.findStockWsConfiguration(id);
 		final WebServiceResponseData response = new WebServiceResponseData();
 		final WSInvoke wsInvoke = new WSInvoke();
 		ResponseEntity<String> wsResponse = null;
+		queryParams.putAll(stockWsConfService.prepareStaticParams(sm));
+		final Map<String, Map<String, String>> params = new HashMap<>();
+		params.put("pathPrameters", pathParams);
 		try
 		{
-			if (pm.getMethod().equals(MethodType.GET))
+			if (sm.getMethod().equals(MethodType.GET))
 			{
-				wsResponse = wsInvoke.getRequest(pm.getUrl(), params, stockWebServiceConfigurationService.prepareHeadersParams(pm),
-						pm.getAccept());
+				params.put("queryPrameters", queryParams);
+				wsResponse = wsInvoke.getSimulationRequest(sm.getUrl(), params, stockWsConfService.prepareHeadersParams(sm),
+						sm.getAccept());
 			}
-			else if (pm.getMethod().equals(MethodType.POST))
+			else if (sm.getMethod().equals(MethodType.POST))
 			{
-				final Collection<PersoWSParamModel> persoParams = pm.getPersonalisedParameters();
-				for (final PersoWSParamModel persoParam : persoParams)
-				{
-					params.put(persoParam.getKey(), persoParam.getValue());
-				}
-				wsResponse = wsInvoke.postRequest(pm.getUrl(), new LinkedMultiValueMap(params), pm.getAccept(), pm.getContentType());
+				params.put("body", queryParams);
+				wsResponse = wsInvoke.postSimulationRequest(sm.getUrl(), params, stockWsConfService.prepareHeadersParams(sm),
+						sm.getAccept(), sm.getContentType());
 			}
 		}
 		catch (final InvokeWsException | CreateWsRequestException e)

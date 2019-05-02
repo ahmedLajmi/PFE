@@ -131,12 +131,12 @@
 
 
 	<bean id="priceConfigurationInterceptor"
-		class="de.hybris.platform.addons.wsclientgenerator.interceptors.PriceConfigurationEnabledInterceptor">
+		class="de.hybris.platform.addons.wsclientgenerator.interceptors.PriceConfigurationInterceptor">
 		<property name="l10NService" ref="l10nService" />
 	</bean>
 
 	<bean id="stockConfigurationInterceptor"
-		class="de.hybris.platform.addons.wsclientgenerator.interceptors.StockConfigurationEnabledInterceptor">
+		class="de.hybris.platform.addons.wsclientgenerator.interceptors.StockConfigurationInterceptor">
 		<property name="l10NService" ref="l10nService" />
 	</bean>
 	

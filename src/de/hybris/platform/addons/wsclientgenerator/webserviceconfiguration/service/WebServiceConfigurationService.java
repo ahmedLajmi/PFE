@@ -16,6 +16,6 @@ public interface WebServiceConfigurationService
 {
 	public Map<String, String> prepareHeadersParams(WebServiceConfigurationModel configuration);
 
-	public Map<String, String> preparePersoParams(WebServiceConfigurationModel configuration);
+	public Map<String, String> prepareStaticParams(WebServiceConfigurationModel configuration);
 
 }

@@ -5,43 +5,28 @@ package de.hybris.platform.addons.wsclientgenerator.stock.impl;
 
 import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
 import de.hybris.platform.addons.wsclientgenerator.enums.ModeType;
-import de.hybris.platform.addons.wsclientgenerator.enums.ResponseType;
-import de.hybris.platform.addons.wsclientgenerator.enums.StockParameter;
+import de.hybris.platform.addons.wsclientgenerator.enums.StockMappingResponse;
 import de.hybris.platform.addons.wsclientgenerator.exceptions.InvokeWsException;
-import de.hybris.platform.addons.wsclientgenerator.exceptions.ParseWsResponseException;
-import de.hybris.platform.addons.wsclientgenerator.model.PersoWSParamModel;
 import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceConfigurationModel;
-import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceParameterModel;
+import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceResponseModel;
 import de.hybris.platform.addons.wsclientgenerator.price.impl.DefaultWsPriceService;
 import de.hybris.platform.addons.wsclientgenerator.stock.WSStockService;
 import de.hybris.platform.addons.wsclientgenerator.tools.WSInvoke;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.service.StockWebServiceConfigurationService;
 import de.hybris.platform.commerceservices.stock.impl.DefaultCommerceStockService;
 import de.hybris.platform.core.model.product.ProductModel;
+import de.hybris.platform.core.model.user.UserModel;
 import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.store.BaseStoreModel;
 import de.hybris.platform.storelocator.model.PointOfServiceModel;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.springframework.http.ResponseEntity;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 
 /**
@@ -52,7 +37,7 @@ public class DefaultWsStockService extends DefaultCommerceStockService implement
 {
 
 	@Resource(name = "stockWebServiceConfigurationService")
-	private StockWebServiceConfigurationService stockWebServiceConfigurationService;
+	private StockWebServiceConfigurationService stockWsConfigService;
 
 	@Resource(name = "userService")
 	private UserService userService;
@@ -64,179 +49,107 @@ public class DefaultWsStockService extends DefaultCommerceStockService implement
 	@Override
 	public Long getStockLevelForProductAndBaseStore(final ProductModel product, final BaseStoreModel baseStore)
 	{
-		stockConfiguration = stockWebServiceConfigurationService.getWsEnabledConfiguration(MethodType.GET);
+		stockConfiguration = stockWsConfigService.getWsEnabledConfiguration(MethodType.GET);
 		if (stockConfiguration == null)
 		{
 			return super.getStockLevelForProductAndBaseStore(product, baseStore);
 		}
 		else
 		{
-			final WSInvoke wsinvoke = new WSInvoke();
-			Long stock = new Long(0);
 			try
 			{
-
-				final ResponseEntity<String> response = wsinvoke.getRequest(stockConfiguration.getUrl(),
-						prepareRequestParams(stockConfiguration, product),
-						stockWebServiceConfigurationService.prepareHeadersParams(stockConfiguration), stockConfiguration.getAccept());
-				System.out.println(response.getBody());
-				if (stockConfiguration.getAccept().equals(ResponseType.JSON))
-				{
-					stock = jsonParseResponse(response.getBody());
-				}
-				else if (stockConfiguration.getAccept().equals(ResponseType.XML))
-				{
-					stock = xmlParseResponse(response.getBody());
-				}
+				return wsTreatment(product);
 			}
-			catch (final ParseWsResponseException | InvokeWsException e)
+			catch (final InvokeWsException e)
 			{
 				LOG.error(e.getMessage());
 				if (!stockConfiguration.getMode().equals(ModeType.ONLYWITHWEBSERVICE))
 				{
 					return super.getStockLevelForProductAndBaseStore(product, baseStore);
 				}
+				else
+				{
+					return new Long(0);
+				}
 			}
-			return stock;
 		}
 	}
 
 	@Override
 	public Long getStockLevelForProductAndPointOfService(final ProductModel product, final PointOfServiceModel pointOfService)
 	{
-		stockConfiguration = stockWebServiceConfigurationService.getWsEnabledConfiguration(MethodType.GET);
+		stockConfiguration = stockWsConfigService.getWsEnabledConfiguration(MethodType.GET);
 		if (stockConfiguration == null)
 		{
 			return super.getStockLevelForProductAndPointOfService(product, pointOfService);
 		}
 		else
 		{
-			final WSInvoke wsinvoke = new WSInvoke();
-			Long stock = new Long(0);
+
 			try
 			{
-				final ResponseEntity<String> response = wsinvoke.getRequest(stockConfiguration.getUrl(),
-						prepareRequestParams(stockConfiguration, product),
-						stockWebServiceConfigurationService.prepareHeadersParams(stockConfiguration), stockConfiguration.getAccept());
-				System.out.println(response.getBody());
-				if (stockConfiguration.getAccept().equals(ResponseType.JSON))
-				{
-					stock = jsonParseResponse(response.getBody());
-				}
-				else if (stockConfiguration.getAccept().equals(ResponseType.XML))
-				{
-					stock = xmlParseResponse(response.getBody());
-				}
+				return wsTreatment(product);
 			}
-			catch (final ParseWsResponseException | InvokeWsException e)
+			catch (final InvokeWsException e)
 			{
 				LOG.error(e.getMessage());
 				if (!stockConfiguration.getMode().equals(ModeType.ONLYWITHWEBSERVICE))
 				{
 					return super.getStockLevelForProductAndPointOfService(product, pointOfService);
 				}
+				else
+				{
+					return new Long(0);
+				}
 			}
-			return stock;
 		}
 	}
 
-	@Override
-	public Long jsonParseResponse(final String response) throws ParseWsResponseException
+	private Long wsTreatment(final ProductModel product) throws InvokeWsException
 	{
-		final ObjectMapper mapper = new ObjectMapper();
-		try
+		final WSInvoke wsinvoke = new WSInvoke();
+		Long stock = new Long(0);
+		final Map<String, String> response = wsinvoke.getRequest(stockConfiguration.getUrl(),
+				prepareGetParams(stockConfiguration, product), stockWsConfigService.prepareHeadersParams(stockConfiguration),
+				stockConfiguration.getAccept());
+
+		for (final StockWebServiceResponseModel item : stockConfiguration.getResponseMapping())
 		{
-			final JsonNode root = mapper.readTree(response);
-			if (root.has(stockConfiguration.getStockKey()))
+			if (item.getValue().equals(StockMappingResponse.STOCKVALUE))
 			{
-				final JsonNode stockValue = root.path(stockConfiguration.getStockKey());
-				return new Long(stockValue.asLong());
-			}
-			else
-			{
-				throw new ParseWsResponseException("Key doesn t exist");
+				final String value = String.valueOf(response.get(item.getKey()));
+				stock = new Long(StringUtils.replaceEach(value, new String[]
+				{ "\n", " " }, new String[]
+				{ "", "" }));
 			}
 		}
-		catch (final IOException e)
-		{
-			throw new ParseWsResponseException("Problem in reading JSON response \n" + e.getMessage());
-		}
+
+		return stock;
+
 	}
 
 	@Override
-	public Long xmlParseResponse(final String response) throws ParseWsResponseException
+	public Map<String, Map<String, String>> prepareGetParams(final StockWebServiceConfigurationModel stockConfiguration,
+			final ProductModel product)
 	{
-		try
+		final Map<String, Map<String, String>> params = new HashMap<>();
+		UserModel user = null;
+		if (!userService.isAnonymousUser(userService.getCurrentUser()))
 		{
-			final Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-					.parse(new InputSource(new StringReader(response)));
-			if (StringUtils.equals(stockConfiguration.getStockKey(), doc.getDocumentElement().getTagName()))
-			{
-				return new Long(doc.getDocumentElement().getFirstChild().getNodeValue());
-			}
-			else
-			{
-				final NodeList nodeList = doc.getDocumentElement().getChildNodes();
-				for (int i = 0; i < nodeList.getLength(); i++)
-				{
-					final Node node = nodeList.item(i);
-					if (StringUtils.equals(stockConfiguration.getStockKey(), node.getNodeName()))
-					{
-						return new Long(node.getFirstChild().getNodeValue());
-					}
-				}
-				throw new ParseWsResponseException("Key doesn t exist");
-			}
+			user = userService.getCurrentUser();
 		}
-		catch (SAXException | ParserConfigurationException | IOException e)
-		{
-			throw new ParseWsResponseException("Problem in reading XML response \n" + e.getMessage());
-		}
-	}
 
-	@Override
-	public Map<String, String> prepareRequestParams(final StockWebServiceConfigurationModel stockConfiguration,
-			final ProductModel model)
-	{
-		final Map<String, String> params = new HashMap<>();
-		final Collection<PersoWSParamModel> persoParams = stockConfiguration.getPersonalisedParameters();
-		final Collection<PersoWSParamModel> securityParams = stockConfiguration.getSecurityParameters();
-		final Collection<StockWebServiceParameterModel> additionelParams = stockConfiguration.getParameters();
-		if (additionelParams != null && !additionelParams.isEmpty())
-		{
-			for (final StockWebServiceParameterModel additionelParam : additionelParams)
-			{
-				if (additionelParam.getValue().equals(StockParameter.PRODUCTCODE))
-				{
-					params.put(additionelParam.getKey(), model.getCode());
-				}
-				if (additionelParam.getValue().equals(StockParameter.CLIENTCODE))
-				{
-					if (!userService.isAnonymousUser(userService.getCurrentUser()))
-					{
-						params.put(additionelParam.getKey(), userService.getCurrentUser().getUid());
-					}
-				}
-			}
-		}
-		if (securityParams != null && !securityParams.isEmpty())
-		{
-			for (final PersoWSParamModel securityParam : securityParams)
-			{
-				params.put(securityParam.getKey(), securityParam.getValue());
-			}
-		}
-		{
-			if (persoParams != null && !persoParams.isEmpty())
-			{
-				for (final PersoWSParamModel persoParam : persoParams)
-				{
-					params.put(persoParam.getKey(), persoParam.getValue());
-				}
-			}
-		}
+		final Map<String, String> pathPrameters = stockWsConfigService.prepareDynamicPathParameters(stockConfiguration, product,
+				user);
+		final Map<String, String> queryPrameters = stockWsConfigService.prepareDynamicQueryParameters(stockConfiguration, product,
+				user);
+		queryPrameters.putAll(stockWsConfigService.prepareStaticParams(stockConfiguration));
+
+		params.put("pathPrameters", pathPrameters);
+		params.put("queryPrameters", queryPrameters);
 		return params;
 	}
+
 
 
 }

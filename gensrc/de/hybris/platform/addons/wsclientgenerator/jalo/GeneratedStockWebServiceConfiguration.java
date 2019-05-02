@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 26 avr. 2019 11:07:06                       ---
+ * --- Generated at 2 mai 2019 13:28:40                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -19,6 +19,7 @@ package de.hybris.platform.addons.wsclientgenerator.jalo;
 
 import de.hybris.platform.addons.wsclientgenerator.constants.WsclientgeneratorConstants;
 import de.hybris.platform.addons.wsclientgenerator.jalo.StockWebServiceParameter;
+import de.hybris.platform.addons.wsclientgenerator.jalo.StockWebServiceResponse;
 import de.hybris.platform.addons.wsclientgenerator.jalo.WebServiceConfiguration;
 import de.hybris.platform.jalo.Item.AttributeMode;
 import de.hybris.platform.jalo.SessionContext;
@@ -35,12 +36,12 @@ import java.util.Map;
 @SuppressWarnings({"deprecation","unused","cast","PMD"})
 public abstract class GeneratedStockWebServiceConfiguration extends WebServiceConfiguration
 {
-	/** Qualifier of the <code>StockWebServiceConfiguration.stockKey</code> attribute **/
-	public static final String STOCKKEY = "stockKey";
-	/** Qualifier of the <code>StockWebServiceConfiguration.productCode</code> attribute **/
-	public static final String PRODUCTCODE = "productCode";
 	/** Qualifier of the <code>StockWebServiceConfiguration.parameters</code> attribute **/
 	public static final String PARAMETERS = "parameters";
+	/** Qualifier of the <code>StockWebServiceConfiguration.pathParameters</code> attribute **/
+	public static final String PATHPARAMETERS = "pathParameters";
+	/** Qualifier of the <code>StockWebServiceConfiguration.responseMapping</code> attribute **/
+	public static final String RESPONSEMAPPING = "responseMapping";
 	/**
 	* {@link OneToManyHandler} for handling 1:n PARAMETERS's relation attributes from 'many' side.
 	**/
@@ -53,12 +54,34 @@ public abstract class GeneratedStockWebServiceConfiguration extends WebServiceCo
 	true,
 	CollectionType.COLLECTION
 	);
+	/**
+	* {@link OneToManyHandler} for handling 1:n PATHPARAMETERS's relation attributes from 'many' side.
+	**/
+	protected static final OneToManyHandler<StockWebServiceParameter> PATHPARAMETERSHANDLER = new OneToManyHandler<StockWebServiceParameter>(
+	WsclientgeneratorConstants.TC.STOCKWEBSERVICEPARAMETER,
+	false,
+	"stockConfiguration",
+	null,
+	false,
+	true,
+	CollectionType.COLLECTION
+	);
+	/**
+	* {@link OneToManyHandler} for handling 1:n RESPONSEMAPPING's relation attributes from 'many' side.
+	**/
+	protected static final OneToManyHandler<StockWebServiceResponse> RESPONSEMAPPINGHANDLER = new OneToManyHandler<StockWebServiceResponse>(
+	WsclientgeneratorConstants.TC.STOCKWEBSERVICERESPONSE,
+	false,
+	"customerConfiguration",
+	null,
+	false,
+	true,
+	CollectionType.COLLECTION
+	);
 	protected static final Map<String, AttributeMode> DEFAULT_INITIAL_ATTRIBUTES;
 	static
 	{
 		final Map<String, AttributeMode> tmp = new HashMap<String, AttributeMode>(WebServiceConfiguration.DEFAULT_INITIAL_ATTRIBUTES);
-		tmp.put(STOCKKEY, AttributeMode.INITIAL);
-		tmp.put(PRODUCTCODE, AttributeMode.INITIAL);
 		DEFAULT_INITIAL_ATTRIBUTES = Collections.unmodifiableMap(tmp);
 	}
 	@Override
@@ -140,112 +163,147 @@ public abstract class GeneratedStockWebServiceConfiguration extends WebServiceCo
 	}
 	
 	/**
-	 * <i>Generated method</i> - Getter of the <code>StockWebServiceConfiguration.productCode</code> attribute.
-	 * @return the productCode
+	 * <i>Generated method</i> - Getter of the <code>StockWebServiceConfiguration.pathParameters</code> attribute.
+	 * @return the pathParameters
 	 */
-	public Boolean isProductCode(final SessionContext ctx)
+	public Collection<StockWebServiceParameter> getPathParameters(final SessionContext ctx)
 	{
-		return (Boolean)getProperty( ctx, PRODUCTCODE);
+		return PATHPARAMETERSHANDLER.getValues( ctx, this );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Getter of the <code>StockWebServiceConfiguration.productCode</code> attribute.
-	 * @return the productCode
+	 * <i>Generated method</i> - Getter of the <code>StockWebServiceConfiguration.pathParameters</code> attribute.
+	 * @return the pathParameters
 	 */
-	public Boolean isProductCode()
+	public Collection<StockWebServiceParameter> getPathParameters()
 	{
-		return isProductCode( getSession().getSessionContext() );
+		return getPathParameters( getSession().getSessionContext() );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Getter of the <code>StockWebServiceConfiguration.productCode</code> attribute. 
-	 * @return the productCode
+	 * <i>Generated method</i> - Setter of the <code>StockWebServiceConfiguration.pathParameters</code> attribute. 
+	 * @param value the pathParameters
 	 */
-	public boolean isProductCodeAsPrimitive(final SessionContext ctx)
+	public void setPathParameters(final SessionContext ctx, final Collection<StockWebServiceParameter> value)
 	{
-		Boolean value = isProductCode( ctx );
-		return value != null ? value.booleanValue() : false;
+		PATHPARAMETERSHANDLER.setValues( ctx, this, value );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Getter of the <code>StockWebServiceConfiguration.productCode</code> attribute. 
-	 * @return the productCode
+	 * <i>Generated method</i> - Setter of the <code>StockWebServiceConfiguration.pathParameters</code> attribute. 
+	 * @param value the pathParameters
 	 */
-	public boolean isProductCodeAsPrimitive()
+	public void setPathParameters(final Collection<StockWebServiceParameter> value)
 	{
-		return isProductCodeAsPrimitive( getSession().getSessionContext() );
+		setPathParameters( getSession().getSessionContext(), value );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Setter of the <code>StockWebServiceConfiguration.productCode</code> attribute. 
-	 * @param value the productCode
+	 * <i>Generated method</i> - Adds <code>value</code> to pathParameters. 
+	 * @param value the item to add to pathParameters
 	 */
-	public void setProductCode(final SessionContext ctx, final Boolean value)
+	public void addToPathParameters(final SessionContext ctx, final StockWebServiceParameter value)
 	{
-		setProperty(ctx, PRODUCTCODE,value);
+		PATHPARAMETERSHANDLER.addValue( ctx, this, value );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Setter of the <code>StockWebServiceConfiguration.productCode</code> attribute. 
-	 * @param value the productCode
+	 * <i>Generated method</i> - Adds <code>value</code> to pathParameters. 
+	 * @param value the item to add to pathParameters
 	 */
-	public void setProductCode(final Boolean value)
+	public void addToPathParameters(final StockWebServiceParameter value)
 	{
-		setProductCode( getSession().getSessionContext(), value );
+		addToPathParameters( getSession().getSessionContext(), value );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Setter of the <code>StockWebServiceConfiguration.productCode</code> attribute. 
-	 * @param value the productCode
+	 * <i>Generated method</i> - Removes <code>value</code> from pathParameters. 
+	 * @param value the item to remove from pathParameters
 	 */
-	public void setProductCode(final SessionContext ctx, final boolean value)
+	public void removeFromPathParameters(final SessionContext ctx, final StockWebServiceParameter value)
 	{
-		setProductCode( ctx,Boolean.valueOf( value ) );
+		PATHPARAMETERSHANDLER.removeValue( ctx, this, value );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Setter of the <code>StockWebServiceConfiguration.productCode</code> attribute. 
-	 * @param value the productCode
+	 * <i>Generated method</i> - Removes <code>value</code> from pathParameters. 
+	 * @param value the item to remove from pathParameters
 	 */
-	public void setProductCode(final boolean value)
+	public void removeFromPathParameters(final StockWebServiceParameter value)
 	{
-		setProductCode( getSession().getSessionContext(), value );
+		removeFromPathParameters( getSession().getSessionContext(), value );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Getter of the <code>StockWebServiceConfiguration.stockKey</code> attribute.
-	 * @return the stockKey
+	 * <i>Generated method</i> - Getter of the <code>StockWebServiceConfiguration.responseMapping</code> attribute.
+	 * @return the responseMapping
 	 */
-	public String getStockKey(final SessionContext ctx)
+	public Collection<StockWebServiceResponse> getResponseMapping(final SessionContext ctx)
 	{
-		return (String)getProperty( ctx, STOCKKEY);
+		return RESPONSEMAPPINGHANDLER.getValues( ctx, this );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Getter of the <code>StockWebServiceConfiguration.stockKey</code> attribute.
-	 * @return the stockKey
+	 * <i>Generated method</i> - Getter of the <code>StockWebServiceConfiguration.responseMapping</code> attribute.
+	 * @return the responseMapping
 	 */
-	public String getStockKey()
+	public Collection<StockWebServiceResponse> getResponseMapping()
 	{
-		return getStockKey( getSession().getSessionContext() );
+		return getResponseMapping( getSession().getSessionContext() );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Setter of the <code>StockWebServiceConfiguration.stockKey</code> attribute. 
-	 * @param value the stockKey
+	 * <i>Generated method</i> - Setter of the <code>StockWebServiceConfiguration.responseMapping</code> attribute. 
+	 * @param value the responseMapping
 	 */
-	public void setStockKey(final SessionContext ctx, final String value)
+	public void setResponseMapping(final SessionContext ctx, final Collection<StockWebServiceResponse> value)
 	{
-		setProperty(ctx, STOCKKEY,value);
+		RESPONSEMAPPINGHANDLER.setValues( ctx, this, value );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Setter of the <code>StockWebServiceConfiguration.stockKey</code> attribute. 
-	 * @param value the stockKey
+	 * <i>Generated method</i> - Setter of the <code>StockWebServiceConfiguration.responseMapping</code> attribute. 
+	 * @param value the responseMapping
 	 */
-	public void setStockKey(final String value)
+	public void setResponseMapping(final Collection<StockWebServiceResponse> value)
 	{
-		setStockKey( getSession().getSessionContext(), value );
+		setResponseMapping( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Adds <code>value</code> to responseMapping. 
+	 * @param value the item to add to responseMapping
+	 */
+	public void addToResponseMapping(final SessionContext ctx, final StockWebServiceResponse value)
+	{
+		RESPONSEMAPPINGHANDLER.addValue( ctx, this, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Adds <code>value</code> to responseMapping. 
+	 * @param value the item to add to responseMapping
+	 */
+	public void addToResponseMapping(final StockWebServiceResponse value)
+	{
+		addToResponseMapping( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Removes <code>value</code> from responseMapping. 
+	 * @param value the item to remove from responseMapping
+	 */
+	public void removeFromResponseMapping(final SessionContext ctx, final StockWebServiceResponse value)
+	{
+		RESPONSEMAPPINGHANDLER.removeValue( ctx, this, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Removes <code>value</code> from responseMapping. 
+	 * @param value the item to remove from responseMapping
+	 */
+	public void removeFromResponseMapping(final StockWebServiceResponse value)
+	{
+		removeFromResponseMapping( getSession().getSessionContext(), value );
 	}
 	
 }

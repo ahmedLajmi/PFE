@@ -11,6 +11,7 @@ import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.facad
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.facade.PriceWebServiceConfigurationFacade;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.facade.StockWebServiceConfigurationFacade;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +37,8 @@ public class WebServicesCallAjaxController
 	private static final String CUSTOMER_KEY = "customer";
 	private static final String STOCK_KEY = "stock";
 	private static final String ORDER_KEY = "order";
+	private static final String QUERY_SUFFIX = "query_";
+	private static final String PATH_SUFFIX = "path_";
 
 	@Resource(name = "customerWebServiceConfigurationFacade")
 	private CustomerWebServiceConfigurationFacade customerWebServiceConfigurationFacade;
@@ -108,23 +111,40 @@ public class WebServicesCallAjaxController
 		final String configurationID = params.get("configurationID");
 		params.remove("functionality");
 		params.remove("configurationID");
+		final Map<String, String> pathParams = new HashMap<>();
+		final Map<String, String> queryParams = new HashMap<>();
+		for (final String key : params.keySet())
+		{
+			if (StringUtils.contains(key, PATH_SUFFIX))
+			{
+				final String newkey = StringUtils.replace(key, PATH_SUFFIX, "");
+				pathParams.put(newkey, params.get(key));
+			}
+			else if (StringUtils.contains(key, QUERY_SUFFIX))
+			{
+				final String newkey = StringUtils.replace(key, QUERY_SUFFIX, "");
+				queryParams.put(newkey, params.get(key));
+			}
+		}
+		System.out.println(queryParams);
+		System.out.println(pathParams);
 		if (functionality != null && configurationID != null)
 		{
 			if (StringUtils.equals(functionality, PRICE_KEY))
 			{
-				return priceWebServiceConfigurationFacade.wsConfigurationCall(configurationID, params);
+				return priceWebServiceConfigurationFacade.wsConfigurationCall(configurationID, queryParams, pathParams);
 			}
 			else if (StringUtils.equals(functionality, CUSTOMER_KEY))
 			{
-				return customerWebServiceConfigurationFacade.wsConfigurationCall(configurationID, params);
+				return customerWebServiceConfigurationFacade.wsConfigurationCall(configurationID, queryParams, pathParams);
 			}
 			else if (StringUtils.equals(functionality, STOCK_KEY))
 			{
-				return stockWebServiceConfigurationFacade.wsConfigurationCall(configurationID, params);
+				return stockWebServiceConfigurationFacade.wsConfigurationCall(configurationID, queryParams, pathParams);
 			}
 			else if (StringUtils.equals(functionality, ORDER_KEY))
 			{
-				return orderWebServiceConfigurationFacade.wsConfigurationCall(configurationID, params);
+				return orderWebServiceConfigurationFacade.wsConfigurationCall(configurationID, queryParams, pathParams);
 			}
 			else
 			{

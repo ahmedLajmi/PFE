@@ -16,17 +16,18 @@ import de.hybris.platform.addons.wsclientgenerator.model.PersoWSParamModel;
 import de.hybris.platform.addons.wsclientgenerator.tools.WSInvoke;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.facade.CustomerWebServiceConfigurationFacade;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.service.CustomerWebServiceConfigurationService;
+import de.hybris.platform.enumeration.EnumerationService;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
 
 
 /**
@@ -37,7 +38,10 @@ public class DefaultCustomerWebServiceConfigurationFacade implements CustomerWeb
 {
 
 	@Resource(name = "customerWebServiceConfigurationService")
-	private CustomerWebServiceConfigurationService customerWebServiceConfigurationService;
+	private CustomerWebServiceConfigurationService customerWsConfService;
+
+	@Resource(name = "enumerationService")
+	private EnumerationService enumerationService;
 
 	private static final Logger LOG = Logger.getLogger(DefaultCustomerWebServiceConfigurationFacade.class);
 
@@ -45,25 +49,37 @@ public class DefaultCustomerWebServiceConfigurationFacade implements CustomerWeb
 	@Override
 	public WebServiceConfigurationDetailsData getConfigurationDetails(final String id)
 	{
-		final CustomerWebServiceConfigurationModel cm = customerWebServiceConfigurationService.findCustomerWsConfiguration(id);
+		final CustomerWebServiceConfigurationModel cm = customerWsConfService.findCustomerWsConfiguration(id);
 		final WebServiceConfigurationDetailsData cd = new WebServiceConfigurationDetailsData();
 		cd.setId(cm.getPk().toString());
 		cd.setName(cm.getName());
 		cd.setUrl(cm.getUrl());
 		cd.setDescription(cm.getDescription());
-		cd.setMethod(cm.getMethod().toString());
+		cd.setMethod(enumerationService.getEnumerationName(cm.getMethod()));
 		cd.setEnable(cm.getEnable().booleanValue());
-		final List<WebServiceParameterData> params = new ArrayList<>();
+		final List<WebServiceParameterData> pathParams = new ArrayList<>();
+		final List<WebServiceParameterData> queryParams = new ArrayList<>();
 		final List<WebServiceParameterData> persoParams = new ArrayList<>();
 		final List<WebServiceParameterData> securityParams = new ArrayList<>();
+
 		for (final CustomerWebServiceParameterModel param : cm.getParameters())
 		{
 			final WebServiceParameterData pd = new WebServiceParameterData();
 			pd.setKey(param.getKey());
 			pd.setValue(param.getValue().toString());
-			params.add(pd);
+			queryParams.add(pd);
 		}
-		cd.setParameters(params);
+		cd.setQueryParameters(queryParams);
+
+		for (final CustomerWebServiceParameterModel param : cm.getPathParameters())
+		{
+			final WebServiceParameterData pd = new WebServiceParameterData();
+			pd.setKey(param.getKey());
+			pd.setValue(param.getValue().toString());
+			pathParams.add(pd);
+		}
+		cd.setPathParameters(pathParams);
+
 		for (final PersoWSParamModel param : cm.getPersonalisedParameters())
 		{
 			final WebServiceParameterData pd = new WebServiceParameterData();
@@ -72,18 +88,25 @@ public class DefaultCustomerWebServiceConfigurationFacade implements CustomerWeb
 			persoParams.add(pd);
 		}
 		cd.setPersoParameters(persoParams);
-		for (final PersoWSParamModel param : cm.getSecurityParameters())
+
+		if (cm.getLogin() != null && !StringUtils.isEmpty(cm.getLogin()))
 		{
-			final WebServiceParameterData pd = new WebServiceParameterData();
-			pd.setKey(param.getKey());
-			pd.setValue(param.getValue().toString());
-			securityParams.add(pd);
+			final WebServiceParameterData login = new WebServiceParameterData();
+			final WebServiceParameterData password = new WebServiceParameterData();
+			login.setKey("login");
+			login.setValue(cm.getLogin());
+			password.setKey("password");
+			password.setValue(cm.getPassword());
+			securityParams.add(login);
+			securityParams.add(password);
+			cd.setSecurityParameters(securityParams);
 		}
-		cd.setSecurityParameters(securityParams);
-		cd.setAccept(cm.getAccept().toString());
+
+		cd.setAccept(enumerationService.getEnumerationName(cm.getAccept()));
+
 		if (cm.getContentType() != null)
 		{
-			cd.setContentType(cm.getContentType().toString());
+			cd.setContentType(enumerationService.getEnumerationName(cm.getContentType()));
 		}
 		return cd;
 	}
@@ -91,8 +114,7 @@ public class DefaultCustomerWebServiceConfigurationFacade implements CustomerWeb
 	@Override
 	public List<WebServiceConfigurationData> getAllConfigurations()
 	{
-		final List<CustomerWebServiceConfigurationModel> customerConfigModels = customerWebServiceConfigurationService
-				.getAllConfigurations();
+		final List<CustomerWebServiceConfigurationModel> customerConfigModels = customerWsConfService.getAllConfigurations();
 		final List<WebServiceConfigurationData> customerWsConfigData = new ArrayList<WebServiceConfigurationData>();
 		for (final CustomerWebServiceConfigurationModel cm : customerConfigModels)
 		{
@@ -105,27 +127,29 @@ public class DefaultCustomerWebServiceConfigurationFacade implements CustomerWeb
 	}
 
 	@Override
-	public WebServiceResponseData wsConfigurationCall(final String id, final Map<String, String> params)
+	public WebServiceResponseData wsConfigurationCall(final String id, final Map<String, String> queryParams,
+			final Map<String, String> pathParams)
 	{
-		final CustomerWebServiceConfigurationModel cm = customerWebServiceConfigurationService.findCustomerWsConfiguration(id);
+		final CustomerWebServiceConfigurationModel cm = customerWsConfService.findCustomerWsConfiguration(id);
 		final WebServiceResponseData response = new WebServiceResponseData();
 		final WSInvoke wsInvoke = new WSInvoke();
 		ResponseEntity<String> wsResponse = null;
+		queryParams.putAll(customerWsConfService.prepareStaticParams(cm));
+		final Map<String, Map<String, String>> params = new HashMap<>();
+		params.put("pathPrameters", pathParams);
 		try
 		{
 			if (cm.getMethod().equals(MethodType.GET))
 			{
-				wsResponse = wsInvoke.getRequest(cm.getUrl(), params, customerWebServiceConfigurationService.prepareHeadersParams(cm),
+				params.put("queryPrameters", queryParams);
+				wsResponse = wsInvoke.getSimulationRequest(cm.getUrl(), params, customerWsConfService.prepareHeadersParams(cm),
 						cm.getAccept());
 			}
 			else if (cm.getMethod().equals(MethodType.POST))
 			{
-				final Collection<PersoWSParamModel> persoParams = cm.getPersonalisedParameters();
-				for (final PersoWSParamModel persoParam : persoParams)
-				{
-					params.put(persoParam.getKey(), persoParam.getValue());
-				}
-				wsResponse = wsInvoke.postRequest(cm.getUrl(), new LinkedMultiValueMap(params), cm.getAccept(), cm.getContentType());
+				params.put("body", queryParams);
+				wsResponse = wsInvoke.postSimulationRequest(cm.getUrl(), params, customerWsConfService.prepareHeadersParams(cm),
+						cm.getAccept(), cm.getContentType());
 			}
 		}
 		catch (final InvokeWsException | CreateWsRequestException e)
@@ -145,4 +169,5 @@ public class DefaultCustomerWebServiceConfigurationFacade implements CustomerWeb
 			return null;
 		}
 	}
+
 }

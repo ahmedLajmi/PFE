@@ -27,7 +27,6 @@
 			generate="true" dynamic="true">
 			<value code="json" />
 			<value code="xml" />
-			<value code="text" />
 		</enumtype>
 		<enumtype code="MethodType" autocreate="true" generate="true"
 			dynamic="true">
@@ -36,31 +35,30 @@
 		</enumtype>
 		<enumtype code="PriceParameter" autocreate="true"
 			generate="true" dynamic="true">
-			<value code="clientCode" />
-			<value code="productCode" />
-			<value code="categorieCode" />
+			<value code="uid" />
+			<value code="code" />
+			<value code="Supercategories" />
 		</enumtype>
 		<enumtype code="OrderParameter" autocreate="true"
 			generate="true" dynamic="true">
-			<value code="clientCode" />
-			<value code="orderCode" />
-			<value code="orderDate" />
-			<value code="currencyCode" />
+			<value code="uid" />
+			<value code="code" />
+			<value code="date" />
 		</enumtype>
 		<enumtype code="StockParameter" autocreate="true"
 			generate="true" dynamic="true">
-			<value code="productCode" />
-			<value code="clientCode" />
+			<value code="code" />
+			<value code="uid" />
 			<value code="orderCode" />
-			<value code="stockCode" />
+			<value code="stockValue" />
 		</enumtype>
 		<enumtype code="CustomerParameter" autocreate="true"
 			generate="true" dynamic="true">
-			<value code="clientCode" />
-			<value code="clientFirstName" />
-			<value code="clientLastName" />
-			<value code="clientOldEmail" />
-			<value code="clientNewEmail" />
+			<value code="uid" />
+			<value code="firstName" />
+			<value code="lastName" />
+			<value code="oldEmail" />
+			<value code="newEmail" />
 			<value code="titleCode" />
 		</enumtype>
 		<enumtype code="ModeType" autocreate="true" generate="true"
@@ -69,7 +67,34 @@
 			<value code="webServiceNative" />
 			<value code="NativeWebService" />
 		</enumtype>
+
+		<enumtype code="CustomerMappingResponse" autocreate="true"
+			generate="true" dynamic="true">
+			<value code="uid" />
+			<value code="firstName" />
+			<value code="lastName" />
+			<value code="titleCode" />
+			<value code="successCode" />
+		</enumtype>
+		<enumtype code="PriceMappingResponse" autocreate="true"
+			generate="true" dynamic="true">
+			<value code="price" />
+			<value code="currency" />
+			<value code="successCode" />
+		</enumtype>
+		<enumtype code="StockMappingResponse" autocreate="true"
+			generate="true" dynamic="true">
+			<value code="stockValue" />
+			<value code="successCode" />
+		</enumtype>
+		<enumtype code="OrderMappingResponse" autocreate="true"
+			generate="true" dynamic="true">
+			<value code="status" />
+			<value code="successCode" />
+		</enumtype>
 	</enumtypes>
+
+
 
 	<relations>
 		<relation code="WebServiceConfigurationParameterRelation"
@@ -81,12 +106,12 @@
 		</relation>
 
 		<relation
-			code="WebServiceConfigurationSecurityParameterRelation"
+			code="WebServiceConfigurationHeadersParameterRelation"
 			localized="false" generate="true" autocreate="true">
 			<sourceElement type="WebServiceConfiguration"
 				qualifier="configuration" cardinality="one" />
 			<targetElement type="PersoWSParam"
-				qualifier="SecurityParameters" cardinality="many" />
+				qualifier="headersParameters" cardinality="many" />
 		</relation>
 
 		<relation
@@ -125,6 +150,76 @@
 				qualifier="parameters" cardinality="many" />
 		</relation>
 
+		<relation
+			code="PriceWebServiceConfigurationHeaderParameterRelation"
+			localized="false" generate="true" autocreate="true">
+			<sourceElement type="PriceWebServiceConfiguration"
+				qualifier="priceConfiguration" cardinality="one" />
+			<targetElement type="PriceWebServiceParameter"
+				qualifier="pathParameters" cardinality="many" />
+		</relation>
+
+		<relation
+			code="OrderWebServiceConfigurationHeaderParameterRelation"
+			localized="false" generate="true" autocreate="true">
+			<sourceElement type="OrderWebServiceConfiguration"
+				qualifier="orderConfiguration" cardinality="one" />
+			<targetElement type="OrderWebServiceParameter"
+				qualifier="pathParameters" cardinality="many" />
+		</relation>
+
+		<relation
+			code="StockWebServiceConfigurationHeaderParameterRelation"
+			localized="false" generate="true" autocreate="true">
+			<sourceElement type="StockWebServiceConfiguration"
+				qualifier="stockConfiguration" cardinality="one" />
+			<targetElement type="StockWebServiceParameter"
+				qualifier="pathParameters" cardinality="many" />
+		</relation>
+
+		<relation
+			code="CustomerWebServiceConfigurationHeaderParameterRelation"
+			localized="false" generate="true" autocreate="true">
+			<sourceElement type="CustomerWebServiceConfiguration"
+				qualifier="customerConfiguration" cardinality="one" />
+			<targetElement type="CustomerWebServiceParameter"
+				qualifier="pathParameters" cardinality="many" />
+		</relation>
+		
+		
+		<relation
+			code="CustomerWebServiceConfigurationResponseMappingrRelation"
+			localized="false" generate="true" autocreate="true">
+			<sourceElement type="CustomerWebServiceConfiguration"
+				qualifier="customerConfiguration" cardinality="one" />
+			<targetElement type="CustomerWebServiceResponse"
+				qualifier="responseMapping" cardinality="many" />
+		</relation>
+		<relation
+			code="PriceWebServiceConfigurationResponseMappingrRelation"
+			localized="false" generate="true" autocreate="true">
+			<sourceElement type="PriceWebServiceConfiguration"
+				qualifier="customerConfiguration" cardinality="one" />
+			<targetElement type="PriceWebServiceResponse"
+				qualifier="responseMapping" cardinality="many" />
+		</relation>
+		<relation
+			code="StockWebServiceConfigurationResponseMappingrRelation"
+			localized="false" generate="true" autocreate="true">
+			<sourceElement type="StockWebServiceConfiguration"
+				qualifier="customerConfiguration" cardinality="one" />
+			<targetElement type="StockWebServiceResponse"
+				qualifier="responseMapping" cardinality="many" />
+		</relation>
+		<relation
+			code="OrderWebServiceConfigurationResponseMappingrRelation"
+			localized="false" generate="true" autocreate="true">
+			<sourceElement type="OrderWebServiceConfiguration"
+				qualifier="customerConfiguration" cardinality="one" />
+			<targetElement type="OrderWebServiceResponse"
+				qualifier="responseMapping" cardinality="many" />
+		</relation>
+
 	</relations>
 
 
@@ -135,11 +230,6 @@
 		<itemtype code="WebServiceConfiguration" autocreate="true"
 			generate="true" abstract="true">
 			<attributes>
-				<attribute type="java.lang.String" qualifier="configID">
-					<modifiers read="true" write="true" search="true"
-						optional="true" />
-					<persistence type="property" />
-				</attribute>
 				<attribute type="java.lang.String" qualifier="name">
 					<modifiers read="true" write="true" search="true"
 						optional="false" />
@@ -213,6 +303,12 @@
 			</attributes>
 		</itemtype>
 
+
+
+
+
+
+
 		<itemtype code="WebServiceParameter" autocreate="true"
 			generate="true" abstract="true">
 			<attributes>
@@ -280,103 +376,85 @@
 		</itemtype>
 
 
-		<itemtype code="PriceWebServiceConfiguration"
-			autocreate="true" generate="true" extends="WebServiceConfiguration">
-			<deployment table="PriceWSConfiguration" typecode="13001" />
+
+
+
+
+		<itemtype code="CustomerWebServiceResponse" autocreate="true"
+			generate="true" extends="WebServiceParameter">
 			<attributes>
-				<attribute qualifier="priceKey" type="java.lang.String">
-					<modifiers read="true" write="true" search="true"
-						optional="true" />
-					<persistence type="property" />
-				</attribute>
-				<attribute qualifier="currencyKey" type="java.lang.String">
-					<modifiers read="true" write="true" search="true"
-						optional="true" />
-					<persistence type="property" />
-				</attribute>
-				<attribute type="java.lang.Boolean"
-					qualifier="productCode">
+				<attribute type="CustomerMappingResponse"
+					qualifier="value">
 					<modifiers read="true" write="true" search="true"
 						optional="false" />
 					<persistence type="property" />
 				</attribute>
+			</attributes>
+		</itemtype>
+		<itemtype code="PriceWebServiceResponse" autocreate="true"
+			generate="true" extends="WebServiceParameter">
+			<attributes>
+				<attribute type="PriceMappingResponse"
+					qualifier="value">
+					<modifiers read="true" write="true" search="true"
+						optional="false" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+		<itemtype code="StockWebServiceResponse" autocreate="true"
+			generate="true" extends="WebServiceParameter">
+			<attributes>
+				<attribute type="StockMappingResponse"
+					qualifier="value">
+					<modifiers read="true" write="true" search="true"
+						optional="false" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+		<itemtype code="OrderWebServiceResponse" autocreate="true"
+			generate="true" extends="WebServiceParameter">
+			<attributes>
+				<attribute type="OrderMappingResponse"
+					qualifier="value">
+					<modifiers read="true" write="true" search="true"
+						optional="false" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+
+
+
+
+
+		<itemtype code="PriceWebServiceConfiguration"
+			autocreate="true" generate="true" extends="WebServiceConfiguration">
+			<deployment table="PriceWSConfiguration" typecode="13001" />
+			<attributes>
 			</attributes>
 		</itemtype>
 
 		<itemtype code="StockWebServiceConfiguration"
 			autocreate="true" generate="true" extends="WebServiceConfiguration">
 			<attributes>
-				<attribute qualifier="stockKey" type="java.lang.String">
-					<modifiers read="true" write="true" search="true"
-						optional="false" />
-					<persistence type="property" />
-				</attribute>
-				<attribute type="java.lang.Boolean"
-					qualifier="productCode">
-					<modifiers read="true" write="true" search="true"
-						optional="false" />
-					<persistence type="property" />
-				</attribute>
 			</attributes>
 		</itemtype>
 
 		<itemtype code="OrderWebServiceConfiguration"
 			autocreate="true" generate="true" extends="WebServiceConfiguration">
 			<attributes>
-				<attribute qualifier="statusKey" type="java.lang.String">
-					<modifiers read="true" write="true" search="true"
-						optional="false" />
-					<persistence type="property" />
-				</attribute>
-				<attribute type="java.lang.Boolean" qualifier="orderCode">
-					<modifiers read="true" write="true" search="true"
-						optional="false" />
-					<persistence type="property" />
-				</attribute>
 			</attributes>
 		</itemtype>
 
 		<itemtype code="CustomerWebServiceConfiguration"
 			autocreate="true" generate="true" extends="WebServiceConfiguration">
 			<attributes>
-				<attribute qualifier="firstNameKey"
-					type="java.lang.String">
-					<modifiers read="true" write="true" search="true"
-						optional="false" />
-					<persistence type="property" />
-				</attribute>
-				<attribute qualifier="lastNameKey" type="java.lang.String">
-					<modifiers read="true" write="true" search="true"
-						optional="false" />
-					<persistence type="property" />
-				</attribute>
-				<attribute qualifier="emailKey" type="java.lang.String">
-					<modifiers read="true" write="true" search="true"
-						optional="false" />
-					<persistence type="property" />
-				</attribute>
-				<attribute qualifier="titleKey" type="java.lang.String">
-					<modifiers read="true" write="true" search="true"
-						optional="false" />
-					<persistence type="property" />
-				</attribute>
-				<attribute type="java.lang.Boolean" qualifier="clientCode">
-					<modifiers read="true" write="true" search="true"
-						optional="false" />
-					<persistence type="property" />
-				</attribute>
 			</attributes>
 		</itemtype>
 
 	</itemtypes>
 
-
-	<!-- <itemtype generate="true" code="MyProduct" jaloclass="de.hybris.platform.addons.wsclientgenerator.jalo.MyProduct" 
-		extends="Product" autocreate="true" > <attributes> <attribute qualifier="myExampleInitialStringField" 
-		type="java.lang.String"> <description>My Example Initial String Value</description> 
-		<modifiers initial="true"/> <persistence type="property"/> </attribute> <attribute 
-		qualifier="myExampleBooleanField" type="java.lang.Boolean"> <description>Example 
-		Initial Boolean Field</description> <persistence type="property"/> </attribute> 
-		<attribute qualifier="media" type="Media"> <persistence type="property"/> 
-		</attribute> </attributes> </itemtype> -->
 </items>

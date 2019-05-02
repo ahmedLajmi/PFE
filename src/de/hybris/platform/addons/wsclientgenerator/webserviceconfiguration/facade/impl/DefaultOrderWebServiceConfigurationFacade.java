@@ -16,17 +16,18 @@ import de.hybris.platform.addons.wsclientgenerator.model.PersoWSParamModel;
 import de.hybris.platform.addons.wsclientgenerator.tools.WSInvoke;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.facade.OrderWebServiceConfigurationFacade;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.service.OrderWebServiceConfigurationService;
+import de.hybris.platform.enumeration.EnumerationService;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
 
 
 /**
@@ -37,7 +38,10 @@ public class DefaultOrderWebServiceConfigurationFacade implements OrderWebServic
 {
 
 	@Resource(name = "orderWebServiceConfigurationService")
-	private OrderWebServiceConfigurationService orderWebServiceConfigurationService;
+	private OrderWebServiceConfigurationService orderWsConfService;
+
+	@Resource(name = "enumerationService")
+	private EnumerationService enumerationService;
 
 	private static final Logger LOG = Logger.getLogger(DefaultOrderWebServiceConfigurationFacade.class);
 
@@ -45,25 +49,38 @@ public class DefaultOrderWebServiceConfigurationFacade implements OrderWebServic
 	@Override
 	public WebServiceConfigurationDetailsData getConfigurationDetails(final String id)
 	{
-		final OrderWebServiceConfigurationModel om = orderWebServiceConfigurationService.findOrderWsConfiguration(id);
+		final OrderWebServiceConfigurationModel om = orderWsConfService.findOrderWsConfiguration(id);
 		final WebServiceConfigurationDetailsData cd = new WebServiceConfigurationDetailsData();
 		cd.setId(om.getPk().toString());
 		cd.setName(om.getName());
 		cd.setUrl(om.getUrl());
 		cd.setDescription(om.getDescription());
-		cd.setMethod(om.getMethod().toString());
+		cd.setMethod(enumerationService.getEnumerationName(om.getMethod()));
 		cd.setEnable(om.getEnable().booleanValue());
-		final List<WebServiceParameterData> params = new ArrayList<>();
+
+		final List<WebServiceParameterData> pathParams = new ArrayList<>();
+		final List<WebServiceParameterData> queryParams = new ArrayList<>();
 		final List<WebServiceParameterData> persoParams = new ArrayList<>();
 		final List<WebServiceParameterData> securityParams = new ArrayList<>();
+
 		for (final OrderWebServiceParameterModel param : om.getParameters())
 		{
 			final WebServiceParameterData pd = new WebServiceParameterData();
 			pd.setKey(param.getKey());
 			pd.setValue(param.getValue().toString());
-			params.add(pd);
+			queryParams.add(pd);
 		}
-		cd.setParameters(params);
+		cd.setQueryParameters(queryParams);
+
+		for (final OrderWebServiceParameterModel param : om.getPathParameters())
+		{
+			final WebServiceParameterData pd = new WebServiceParameterData();
+			pd.setKey(param.getKey());
+			pd.setValue(param.getValue().toString());
+			pathParams.add(pd);
+		}
+		cd.setPathParameters(pathParams);
+
 		for (final PersoWSParamModel param : om.getPersonalisedParameters())
 		{
 			final WebServiceParameterData pd = new WebServiceParameterData();
@@ -72,18 +89,24 @@ public class DefaultOrderWebServiceConfigurationFacade implements OrderWebServic
 			persoParams.add(pd);
 		}
 		cd.setPersoParameters(persoParams);
-		for (final PersoWSParamModel param : om.getSecurityParameters())
+
+		if (om.getLogin() != null && !StringUtils.isEmpty(om.getLogin()))
 		{
-			final WebServiceParameterData pd = new WebServiceParameterData();
-			pd.setKey(param.getKey());
-			pd.setValue(param.getValue().toString());
-			securityParams.add(pd);
+			final WebServiceParameterData login = new WebServiceParameterData();
+			final WebServiceParameterData password = new WebServiceParameterData();
+			login.setKey("login");
+			login.setValue(om.getLogin());
+			password.setKey("password");
+			password.setValue(om.getPassword());
+			securityParams.add(login);
+			securityParams.add(password);
+			cd.setSecurityParameters(securityParams);
 		}
-		cd.setSecurityParameters(securityParams);
-		cd.setAccept(om.getAccept().toString());
+
+		cd.setAccept(enumerationService.getEnumerationName(om.getAccept()));
 		if (om.getContentType() != null)
 		{
-			cd.setContentType(om.getContentType().toString());
+			cd.setContentType(enumerationService.getEnumerationName(om.getContentType()));
 		}
 
 		return cd;
@@ -92,8 +115,7 @@ public class DefaultOrderWebServiceConfigurationFacade implements OrderWebServic
 	@Override
 	public List<WebServiceConfigurationData> getAllConfigurations()
 	{
-		final List<OrderWebServiceConfigurationModel> orderConfigModels = orderWebServiceConfigurationService
-				.getAllConfigurations();
+		final List<OrderWebServiceConfigurationModel> orderConfigModels = orderWsConfService.getAllConfigurations();
 		final List<WebServiceConfigurationData> orderWsConfigData = new ArrayList<WebServiceConfigurationData>();
 		for (final OrderWebServiceConfigurationModel om : orderConfigModels)
 		{
@@ -106,27 +128,29 @@ public class DefaultOrderWebServiceConfigurationFacade implements OrderWebServic
 	}
 
 	@Override
-	public WebServiceResponseData wsConfigurationCall(final String id, final Map<String, String> params)
+	public WebServiceResponseData wsConfigurationCall(final String id, final Map<String, String> queryParams,
+			final Map<String, String> pathParams)
 	{
-		final OrderWebServiceConfigurationModel om = orderWebServiceConfigurationService.findOrderWsConfiguration(id);
+		final OrderWebServiceConfigurationModel om = orderWsConfService.findOrderWsConfiguration(id);
 		final WebServiceResponseData response = new WebServiceResponseData();
 		final WSInvoke wsInvoke = new WSInvoke();
 		ResponseEntity<String> wsResponse = null;
+		queryParams.putAll(orderWsConfService.prepareStaticParams(om));
+		final Map<String, Map<String, String>> params = new HashMap<>();
+		params.put("pathPrameters", pathParams);
 		try
 		{
 			if (om.getMethod().equals(MethodType.GET))
 			{
-				wsResponse = wsInvoke.getRequest(om.getUrl(), params, orderWebServiceConfigurationService.prepareHeadersParams(om),
+				params.put("queryPrameters", queryParams);
+				wsResponse = wsInvoke.getSimulationRequest(om.getUrl(), params, orderWsConfService.prepareHeadersParams(om),
 						om.getAccept());
 			}
 			else if (om.getMethod().equals(MethodType.POST))
 			{
-				final Collection<PersoWSParamModel> persoParams = om.getPersonalisedParameters();
-				for (final PersoWSParamModel persoParam : persoParams)
-				{
-					params.put(persoParam.getKey(), persoParam.getValue());
-				}
-				wsResponse = wsInvoke.postRequest(om.getUrl(), new LinkedMultiValueMap(params), om.getAccept(), om.getContentType());
+				params.put("body", queryParams);
+				wsResponse = wsInvoke.postSimulationRequest(om.getUrl(), params, orderWsConfService.prepareHeadersParams(om),
+						om.getAccept(), om.getContentType());
 			}
 		}
 		catch (final InvokeWsException | CreateWsRequestException e)

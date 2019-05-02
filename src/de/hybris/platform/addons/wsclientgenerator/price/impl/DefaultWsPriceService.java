@@ -4,27 +4,23 @@
 package de.hybris.platform.addons.wsclientgenerator.price.impl;
 
 import de.hybris.platform.addons.wsclientgenerator.enums.ModeType;
-import de.hybris.platform.addons.wsclientgenerator.enums.PriceParameter;
-import de.hybris.platform.addons.wsclientgenerator.enums.ResponseType;
+import de.hybris.platform.addons.wsclientgenerator.enums.PriceMappingResponse;
 import de.hybris.platform.addons.wsclientgenerator.exceptions.InvokeWsException;
-import de.hybris.platform.addons.wsclientgenerator.exceptions.ParseWsResponseException;
 import de.hybris.platform.addons.wsclientgenerator.model.PriceWebServiceConfigurationModel;
-import de.hybris.platform.addons.wsclientgenerator.model.PriceWebServiceParameterModel;
+import de.hybris.platform.addons.wsclientgenerator.model.PriceWebServiceResponseModel;
 import de.hybris.platform.addons.wsclientgenerator.price.WSPriceService;
 import de.hybris.platform.addons.wsclientgenerator.tools.WSInvoke;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.service.PriceWebServiceConfigurationService;
-import de.hybris.platform.category.model.CategoryModel;
+import de.hybris.platform.commercefacades.storesession.StoreSessionFacade;
 import de.hybris.platform.commercefacades.storesession.data.CurrencyData;
 import de.hybris.platform.commerceservices.price.impl.NetPriceService;
 import de.hybris.platform.core.model.product.ProductModel;
+import de.hybris.platform.core.model.user.UserModel;
 import de.hybris.platform.jalo.order.price.PriceInformation;
 import de.hybris.platform.servicelayer.time.TimeService;
 import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.util.PriceValue;
-import de.hybris.platform.ycommercewebservices.storesession.data.CurrencyDataList;
 
-import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -32,20 +28,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.springframework.http.ResponseEntity;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 
 /**
@@ -58,10 +43,13 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 	private TimeService timeService;
 
 	@Resource(name = "priceWebServiceConfigurationService")
-	private PriceWebServiceConfigurationService priceWebServiceConfigurationService;
+	private PriceWebServiceConfigurationService priceWsConfService;
 
 	@Resource(name = "userService")
 	private UserService userService;
+
+	@Resource(name = "storeSessionFacade")
+	private StoreSessionFacade storeSessionFacade;
 
 	private PriceWebServiceConfigurationModel priceConfiguration;
 
@@ -71,42 +59,51 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 	@Override
 	public List<PriceInformation> getPriceInformationsForProduct(final ProductModel model)
 	{
-		priceConfiguration = priceWebServiceConfigurationService.getWsEnabledConfiguration();
+		priceConfiguration = priceWsConfService.getWsEnabledConfiguration();
 		if (priceConfiguration == null)
 		{
 			return super.getPriceInformationsForProduct(model);
 		}
 		else
 		{
-			Map<String, String> result = new HashMap<>();
 			final List<PriceInformation> prices = new ArrayList<PriceInformation>();
 			PriceInformation priceInfo;
+			String currency = "EUR";
+			double value = 0;
 			final WSInvoke wsinvoke = new WSInvoke();
 			try
 			{
-				final ResponseEntity<String> response = wsinvoke.getRequest(priceConfiguration.getUrl(),
-						prepareGetRequestParams(priceConfiguration, model),
-						priceWebServiceConfigurationService.prepareHeadersParams(priceConfiguration), priceConfiguration.getAccept());
-				System.out.println(response.getBody());
+				final Map<String, String> response = wsinvoke.getRequest(priceConfiguration.getUrl(),
+						prepareGetParams(priceConfiguration, model), priceWsConfService.prepareHeadersParams(priceConfiguration),
+						priceConfiguration.getAccept());
 
-				if (priceConfiguration.getAccept().equals(ResponseType.JSON))
+				for (final PriceWebServiceResponseModel item : priceConfiguration.getResponseMapping())
 				{
-					result = jsonParseResponse(response.getBody());
+					if (item.getValue().equals(PriceMappingResponse.PRICE))
+					{
+						final String itemValue = String.valueOf(response.get(item.getKey()));
+						value = Double.parseDouble(StringUtils.replaceEach(itemValue, new String[]
+						{ "\n" }, new String[]
+						{ "" }));
+					}
+					else if (item.getValue().equals(PriceMappingResponse.CURRENCY))
+					{
+						currency = response.get(item.getKey());
+					}
 				}
-				else if (priceConfiguration.getAccept().equals(ResponseType.XML))
+				if (value == 0 || !validateCurrency(currency))
 				{
-					result = xmlParseResponse(response.getBody());
+					throw new InvokeWsException("Problem in reading response!");
 				}
-				else if (priceConfiguration.getAccept().equals(ResponseType.TEXT))
+				else
 				{
-					result = textParseResponse(response.getBody(), priceConfiguration);
+					priceInfo = new PriceInformation(new PriceValue(currency, value, true));
+					prices.add(priceInfo);
+					return prices;
 				}
-				priceInfo = new PriceInformation(
-						new PriceValue(result.get("currency"), Double.parseDouble(result.get("price")), true));
-				prices.add(priceInfo);
-				return prices;
+
 			}
-			catch (final ParseWsResponseException | InvokeWsException e)
+			catch (final InvokeWsException e)
 			{
 				LOG.error(e.getMessage());
 				if (!priceConfiguration.getMode().equals(ModeType.ONLYWITHWEBSERVICE))
@@ -134,179 +131,25 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 	}
 
 	@Override
-	public Map<String, String> jsonParseResponse(final String response) throws ParseWsResponseException
+	public Map<String, Map<String, String>> prepareGetParams(final PriceWebServiceConfigurationModel priceConfiguration,
+			final ProductModel product)
 	{
-		final Map<String, String> result = new HashMap<>();
-		final ObjectMapper mapper = new ObjectMapper();
-		try
-		{
-			final JsonNode root = mapper.readTree(response);
-			if (root.has(priceConfiguration.getPriceKey()))
-			{
-				final String price = root.path(priceConfiguration.getPriceKey()).asText();
-				String currency = "EUR";
-				if (root.has(priceConfiguration.getCurrencyKey()))
-				{
-					currency = root.path(priceConfiguration.getCurrencyKey()).asText();
-					if (!validateCurrency(currency))
-					{
-						throw new ParseWsResponseException("Error in parsing response!! Invalid currency value");
-					}
-				}
-				else
-				{
-					if (!userService.isAnonymousUser(userService.getCurrentUser()))
-					{
-						currency = userService.getCurrentUser().getSessionCurrency().getIsocode().toUpperCase();
-					}
-				}
+		final Map<String, Map<String, String>> params = new HashMap<>();
 
-				result.put("price", price);
-				result.put("currency", currency);
-				return result;
-			}
-			else
-			{
-				throw new ParseWsResponseException("Error in parsing response!! Key doesn t exist");
-			}
-		}
-		catch (final IOException e)
+		UserModel user = null;
+		if (!userService.isAnonymousUser(userService.getCurrentUser()))
 		{
-			throw new ParseWsResponseException("Problem in reading JSON response \n" + e.getMessage());
+			user = userService.getCurrentUser();
 		}
-	}
 
-	@Override
-	public Map<String, String> xmlParseResponse(final String response) throws ParseWsResponseException
-	{
-		final Map<String, String> result = new HashMap<>();
-		String price = "";
-		String currency = "EUR";
-		Document doc;
-		try
-		{
-			doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(response)));
-			if (StringUtils.equals(priceConfiguration.getPriceKey(), doc.getDocumentElement().getTagName()))
-			{
-				price = doc.getDocumentElement().getFirstChild().getNodeValue();
-				result.put("price", price);
-				result.put("currency", currency);
-				return result;
-			}
-			else
-			{
-				final NodeList nodeList = doc.getDocumentElement().getChildNodes();
-				for (int i = 0; i < nodeList.getLength(); i++)
-				{
-					final Node node = nodeList.item(i);
-					if (node.getNodeType() == Node.ELEMENT_NODE)
-					{
-						final Element elem = (Element) node;
+		final Map<String, String> pathPrameters = priceWsConfService.prepareDynamicPathParameters(priceConfiguration, product,
+				user);
+		final Map<String, String> queryPrameters = priceWsConfService.prepareDynamicQueryParameters(priceConfiguration, product,
+				user);
+		queryPrameters.putAll(priceWsConfService.prepareStaticParams(priceConfiguration));
 
-						if (StringUtils.equals(priceConfiguration.getPriceKey(), elem.getTagName()))
-						{
-							price = elem.getFirstChild().getNodeValue();
-						}
-						else if (StringUtils.equals(priceConfiguration.getCurrencyKey(), elem.getTagName()))
-						{
-							currency = elem.getFirstChild().getNodeValue().toUpperCase();
-							if (!validateCurrency(currency))
-							{
-								throw new ParseWsResponseException("Error in parsing response!! Invalid currency value");
-							}
-						}
-					}
-				}
-				if (price.isEmpty())
-				{
-					throw new ParseWsResponseException("Error in parsing response!! Key doesn t exist");
-				}
-				else
-				{
-					result.put("price", price);
-					result.put("currency", currency);
-					return result;
-				}
-			}
-		}
-		catch (SAXException | ParserConfigurationException | IOException e)
-		{
-			throw new ParseWsResponseException("Problem in reading XML response \n" + e.getMessage());
-		}
-	}
-
-	@Override
-	public Map<String, String> textParseResponse(final String response, final PriceWebServiceConfigurationModel priceConfiguration)
-			throws ParseWsResponseException
-	{
-		final Map<String, String> result = new HashMap<>();
-		final String sepearator = priceConfiguration.getTextSeperator();
-		try
-		{
-			final String[] arrOfStr = response.split(sepearator);
-			if (arrOfStr != null && arrOfStr.length >= Integer.parseInt(priceConfiguration.getPriceKey()) - 1)
-			{
-				result.put("price", arrOfStr[Integer.parseInt(priceConfiguration.getPriceKey()) - 1]);
-				if (arrOfStr.length >= Integer.parseInt(priceConfiguration.getCurrencyKey()) - 1)
-				{
-					final String currency = arrOfStr[Integer.parseInt(priceConfiguration.getCurrencyKey()) - 1].toUpperCase();
-					if (validateCurrency(currency))
-					{
-						result.put("currency", arrOfStr[Integer.parseInt(priceConfiguration.getCurrencyKey()) - 1].toUpperCase());
-					}
-					else
-					{
-						throw new ParseWsResponseException("Error in parsing response!! Invalid currency value");
-					}
-				}
-				return result;
-			}
-			else
-			{
-				throw new ParseWsResponseException("Error in parsing response!! Key doesn t exist");
-			}
-		}
-		catch (final Exception e)
-		{
-			throw new ParseWsResponseException("Problem in reading TEXT response \n" + e.getMessage());
-		}
-	}
-
-	@Override
-	public Map<String, String> prepareGetRequestParams(final PriceWebServiceConfigurationModel priceConfiguration,
-			final ProductModel model)
-	{
-		final Collection<PriceWebServiceParameterModel> additionelParams = priceConfiguration.getParameters();
-		final Map<String, String> params = new HashMap<>();
-		if (additionelParams != null && !additionelParams.isEmpty())
-		{
-			for (final PriceWebServiceParameterModel additionelParam : additionelParams)
-			{
-				if (additionelParam.getValue().equals(PriceParameter.PRODUCTCODE))
-				{
-					params.put(additionelParam.getKey(), model.getCode());
-				}
-				if (additionelParam.getValue().equals(PriceParameter.CLIENTCODE))
-				{
-					if (!userService.isAnonymousUser(userService.getCurrentUser()))
-					{
-						params.put(additionelParam.getKey(), userService.getCurrentUser().getUid());
-					}
-				}
-				else if (additionelParam.getValue().equals(PriceParameter.CATEGORIECODE))
-				{
-					if (!userService.isAnonymousUser(userService.getCurrentUser()))
-					{
-						final Collection<CategoryModel> categories = model.getSupercategories();
-						if (categories != null && !categories.isEmpty())
-						{
-							params.put(additionelParam.getKey(), categories.toArray().toString());
-						}
-					}
-				}
-			}
-		}
-		params.putAll(priceWebServiceConfigurationService.preparePersoParams(priceConfiguration));
+		params.put("pathPrameters", pathPrameters);
+		params.put("queryPrameters", queryPrameters);
 		return params;
 	}
 
@@ -314,7 +157,7 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 	public boolean validateCurrency(final String value)
 	{
 
-		final Collection<CurrencyData> CurrencyList = new CurrencyDataList().getCurrencies();
+		final Collection<CurrencyData> CurrencyList = storeSessionFacade.getAllCurrencies();
 		for (final CurrencyData currency : CurrencyList)
 		{
 			if (StringUtils.equalsIgnoreCase(currency.getIsocode(), value))

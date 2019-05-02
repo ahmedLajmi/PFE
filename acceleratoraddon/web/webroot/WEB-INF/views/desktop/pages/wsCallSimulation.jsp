@@ -22,6 +22,12 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/mode-xml.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3/theme-twilight.js"></script>
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+	integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+	crossorigin="anonymous">
+
+
 
 
 <template:page pageTitle="${pageTitle}">
@@ -36,7 +42,7 @@
 						<div class="col-sm-6 form-group perso">
 							<input type="hidden" id="csrf" name="CSRFToken"
 								value="${CSRFToken}"> <label for="category">Please
-								select a category : </label> <select class="form-control perso"
+								select a functionality : </label> <select class="form-control perso"
 								name="functionality" id="functionality"
 								onchange="getAllConfigurations(this);">
 								<option value=""></option>
@@ -56,14 +62,38 @@
 					</div>
 					<div class="col-sm-8 wsConfigurationDetails"
 						id="wsConfigurationDetails">
-						<label>URI : </label><span id="uri">
-							http://127.0.0.1:3000/customer/xml</span> <br> <label>Method
-							: </label><span id="method">GET</span> <br> <label>Status :
-						</label><small class="label label-success"><span id="enable">Active</span></small><br>
-						<label>Response type : </label><span id="accept">
+						<div class="detailsWsConf">Web service configuration details</div>
+						<div class="urlDetails">
+							<div class="" id="method"></div>
+							<div class="" id=uri></div>
+						</div>
+						<div class="extraUrlDetails">
+							<div id="enable" class="status"></div>
+							<div id="" class="accept text-secondary">
+								Response format : <span id="accept"> </span>
+							</div>
+							<div id="contentType" class="contentType text-secondary"></div>
+						</div>
+						<div id="securityDetails" class="securityDetails">
+							<fieldset>
+								<legend class="legend_security">Security informations</legend>
+								<div id="login" class=""></div>
+								<div id="password" class=""></div>								
+							</fieldset>
+						</div>
 					</div>
-
-					<div class="row" id="parameters"></div>
+					<div id="path">
+						<fieldset>
+							<legend>URL path parameters</legend>
+							<div class="row" id="pathParameters"></div>
+						</fieldset>
+					</div>
+					<div id="query">
+						<fieldset>
+							<legend>Query parameters</legend>
+							<div class="row" id="queryParameters"></div>
+						</fieldset>
+					</div>
 					<div class="row">
 						<div class="form-group perso" id="btn">
 							<button id="submit" type="submit" class="btn btn-success">Send
@@ -72,7 +102,10 @@
 					</div>
 				</form>
 				<div class="row" id="response">
-					<label for="message"> Response:</label>
+					<div class="response">
+						<hr class="sep_response">
+						Response
+					</div>
 					<div class="col-sm-10 form-group perso" id="editor"></div>
 				</div>
 				<div id="success_message"

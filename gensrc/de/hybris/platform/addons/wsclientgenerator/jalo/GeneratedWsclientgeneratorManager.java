@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 26 avr. 2019 11:07:06                       ---
+ * --- Generated at 2 mai 2019 13:28:40                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -20,13 +20,17 @@ package de.hybris.platform.addons.wsclientgenerator.jalo;
 import de.hybris.platform.addons.wsclientgenerator.constants.WsclientgeneratorConstants;
 import de.hybris.platform.addons.wsclientgenerator.jalo.CustomerWebServiceConfiguration;
 import de.hybris.platform.addons.wsclientgenerator.jalo.CustomerWebServiceParameter;
+import de.hybris.platform.addons.wsclientgenerator.jalo.CustomerWebServiceResponse;
 import de.hybris.platform.addons.wsclientgenerator.jalo.OrderWebServiceConfiguration;
 import de.hybris.platform.addons.wsclientgenerator.jalo.OrderWebServiceParameter;
+import de.hybris.platform.addons.wsclientgenerator.jalo.OrderWebServiceResponse;
 import de.hybris.platform.addons.wsclientgenerator.jalo.PersoWSParam;
 import de.hybris.platform.addons.wsclientgenerator.jalo.PriceWebServiceConfiguration;
 import de.hybris.platform.addons.wsclientgenerator.jalo.PriceWebServiceParameter;
+import de.hybris.platform.addons.wsclientgenerator.jalo.PriceWebServiceResponse;
 import de.hybris.platform.addons.wsclientgenerator.jalo.StockWebServiceConfiguration;
 import de.hybris.platform.addons.wsclientgenerator.jalo.StockWebServiceParameter;
+import de.hybris.platform.addons.wsclientgenerator.jalo.StockWebServiceResponse;
 import de.hybris.platform.jalo.Item;
 import de.hybris.platform.jalo.Item.AttributeMode;
 import de.hybris.platform.jalo.JaloBusinessException;
@@ -114,6 +118,32 @@ public abstract class GeneratedWsclientgeneratorManager extends Extension
 		return createCustomerWebServiceParameter( getSession().getSessionContext(), attributeValues );
 	}
 	
+	public CustomerWebServiceResponse createCustomerWebServiceResponse(final SessionContext ctx, final Map attributeValues)
+	{
+		try
+		{
+			ComposedType type = getTenant().getJaloConnection().getTypeManager().getComposedType( WsclientgeneratorConstants.TC.CUSTOMERWEBSERVICERESPONSE );
+			return (CustomerWebServiceResponse)type.newInstance( ctx, attributeValues );
+		}
+		catch( JaloGenericCreationException e)
+		{
+			final Throwable cause = e.getCause();
+			throw (cause instanceof RuntimeException ?
+			(RuntimeException)cause
+			:
+			new JaloSystemException( cause, cause.getMessage(), e.getErrorCode() ) );
+		}
+		catch( JaloBusinessException e )
+		{
+			throw new JaloSystemException( e ,"error creating CustomerWebServiceResponse : "+e.getMessage(), 0 );
+		}
+	}
+	
+	public CustomerWebServiceResponse createCustomerWebServiceResponse(final Map attributeValues)
+	{
+		return createCustomerWebServiceResponse( getSession().getSessionContext(), attributeValues );
+	}
+	
 	public OrderWebServiceConfiguration createOrderWebServiceConfiguration(final SessionContext ctx, final Map attributeValues)
 	{
 		try
@@ -164,6 +194,32 @@ public abstract class GeneratedWsclientgeneratorManager extends Extension
 	public OrderWebServiceParameter createOrderWebServiceParameter(final Map attributeValues)
 	{
 		return createOrderWebServiceParameter( getSession().getSessionContext(), attributeValues );
+	}
+	
+	public OrderWebServiceResponse createOrderWebServiceResponse(final SessionContext ctx, final Map attributeValues)
+	{
+		try
+		{
+			ComposedType type = getTenant().getJaloConnection().getTypeManager().getComposedType( WsclientgeneratorConstants.TC.ORDERWEBSERVICERESPONSE );
+			return (OrderWebServiceResponse)type.newInstance( ctx, attributeValues );
+		}
+		catch( JaloGenericCreationException e)
+		{
+			final Throwable cause = e.getCause();
+			throw (cause instanceof RuntimeException ?
+			(RuntimeException)cause
+			:
+			new JaloSystemException( cause, cause.getMessage(), e.getErrorCode() ) );
+		}
+		catch( JaloBusinessException e )
+		{
+			throw new JaloSystemException( e ,"error creating OrderWebServiceResponse : "+e.getMessage(), 0 );
+		}
+	}
+	
+	public OrderWebServiceResponse createOrderWebServiceResponse(final Map attributeValues)
+	{
+		return createOrderWebServiceResponse( getSession().getSessionContext(), attributeValues );
 	}
 	
 	public PersoWSParam createPersoWSParam(final SessionContext ctx, final Map attributeValues)
@@ -244,6 +300,32 @@ public abstract class GeneratedWsclientgeneratorManager extends Extension
 		return createPriceWebServiceParameter( getSession().getSessionContext(), attributeValues );
 	}
 	
+	public PriceWebServiceResponse createPriceWebServiceResponse(final SessionContext ctx, final Map attributeValues)
+	{
+		try
+		{
+			ComposedType type = getTenant().getJaloConnection().getTypeManager().getComposedType( WsclientgeneratorConstants.TC.PRICEWEBSERVICERESPONSE );
+			return (PriceWebServiceResponse)type.newInstance( ctx, attributeValues );
+		}
+		catch( JaloGenericCreationException e)
+		{
+			final Throwable cause = e.getCause();
+			throw (cause instanceof RuntimeException ?
+			(RuntimeException)cause
+			:
+			new JaloSystemException( cause, cause.getMessage(), e.getErrorCode() ) );
+		}
+		catch( JaloBusinessException e )
+		{
+			throw new JaloSystemException( e ,"error creating PriceWebServiceResponse : "+e.getMessage(), 0 );
+		}
+	}
+	
+	public PriceWebServiceResponse createPriceWebServiceResponse(final Map attributeValues)
+	{
+		return createPriceWebServiceResponse( getSession().getSessionContext(), attributeValues );
+	}
+	
 	public StockWebServiceConfiguration createStockWebServiceConfiguration(final SessionContext ctx, final Map attributeValues)
 	{
 		try
@@ -294,6 +376,32 @@ public abstract class GeneratedWsclientgeneratorManager extends Extension
 	public StockWebServiceParameter createStockWebServiceParameter(final Map attributeValues)
 	{
 		return createStockWebServiceParameter( getSession().getSessionContext(), attributeValues );
+	}
+	
+	public StockWebServiceResponse createStockWebServiceResponse(final SessionContext ctx, final Map attributeValues)
+	{
+		try
+		{
+			ComposedType type = getTenant().getJaloConnection().getTypeManager().getComposedType( WsclientgeneratorConstants.TC.STOCKWEBSERVICERESPONSE );
+			return (StockWebServiceResponse)type.newInstance( ctx, attributeValues );
+		}
+		catch( JaloGenericCreationException e)
+		{
+			final Throwable cause = e.getCause();
+			throw (cause instanceof RuntimeException ?
+			(RuntimeException)cause
+			:
+			new JaloSystemException( cause, cause.getMessage(), e.getErrorCode() ) );
+		}
+		catch( JaloBusinessException e )
+		{
+			throw new JaloSystemException( e ,"error creating StockWebServiceResponse : "+e.getMessage(), 0 );
+		}
+	}
+	
+	public StockWebServiceResponse createStockWebServiceResponse(final Map attributeValues)
+	{
+		return createStockWebServiceResponse( getSession().getSessionContext(), attributeValues );
 	}
 	
 	@Override

@@ -117,6 +117,46 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 		);
 	
 		createItemType(
+			"CustomerWebServiceResponse",
+			"WebServiceParameter",
+			de.hybris.platform.addons.wsclientgenerator.jalo.CustomerWebServiceResponse.class,
+			null,
+			false,
+			null,
+			false
+		);
+	
+		createItemType(
+			"PriceWebServiceResponse",
+			"WebServiceParameter",
+			de.hybris.platform.addons.wsclientgenerator.jalo.PriceWebServiceResponse.class,
+			null,
+			false,
+			null,
+			false
+		);
+	
+		createItemType(
+			"StockWebServiceResponse",
+			"WebServiceParameter",
+			de.hybris.platform.addons.wsclientgenerator.jalo.StockWebServiceResponse.class,
+			null,
+			false,
+			null,
+			false
+		);
+	
+		createItemType(
+			"OrderWebServiceResponse",
+			"WebServiceParameter",
+			de.hybris.platform.addons.wsclientgenerator.jalo.OrderWebServiceResponse.class,
+			null,
+			false,
+			null,
+			false
+		);
+	
+		createItemType(
 			"PriceWebServiceConfiguration",
 			"WebServiceConfiguration",
 			de.hybris.platform.addons.wsclientgenerator.jalo.PriceWebServiceConfiguration.class,
@@ -163,7 +203,7 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 		);
 	
 		createRelationType(
-			"WebServiceConfigurationSecurityParameterRelation",
+			"WebServiceConfigurationHeadersParameterRelation",
 			null,
 			true
 		);
@@ -188,6 +228,54 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 	
 		createRelationType(
 			"CustomerWebServiceConfigurationParameterRelation",
+			null,
+			true
+		);
+	
+		createRelationType(
+			"PriceWebServiceConfigurationHeaderParameterRelation",
+			null,
+			true
+		);
+	
+		createRelationType(
+			"OrderWebServiceConfigurationHeaderParameterRelation",
+			null,
+			true
+		);
+	
+		createRelationType(
+			"StockWebServiceConfigurationHeaderParameterRelation",
+			null,
+			true
+		);
+	
+		createRelationType(
+			"CustomerWebServiceConfigurationHeaderParameterRelation",
+			null,
+			true
+		);
+	
+		createRelationType(
+			"CustomerWebServiceConfigurationResponseMappingrRelation",
+			null,
+			true
+		);
+	
+		createRelationType(
+			"PriceWebServiceConfigurationResponseMappingrRelation",
+			null,
+			true
+		);
+	
+		createRelationType(
+			"StockWebServiceConfigurationResponseMappingrRelation",
+			null,
+			true
+		);
+	
+		createRelationType(
+			"OrderWebServiceConfigurationResponseMappingrRelation",
 			null,
 			true
 		);
@@ -232,6 +320,26 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			null
 		);
 	
+		createEnumerationType(
+			"CustomerMappingResponse",
+			null
+		);
+	
+		createEnumerationType(
+			"PriceMappingResponse",
+			null
+		);
+	
+		createEnumerationType(
+			"StockMappingResponse",
+			null
+		);
+	
+		createEnumerationType(
+			"OrderMappingResponse",
+			null
+		);
+	
 		createCollectionType(
 			"PriceWSParam",
 			"PriceParameter",
@@ -251,8 +359,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 
 	
 	
-				single_createattr_WebServiceConfiguration_configID();
-			
 				single_createattr_WebServiceConfiguration_name();
 			
 				single_createattr_WebServiceConfiguration_description();
@@ -291,29 +397,13 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 				single_createattr_CustomerWebServiceParameter_value();
 			
-				single_createattr_PriceWebServiceConfiguration_priceKey();
+				single_createattr_CustomerWebServiceResponse_value();
 			
-				single_createattr_PriceWebServiceConfiguration_currencyKey();
+				single_createattr_PriceWebServiceResponse_value();
 			
-				single_createattr_PriceWebServiceConfiguration_productCode();
+				single_createattr_StockWebServiceResponse_value();
 			
-				single_createattr_StockWebServiceConfiguration_stockKey();
-			
-				single_createattr_StockWebServiceConfiguration_productCode();
-			
-				single_createattr_OrderWebServiceConfiguration_statusKey();
-			
-				single_createattr_OrderWebServiceConfiguration_orderCode();
-			
-				single_createattr_CustomerWebServiceConfiguration_firstNameKey();
-			
-				single_createattr_CustomerWebServiceConfiguration_lastNameKey();
-			
-				single_createattr_CustomerWebServiceConfiguration_emailKey();
-			
-				single_createattr_CustomerWebServiceConfiguration_titleKey();
-			
-				single_createattr_CustomerWebServiceConfiguration_clientCode();
+				single_createattr_OrderWebServiceResponse_value();
 			
 		createRelationAttributes(
 			"WebServiceConfigurationParameterRelation", 
@@ -336,7 +426,7 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 		);
 	
 		createRelationAttributes(
-			"WebServiceConfigurationSecurityParameterRelation", 
+			"WebServiceConfigurationHeadersParameterRelation", 
 			false, 
 
 			"configuration", 
@@ -346,7 +436,7 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			false,
 			false,
 			CollectionType.COLLECTION,
-			"SecurityParameters", 
+			"headersParameters", 
 			"PersoWSParam", 
 			true,
 			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
@@ -435,26 +525,169 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			CollectionType.COLLECTION
 		);
 	
+		createRelationAttributes(
+			"PriceWebServiceConfigurationHeaderParameterRelation", 
+			false, 
 
-	}
-
+			"priceConfiguration", 
+			"PriceWebServiceConfiguration", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			false,
+			false,
+			CollectionType.COLLECTION,
+			"pathParameters", 
+			"PriceWebServiceParameter", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			false,
+			CollectionType.COLLECTION
+		);
 	
-	public void single_createattr_WebServiceConfiguration_configID() throws JaloBusinessException
-	{
-		
-						Map sqlColumnDefinitions = null;
-					
-				createPropertyAttribute(
-					"WebServiceConfiguration", 
-					"configID",  
-					null,
-					"java.lang.String",
-					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
-					null,
-					sqlColumnDefinitions
-				);
-			
+		createRelationAttributes(
+			"OrderWebServiceConfigurationHeaderParameterRelation", 
+			false, 
+
+			"orderConfiguration", 
+			"OrderWebServiceConfiguration", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			false,
+			false,
+			CollectionType.COLLECTION,
+			"pathParameters", 
+			"OrderWebServiceParameter", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			false,
+			CollectionType.COLLECTION
+		);
+	
+		createRelationAttributes(
+			"StockWebServiceConfigurationHeaderParameterRelation", 
+			false, 
+
+			"stockConfiguration", 
+			"StockWebServiceConfiguration", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			false,
+			false,
+			CollectionType.COLLECTION,
+			"pathParameters", 
+			"StockWebServiceParameter", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			false,
+			CollectionType.COLLECTION
+		);
+	
+		createRelationAttributes(
+			"CustomerWebServiceConfigurationHeaderParameterRelation", 
+			false, 
+
+			"customerConfiguration", 
+			"CustomerWebServiceConfiguration", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			false,
+			false,
+			CollectionType.COLLECTION,
+			"pathParameters", 
+			"CustomerWebServiceParameter", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			false,
+			CollectionType.COLLECTION
+		);
+	
+		createRelationAttributes(
+			"CustomerWebServiceConfigurationResponseMappingrRelation", 
+			false, 
+
+			"customerConfiguration", 
+			"CustomerWebServiceConfiguration", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			false,
+			false,
+			CollectionType.COLLECTION,
+			"responseMapping", 
+			"CustomerWebServiceResponse", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			false,
+			CollectionType.COLLECTION
+		);
+	
+		createRelationAttributes(
+			"PriceWebServiceConfigurationResponseMappingrRelation", 
+			false, 
+
+			"customerConfiguration", 
+			"PriceWebServiceConfiguration", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			false,
+			false,
+			CollectionType.COLLECTION,
+			"responseMapping", 
+			"PriceWebServiceResponse", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			false,
+			CollectionType.COLLECTION
+		);
+	
+		createRelationAttributes(
+			"StockWebServiceConfigurationResponseMappingrRelation", 
+			false, 
+
+			"customerConfiguration", 
+			"StockWebServiceConfiguration", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			false,
+			false,
+			CollectionType.COLLECTION,
+			"responseMapping", 
+			"StockWebServiceResponse", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			false,
+			CollectionType.COLLECTION
+		);
+	
+		createRelationAttributes(
+			"OrderWebServiceConfigurationResponseMappingrRelation", 
+			false, 
+
+			"customerConfiguration", 
+			"OrderWebServiceConfiguration", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			false,
+			false,
+			CollectionType.COLLECTION,
+			"responseMapping", 
+			"OrderWebServiceResponse", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			false,
+			CollectionType.COLLECTION
+		);
+	
+
 	}
+
 	
 	public void single_createattr_WebServiceConfiguration_name() throws JaloBusinessException
 	{
@@ -779,50 +1012,16 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 	}
 	
-	public void single_createattr_PriceWebServiceConfiguration_priceKey() throws JaloBusinessException
+	public void single_createattr_CustomerWebServiceResponse_value() throws JaloBusinessException
 	{
 		
 						Map sqlColumnDefinitions = null;
 					
 				createPropertyAttribute(
-					"PriceWebServiceConfiguration", 
-					"priceKey",  
+					"CustomerWebServiceResponse", 
+					"value",  
 					null,
-					"java.lang.String",
-					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
-					null,
-					sqlColumnDefinitions
-				);
-			
-	}
-	
-	public void single_createattr_PriceWebServiceConfiguration_currencyKey() throws JaloBusinessException
-	{
-		
-						Map sqlColumnDefinitions = null;
-					
-				createPropertyAttribute(
-					"PriceWebServiceConfiguration", 
-					"currencyKey",  
-					null,
-					"java.lang.String",
-					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
-					null,
-					sqlColumnDefinitions
-				);
-			
-	}
-	
-	public void single_createattr_PriceWebServiceConfiguration_productCode() throws JaloBusinessException
-	{
-		
-						Map sqlColumnDefinitions = null;
-					
-				createPropertyAttribute(
-					"PriceWebServiceConfiguration", 
-					"productCode",  
-					null,
-					"java.lang.Boolean",
+					"CustomerMappingResponse",
 					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
 					null,
 					sqlColumnDefinitions
@@ -830,16 +1029,16 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 	}
 	
-	public void single_createattr_StockWebServiceConfiguration_stockKey() throws JaloBusinessException
+	public void single_createattr_PriceWebServiceResponse_value() throws JaloBusinessException
 	{
 		
 						Map sqlColumnDefinitions = null;
 					
 				createPropertyAttribute(
-					"StockWebServiceConfiguration", 
-					"stockKey",  
+					"PriceWebServiceResponse", 
+					"value",  
 					null,
-					"java.lang.String",
+					"PriceMappingResponse",
 					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
 					null,
 					sqlColumnDefinitions
@@ -847,16 +1046,16 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 	}
 	
-	public void single_createattr_StockWebServiceConfiguration_productCode() throws JaloBusinessException
+	public void single_createattr_StockWebServiceResponse_value() throws JaloBusinessException
 	{
 		
 						Map sqlColumnDefinitions = null;
 					
 				createPropertyAttribute(
-					"StockWebServiceConfiguration", 
-					"productCode",  
+					"StockWebServiceResponse", 
+					"value",  
 					null,
-					"java.lang.Boolean",
+					"StockMappingResponse",
 					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
 					null,
 					sqlColumnDefinitions
@@ -864,118 +1063,16 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 	}
 	
-	public void single_createattr_OrderWebServiceConfiguration_statusKey() throws JaloBusinessException
+	public void single_createattr_OrderWebServiceResponse_value() throws JaloBusinessException
 	{
 		
 						Map sqlColumnDefinitions = null;
 					
 				createPropertyAttribute(
-					"OrderWebServiceConfiguration", 
-					"statusKey",  
+					"OrderWebServiceResponse", 
+					"value",  
 					null,
-					"java.lang.String",
-					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
-					null,
-					sqlColumnDefinitions
-				);
-			
-	}
-	
-	public void single_createattr_OrderWebServiceConfiguration_orderCode() throws JaloBusinessException
-	{
-		
-						Map sqlColumnDefinitions = null;
-					
-				createPropertyAttribute(
-					"OrderWebServiceConfiguration", 
-					"orderCode",  
-					null,
-					"java.lang.Boolean",
-					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
-					null,
-					sqlColumnDefinitions
-				);
-			
-	}
-	
-	public void single_createattr_CustomerWebServiceConfiguration_firstNameKey() throws JaloBusinessException
-	{
-		
-						Map sqlColumnDefinitions = null;
-					
-				createPropertyAttribute(
-					"CustomerWebServiceConfiguration", 
-					"firstNameKey",  
-					null,
-					"java.lang.String",
-					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
-					null,
-					sqlColumnDefinitions
-				);
-			
-	}
-	
-	public void single_createattr_CustomerWebServiceConfiguration_lastNameKey() throws JaloBusinessException
-	{
-		
-						Map sqlColumnDefinitions = null;
-					
-				createPropertyAttribute(
-					"CustomerWebServiceConfiguration", 
-					"lastNameKey",  
-					null,
-					"java.lang.String",
-					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
-					null,
-					sqlColumnDefinitions
-				);
-			
-	}
-	
-	public void single_createattr_CustomerWebServiceConfiguration_emailKey() throws JaloBusinessException
-	{
-		
-						Map sqlColumnDefinitions = null;
-					
-				createPropertyAttribute(
-					"CustomerWebServiceConfiguration", 
-					"emailKey",  
-					null,
-					"java.lang.String",
-					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
-					null,
-					sqlColumnDefinitions
-				);
-			
-	}
-	
-	public void single_createattr_CustomerWebServiceConfiguration_titleKey() throws JaloBusinessException
-	{
-		
-						Map sqlColumnDefinitions = null;
-					
-				createPropertyAttribute(
-					"CustomerWebServiceConfiguration", 
-					"titleKey",  
-					null,
-					"java.lang.String",
-					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
-					null,
-					sqlColumnDefinitions
-				);
-			
-	}
-	
-	public void single_createattr_CustomerWebServiceConfiguration_clientCode() throws JaloBusinessException
-	{
-		
-						Map sqlColumnDefinitions = null;
-					
-				createPropertyAttribute(
-					"CustomerWebServiceConfiguration", 
-					"clientCode",  
-					null,
-					"java.lang.Boolean",
+					"OrderMappingResponse",
 					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
 					null,
 					sqlColumnDefinitions
@@ -1011,8 +1108,7 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			Arrays.asList( new String[] {
 			
 				"json",
-				"xml",
-				"text"
+				"xml"
 			} )
 		);
 	
@@ -1031,9 +1127,9 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			true,
 			Arrays.asList( new String[] {
 			
-				"clientCode",
-				"productCode",
-				"categorieCode"
+				"uid",
+				"code",
+				"Supercategories"
 			} )
 		);
 	
@@ -1042,10 +1138,9 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			true,
 			Arrays.asList( new String[] {
 			
-				"clientCode",
-				"orderCode",
-				"orderDate",
-				"currencyCode"
+				"uid",
+				"code",
+				"date"
 			} )
 		);
 	
@@ -1054,10 +1149,10 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			true,
 			Arrays.asList( new String[] {
 			
-				"productCode",
-				"clientCode",
+				"code",
+				"uid",
 				"orderCode",
-				"stockCode"
+				"stockValue"
 			} )
 		);
 	
@@ -1066,11 +1161,11 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			true,
 			Arrays.asList( new String[] {
 			
-				"clientCode",
-				"clientFirstName",
-				"clientLastName",
-				"clientOldEmail",
-				"clientNewEmail",
+				"uid",
+				"firstName",
+				"lastName",
+				"oldEmail",
+				"newEmail",
 				"titleCode"
 			} )
 		);
@@ -1086,9 +1181,53 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			} )
 		);
 	
+		createEnumerationValues(
+			"CustomerMappingResponse",
+			true,
+			Arrays.asList( new String[] {
+			
+				"uid",
+				"firstName",
+				"lastName",
+				"titleCode",
+				"successCode"
+			} )
+		);
+	
+		createEnumerationValues(
+			"PriceMappingResponse",
+			true,
+			Arrays.asList( new String[] {
+			
+				"price",
+				"currency",
+				"successCode"
+			} )
+		);
+	
+		createEnumerationValues(
+			"StockMappingResponse",
+			true,
+			Arrays.asList( new String[] {
+			
+				"stockValue",
+				"successCode"
+			} )
+		);
+	
+		createEnumerationValues(
+			"OrderMappingResponse",
+			true,
+			Arrays.asList( new String[] {
+			
+				"status",
+				"successCode"
+			} )
+		);
+	
 		single_setRelAttributeProperties_WebServiceConfigurationParameterRelation_source();
 	
-		single_setRelAttributeProperties_WebServiceConfigurationSecurityParameterRelation_source();
+		single_setRelAttributeProperties_WebServiceConfigurationHeadersParameterRelation_source();
 	
 		single_setRelAttributeProperties_PriceWebServiceConfigurationParameterRelation_source();
 	
@@ -1098,9 +1237,25 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 	
 		single_setRelAttributeProperties_CustomerWebServiceConfigurationParameterRelation_source();
 	
+		single_setRelAttributeProperties_PriceWebServiceConfigurationHeaderParameterRelation_source();
+	
+		single_setRelAttributeProperties_OrderWebServiceConfigurationHeaderParameterRelation_source();
+	
+		single_setRelAttributeProperties_StockWebServiceConfigurationHeaderParameterRelation_source();
+	
+		single_setRelAttributeProperties_CustomerWebServiceConfigurationHeaderParameterRelation_source();
+	
+		single_setRelAttributeProperties_CustomerWebServiceConfigurationResponseMappingrRelation_source();
+	
+		single_setRelAttributeProperties_PriceWebServiceConfigurationResponseMappingrRelation_source();
+	
+		single_setRelAttributeProperties_StockWebServiceConfigurationResponseMappingrRelation_source();
+	
+		single_setRelAttributeProperties_OrderWebServiceConfigurationResponseMappingrRelation_source();
+	
 		single_setRelAttributeProperties_WebServiceConfigurationParameterRelation_target();
 	
-		single_setRelAttributeProperties_WebServiceConfigurationSecurityParameterRelation_target();
+		single_setRelAttributeProperties_WebServiceConfigurationHeadersParameterRelation_target();
 	
 		single_setRelAttributeProperties_PriceWebServiceConfigurationParameterRelation_target();
 	
@@ -1109,6 +1264,22 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 		single_setRelAttributeProperties_StockWebServiceConfigurationParameterRelation_target();
 	
 		single_setRelAttributeProperties_CustomerWebServiceConfigurationParameterRelation_target();
+	
+		single_setRelAttributeProperties_PriceWebServiceConfigurationHeaderParameterRelation_target();
+	
+		single_setRelAttributeProperties_OrderWebServiceConfigurationHeaderParameterRelation_target();
+	
+		single_setRelAttributeProperties_StockWebServiceConfigurationHeaderParameterRelation_target();
+	
+		single_setRelAttributeProperties_CustomerWebServiceConfigurationHeaderParameterRelation_target();
+	
+		single_setRelAttributeProperties_CustomerWebServiceConfigurationResponseMappingrRelation_target();
+	
+		single_setRelAttributeProperties_PriceWebServiceConfigurationResponseMappingrRelation_target();
+	
+		single_setRelAttributeProperties_StockWebServiceConfigurationResponseMappingrRelation_target();
+	
+		single_setRelAttributeProperties_OrderWebServiceConfigurationResponseMappingrRelation_target();
 	
 		connectRelation(
 			"WebServiceConfigurationParameterRelation", 
@@ -1126,13 +1297,13 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 		);
 	
 		connectRelation(
-			"WebServiceConfigurationSecurityParameterRelation", 
+			"WebServiceConfigurationHeadersParameterRelation", 
 			false, 
 			"configuration", 
 			"WebServiceConfiguration", 
 			true,
 			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
-			"SecurityParameters", 
+			"headersParameters", 
 			"PersoWSParam", 
 			true,
 			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
@@ -1200,6 +1371,126 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			true
 		);
 	
+		connectRelation(
+			"PriceWebServiceConfigurationHeaderParameterRelation", 
+			false, 
+			"priceConfiguration", 
+			"PriceWebServiceConfiguration", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			"pathParameters", 
+			"PriceWebServiceParameter", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			true
+		);
+	
+		connectRelation(
+			"OrderWebServiceConfigurationHeaderParameterRelation", 
+			false, 
+			"orderConfiguration", 
+			"OrderWebServiceConfiguration", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			"pathParameters", 
+			"OrderWebServiceParameter", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			true
+		);
+	
+		connectRelation(
+			"StockWebServiceConfigurationHeaderParameterRelation", 
+			false, 
+			"stockConfiguration", 
+			"StockWebServiceConfiguration", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			"pathParameters", 
+			"StockWebServiceParameter", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			true
+		);
+	
+		connectRelation(
+			"CustomerWebServiceConfigurationHeaderParameterRelation", 
+			false, 
+			"customerConfiguration", 
+			"CustomerWebServiceConfiguration", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			"pathParameters", 
+			"CustomerWebServiceParameter", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			true
+		);
+	
+		connectRelation(
+			"CustomerWebServiceConfigurationResponseMappingrRelation", 
+			false, 
+			"customerConfiguration", 
+			"CustomerWebServiceConfiguration", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			"responseMapping", 
+			"CustomerWebServiceResponse", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			true
+		);
+	
+		connectRelation(
+			"PriceWebServiceConfigurationResponseMappingrRelation", 
+			false, 
+			"customerConfiguration", 
+			"PriceWebServiceConfiguration", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			"responseMapping", 
+			"PriceWebServiceResponse", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			true
+		);
+	
+		connectRelation(
+			"StockWebServiceConfigurationResponseMappingrRelation", 
+			false, 
+			"customerConfiguration", 
+			"StockWebServiceConfiguration", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			"responseMapping", 
+			"StockWebServiceResponse", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			true
+		);
+	
+		connectRelation(
+			"OrderWebServiceConfigurationResponseMappingrRelation", 
+			false, 
+			"customerConfiguration", 
+			"OrderWebServiceConfiguration", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			"responseMapping", 
+			"OrderWebServiceResponse", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			true
+		);
+	
 				{
 				Map customPropsMap = new HashMap();
 				
@@ -1213,8 +1504,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				);
 				}
 			
-			single_setAttributeProperties_WebServiceConfiguration_configID();
-		
 			single_setAttributeProperties_WebServiceConfiguration_name();
 		
 			single_setAttributeProperties_WebServiceConfiguration_description();
@@ -1335,6 +1624,66 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				Map customPropsMap = new HashMap();
 				
 				setItemTypeProperties(
+					"CustomerWebServiceResponse",
+					false,
+					true,
+					true,
+					null,
+					customPropsMap
+				);
+				}
+			
+			single_setAttributeProperties_CustomerWebServiceResponse_value();
+		
+				{
+				Map customPropsMap = new HashMap();
+				
+				setItemTypeProperties(
+					"PriceWebServiceResponse",
+					false,
+					true,
+					true,
+					null,
+					customPropsMap
+				);
+				}
+			
+			single_setAttributeProperties_PriceWebServiceResponse_value();
+		
+				{
+				Map customPropsMap = new HashMap();
+				
+				setItemTypeProperties(
+					"StockWebServiceResponse",
+					false,
+					true,
+					true,
+					null,
+					customPropsMap
+				);
+				}
+			
+			single_setAttributeProperties_StockWebServiceResponse_value();
+		
+				{
+				Map customPropsMap = new HashMap();
+				
+				setItemTypeProperties(
+					"OrderWebServiceResponse",
+					false,
+					true,
+					true,
+					null,
+					customPropsMap
+				);
+				}
+			
+			single_setAttributeProperties_OrderWebServiceResponse_value();
+		
+				{
+				Map customPropsMap = new HashMap();
+				
+				setItemTypeProperties(
 					"PriceWebServiceConfiguration",
 					false,
 					true,
@@ -1344,12 +1693,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				);
 				}
 			
-			single_setAttributeProperties_PriceWebServiceConfiguration_priceKey();
-		
-			single_setAttributeProperties_PriceWebServiceConfiguration_currencyKey();
-		
-			single_setAttributeProperties_PriceWebServiceConfiguration_productCode();
-		
 				{
 				Map customPropsMap = new HashMap();
 				
@@ -1363,10 +1706,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				);
 				}
 			
-			single_setAttributeProperties_StockWebServiceConfiguration_stockKey();
-		
-			single_setAttributeProperties_StockWebServiceConfiguration_productCode();
-		
 				{
 				Map customPropsMap = new HashMap();
 				
@@ -1380,10 +1719,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				);
 				}
 			
-			single_setAttributeProperties_OrderWebServiceConfiguration_statusKey();
-		
-			single_setAttributeProperties_OrderWebServiceConfiguration_orderCode();
-		
 				{
 				Map customPropsMap = new HashMap();
 				
@@ -1397,16 +1732,6 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				);
 				}
 			
-			single_setAttributeProperties_CustomerWebServiceConfiguration_firstNameKey();
-		
-			single_setAttributeProperties_CustomerWebServiceConfiguration_lastNameKey();
-		
-			single_setAttributeProperties_CustomerWebServiceConfiguration_emailKey();
-		
-			single_setAttributeProperties_CustomerWebServiceConfiguration_titleKey();
-		
-			single_setAttributeProperties_CustomerWebServiceConfiguration_clientCode();
-		
 				setDefaultProperties(
 					"PriceWSParam",
 					true,
@@ -1470,32 +1795,38 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 					null
 				);
 			
+				setDefaultProperties(
+					"CustomerMappingResponse",
+					true,
+					true,
+					null
+				);
+			
+				setDefaultProperties(
+					"PriceMappingResponse",
+					true,
+					true,
+					null
+				);
+			
+				setDefaultProperties(
+					"StockMappingResponse",
+					true,
+					true,
+					null
+				);
+			
+				setDefaultProperties(
+					"OrderMappingResponse",
+					true,
+					true,
+					null
+				);
+			
 	}
 
 
 		
-						public void single_setAttributeProperties_WebServiceConfiguration_configID() throws JaloBusinessException
-						{
-							
-							
-							
-							Map customPropsMap = new HashMap();
-							
-							setAttributeProperties(
-								"WebServiceConfiguration", 
-								"configID",
-								false, 
-								null,
-								null,
-								null,
-								true,
-								true,
-								null,
-								customPropsMap,
-								null
-							);
-						}
-					
 						public void single_setAttributeProperties_WebServiceConfiguration_name() throws JaloBusinessException
 						{
 							
@@ -1914,7 +2245,7 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 							);
 						}
 					
-						public void single_setAttributeProperties_PriceWebServiceConfiguration_priceKey() throws JaloBusinessException
+						public void single_setAttributeProperties_CustomerWebServiceResponse_value() throws JaloBusinessException
 						{
 							
 							
@@ -1922,8 +2253,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 							Map customPropsMap = new HashMap();
 							
 							setAttributeProperties(
-								"PriceWebServiceConfiguration", 
-								"priceKey",
+								"CustomerWebServiceResponse", 
+								"value",
 								false, 
 								null,
 								null,
@@ -1936,7 +2267,7 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 							);
 						}
 					
-						public void single_setAttributeProperties_PriceWebServiceConfiguration_currencyKey() throws JaloBusinessException
+						public void single_setAttributeProperties_PriceWebServiceResponse_value() throws JaloBusinessException
 						{
 							
 							
@@ -1944,8 +2275,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 							Map customPropsMap = new HashMap();
 							
 							setAttributeProperties(
-								"PriceWebServiceConfiguration", 
-								"currencyKey",
+								"PriceWebServiceResponse", 
+								"value",
 								false, 
 								null,
 								null,
@@ -1958,7 +2289,7 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 							);
 						}
 					
-						public void single_setAttributeProperties_PriceWebServiceConfiguration_productCode() throws JaloBusinessException
+						public void single_setAttributeProperties_StockWebServiceResponse_value() throws JaloBusinessException
 						{
 							
 							
@@ -1966,8 +2297,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 							Map customPropsMap = new HashMap();
 							
 							setAttributeProperties(
-								"PriceWebServiceConfiguration", 
-								"productCode",
+								"StockWebServiceResponse", 
+								"value",
 								false, 
 								null,
 								null,
@@ -1980,7 +2311,7 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 							);
 						}
 					
-						public void single_setAttributeProperties_StockWebServiceConfiguration_stockKey() throws JaloBusinessException
+						public void single_setAttributeProperties_OrderWebServiceResponse_value() throws JaloBusinessException
 						{
 							
 							
@@ -1988,184 +2319,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 							Map customPropsMap = new HashMap();
 							
 							setAttributeProperties(
-								"StockWebServiceConfiguration", 
-								"stockKey",
-								false, 
-								null,
-								null,
-								null,
-								true,
-								true,
-								null,
-								customPropsMap,
-								null
-							);
-						}
-					
-						public void single_setAttributeProperties_StockWebServiceConfiguration_productCode() throws JaloBusinessException
-						{
-							
-							
-							
-							Map customPropsMap = new HashMap();
-							
-							setAttributeProperties(
-								"StockWebServiceConfiguration", 
-								"productCode",
-								false, 
-								null,
-								null,
-								null,
-								true,
-								true,
-								null,
-								customPropsMap,
-								null
-							);
-						}
-					
-						public void single_setAttributeProperties_OrderWebServiceConfiguration_statusKey() throws JaloBusinessException
-						{
-							
-							
-							
-							Map customPropsMap = new HashMap();
-							
-							setAttributeProperties(
-								"OrderWebServiceConfiguration", 
-								"statusKey",
-								false, 
-								null,
-								null,
-								null,
-								true,
-								true,
-								null,
-								customPropsMap,
-								null
-							);
-						}
-					
-						public void single_setAttributeProperties_OrderWebServiceConfiguration_orderCode() throws JaloBusinessException
-						{
-							
-							
-							
-							Map customPropsMap = new HashMap();
-							
-							setAttributeProperties(
-								"OrderWebServiceConfiguration", 
-								"orderCode",
-								false, 
-								null,
-								null,
-								null,
-								true,
-								true,
-								null,
-								customPropsMap,
-								null
-							);
-						}
-					
-						public void single_setAttributeProperties_CustomerWebServiceConfiguration_firstNameKey() throws JaloBusinessException
-						{
-							
-							
-							
-							Map customPropsMap = new HashMap();
-							
-							setAttributeProperties(
-								"CustomerWebServiceConfiguration", 
-								"firstNameKey",
-								false, 
-								null,
-								null,
-								null,
-								true,
-								true,
-								null,
-								customPropsMap,
-								null
-							);
-						}
-					
-						public void single_setAttributeProperties_CustomerWebServiceConfiguration_lastNameKey() throws JaloBusinessException
-						{
-							
-							
-							
-							Map customPropsMap = new HashMap();
-							
-							setAttributeProperties(
-								"CustomerWebServiceConfiguration", 
-								"lastNameKey",
-								false, 
-								null,
-								null,
-								null,
-								true,
-								true,
-								null,
-								customPropsMap,
-								null
-							);
-						}
-					
-						public void single_setAttributeProperties_CustomerWebServiceConfiguration_emailKey() throws JaloBusinessException
-						{
-							
-							
-							
-							Map customPropsMap = new HashMap();
-							
-							setAttributeProperties(
-								"CustomerWebServiceConfiguration", 
-								"emailKey",
-								false, 
-								null,
-								null,
-								null,
-								true,
-								true,
-								null,
-								customPropsMap,
-								null
-							);
-						}
-					
-						public void single_setAttributeProperties_CustomerWebServiceConfiguration_titleKey() throws JaloBusinessException
-						{
-							
-							
-							
-							Map customPropsMap = new HashMap();
-							
-							setAttributeProperties(
-								"CustomerWebServiceConfiguration", 
-								"titleKey",
-								false, 
-								null,
-								null,
-								null,
-								true,
-								true,
-								null,
-								customPropsMap,
-								null
-							);
-						}
-					
-						public void single_setAttributeProperties_CustomerWebServiceConfiguration_clientCode() throws JaloBusinessException
-						{
-							
-							
-							
-							Map customPropsMap = new HashMap();
-							
-							setAttributeProperties(
-								"CustomerWebServiceConfiguration", 
-								"clientCode",
+								"OrderWebServiceResponse", 
+								"value",
 								false, 
 								null,
 								null,
@@ -2220,7 +2375,7 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 									);
 								}
 							
-								public void single_setRelAttributeProperties_WebServiceConfigurationSecurityParameterRelation_source() throws JaloBusinessException
+								public void single_setRelAttributeProperties_WebServiceConfigurationHeadersParameterRelation_source() throws JaloBusinessException
 								{
 									
 									Map customPropsMap = new HashMap();
@@ -2241,7 +2396,7 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 									);
 								}
 							
-								public void single_setRelAttributeProperties_WebServiceConfigurationSecurityParameterRelation_target() throws JaloBusinessException
+								public void single_setRelAttributeProperties_WebServiceConfigurationHeadersParameterRelation_target() throws JaloBusinessException
 								{
 									
 									Map customPropsMap = new HashMap();
@@ -2249,7 +2404,7 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 
 									setAttributeProperties(
 										"WebServiceConfiguration", 
-										"SecurityParameters",
+										"headersParameters",
 										false, 
 										null,
 										null,
@@ -2418,6 +2573,342 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 									setAttributeProperties(
 										"CustomerWebServiceConfiguration", 
 										"parameters",
+										false, 
+										null,
+										null,
+										null,
+										true,
+										true,
+										null,
+										customPropsMap,
+										null
+									);
+								}
+							
+								public void single_setRelAttributeProperties_PriceWebServiceConfigurationHeaderParameterRelation_source() throws JaloBusinessException
+								{
+									
+									Map customPropsMap = new HashMap();
+									
+
+									setAttributeProperties(
+										"PriceWebServiceParameter", 
+										"priceConfiguration",
+										false, 
+										null,
+										null,
+										null,
+										true,
+										true,
+										null,
+										customPropsMap,
+										null
+									);
+								}
+							
+								public void single_setRelAttributeProperties_PriceWebServiceConfigurationHeaderParameterRelation_target() throws JaloBusinessException
+								{
+									
+									Map customPropsMap = new HashMap();
+									
+
+									setAttributeProperties(
+										"PriceWebServiceConfiguration", 
+										"pathParameters",
+										false, 
+										null,
+										null,
+										null,
+										true,
+										true,
+										null,
+										customPropsMap,
+										null
+									);
+								}
+							
+								public void single_setRelAttributeProperties_OrderWebServiceConfigurationHeaderParameterRelation_source() throws JaloBusinessException
+								{
+									
+									Map customPropsMap = new HashMap();
+									
+
+									setAttributeProperties(
+										"OrderWebServiceParameter", 
+										"orderConfiguration",
+										false, 
+										null,
+										null,
+										null,
+										true,
+										true,
+										null,
+										customPropsMap,
+										null
+									);
+								}
+							
+								public void single_setRelAttributeProperties_OrderWebServiceConfigurationHeaderParameterRelation_target() throws JaloBusinessException
+								{
+									
+									Map customPropsMap = new HashMap();
+									
+
+									setAttributeProperties(
+										"OrderWebServiceConfiguration", 
+										"pathParameters",
+										false, 
+										null,
+										null,
+										null,
+										true,
+										true,
+										null,
+										customPropsMap,
+										null
+									);
+								}
+							
+								public void single_setRelAttributeProperties_StockWebServiceConfigurationHeaderParameterRelation_source() throws JaloBusinessException
+								{
+									
+									Map customPropsMap = new HashMap();
+									
+
+									setAttributeProperties(
+										"StockWebServiceParameter", 
+										"stockConfiguration",
+										false, 
+										null,
+										null,
+										null,
+										true,
+										true,
+										null,
+										customPropsMap,
+										null
+									);
+								}
+							
+								public void single_setRelAttributeProperties_StockWebServiceConfigurationHeaderParameterRelation_target() throws JaloBusinessException
+								{
+									
+									Map customPropsMap = new HashMap();
+									
+
+									setAttributeProperties(
+										"StockWebServiceConfiguration", 
+										"pathParameters",
+										false, 
+										null,
+										null,
+										null,
+										true,
+										true,
+										null,
+										customPropsMap,
+										null
+									);
+								}
+							
+								public void single_setRelAttributeProperties_CustomerWebServiceConfigurationHeaderParameterRelation_source() throws JaloBusinessException
+								{
+									
+									Map customPropsMap = new HashMap();
+									
+
+									setAttributeProperties(
+										"CustomerWebServiceParameter", 
+										"customerConfiguration",
+										false, 
+										null,
+										null,
+										null,
+										true,
+										true,
+										null,
+										customPropsMap,
+										null
+									);
+								}
+							
+								public void single_setRelAttributeProperties_CustomerWebServiceConfigurationHeaderParameterRelation_target() throws JaloBusinessException
+								{
+									
+									Map customPropsMap = new HashMap();
+									
+
+									setAttributeProperties(
+										"CustomerWebServiceConfiguration", 
+										"pathParameters",
+										false, 
+										null,
+										null,
+										null,
+										true,
+										true,
+										null,
+										customPropsMap,
+										null
+									);
+								}
+							
+								public void single_setRelAttributeProperties_CustomerWebServiceConfigurationResponseMappingrRelation_source() throws JaloBusinessException
+								{
+									
+									Map customPropsMap = new HashMap();
+									
+
+									setAttributeProperties(
+										"CustomerWebServiceResponse", 
+										"customerConfiguration",
+										false, 
+										null,
+										null,
+										null,
+										true,
+										true,
+										null,
+										customPropsMap,
+										null
+									);
+								}
+							
+								public void single_setRelAttributeProperties_CustomerWebServiceConfigurationResponseMappingrRelation_target() throws JaloBusinessException
+								{
+									
+									Map customPropsMap = new HashMap();
+									
+
+									setAttributeProperties(
+										"CustomerWebServiceConfiguration", 
+										"responseMapping",
+										false, 
+										null,
+										null,
+										null,
+										true,
+										true,
+										null,
+										customPropsMap,
+										null
+									);
+								}
+							
+								public void single_setRelAttributeProperties_PriceWebServiceConfigurationResponseMappingrRelation_source() throws JaloBusinessException
+								{
+									
+									Map customPropsMap = new HashMap();
+									
+
+									setAttributeProperties(
+										"PriceWebServiceResponse", 
+										"customerConfiguration",
+										false, 
+										null,
+										null,
+										null,
+										true,
+										true,
+										null,
+										customPropsMap,
+										null
+									);
+								}
+							
+								public void single_setRelAttributeProperties_PriceWebServiceConfigurationResponseMappingrRelation_target() throws JaloBusinessException
+								{
+									
+									Map customPropsMap = new HashMap();
+									
+
+									setAttributeProperties(
+										"PriceWebServiceConfiguration", 
+										"responseMapping",
+										false, 
+										null,
+										null,
+										null,
+										true,
+										true,
+										null,
+										customPropsMap,
+										null
+									);
+								}
+							
+								public void single_setRelAttributeProperties_StockWebServiceConfigurationResponseMappingrRelation_source() throws JaloBusinessException
+								{
+									
+									Map customPropsMap = new HashMap();
+									
+
+									setAttributeProperties(
+										"StockWebServiceResponse", 
+										"customerConfiguration",
+										false, 
+										null,
+										null,
+										null,
+										true,
+										true,
+										null,
+										customPropsMap,
+										null
+									);
+								}
+							
+								public void single_setRelAttributeProperties_StockWebServiceConfigurationResponseMappingrRelation_target() throws JaloBusinessException
+								{
+									
+									Map customPropsMap = new HashMap();
+									
+
+									setAttributeProperties(
+										"StockWebServiceConfiguration", 
+										"responseMapping",
+										false, 
+										null,
+										null,
+										null,
+										true,
+										true,
+										null,
+										customPropsMap,
+										null
+									);
+								}
+							
+								public void single_setRelAttributeProperties_OrderWebServiceConfigurationResponseMappingrRelation_source() throws JaloBusinessException
+								{
+									
+									Map customPropsMap = new HashMap();
+									
+
+									setAttributeProperties(
+										"OrderWebServiceResponse", 
+										"customerConfiguration",
+										false, 
+										null,
+										null,
+										null,
+										true,
+										true,
+										null,
+										customPropsMap,
+										null
+									);
+								}
+							
+								public void single_setRelAttributeProperties_OrderWebServiceConfigurationResponseMappingrRelation_target() throws JaloBusinessException
+								{
+									
+									Map customPropsMap = new HashMap();
+									
+
+									setAttributeProperties(
+										"OrderWebServiceConfiguration", 
+										"responseMapping",
 										false, 
 										null,
 										null,

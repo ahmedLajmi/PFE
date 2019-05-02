@@ -40,14 +40,16 @@
 		<property name="enable" type="boolean" />
 		<property name="accept" type="String" />
 		<property name="contentType" type="String" />
-		<property name="parameters"
+		<property name="queryParameters"
+			type="java.util.List&lt;de.hybris.platform.addons.wsclientgenerator.data.WebServiceParameterData>" />
+		<property name="pathParameters"
 			type="java.util.List&lt;de.hybris.platform.addons.wsclientgenerator.data.WebServiceParameterData>" />
 		<property name="persoParameters"
 			type="java.util.List&lt;de.hybris.platform.addons.wsclientgenerator.data.WebServiceParameterData>" />
 		<property name="securityParameters"
 			type="java.util.List&lt;de.hybris.platform.addons.wsclientgenerator.data.WebServiceParameterData>" />
 	</bean>
-	
+
 	<bean
 		class="de.hybris.platform.addons.wsclientgenerator.data.WebServiceResponseData">
 		<description>Data object for WebServiceResponse which has no equivalent on the type system</description>

@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 26 avr. 2019 11:07:06                       ---
+ * --- Generated at 2 mai 2019 13:28:40                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -19,6 +19,7 @@ package de.hybris.platform.addons.wsclientgenerator.jalo;
 
 import de.hybris.platform.addons.wsclientgenerator.constants.WsclientgeneratorConstants;
 import de.hybris.platform.addons.wsclientgenerator.jalo.OrderWebServiceParameter;
+import de.hybris.platform.addons.wsclientgenerator.jalo.OrderWebServiceResponse;
 import de.hybris.platform.addons.wsclientgenerator.jalo.WebServiceConfiguration;
 import de.hybris.platform.jalo.Item.AttributeMode;
 import de.hybris.platform.jalo.SessionContext;
@@ -35,12 +36,12 @@ import java.util.Map;
 @SuppressWarnings({"deprecation","unused","cast","PMD"})
 public abstract class GeneratedOrderWebServiceConfiguration extends WebServiceConfiguration
 {
-	/** Qualifier of the <code>OrderWebServiceConfiguration.statusKey</code> attribute **/
-	public static final String STATUSKEY = "statusKey";
-	/** Qualifier of the <code>OrderWebServiceConfiguration.orderCode</code> attribute **/
-	public static final String ORDERCODE = "orderCode";
 	/** Qualifier of the <code>OrderWebServiceConfiguration.parameters</code> attribute **/
 	public static final String PARAMETERS = "parameters";
+	/** Qualifier of the <code>OrderWebServiceConfiguration.pathParameters</code> attribute **/
+	public static final String PATHPARAMETERS = "pathParameters";
+	/** Qualifier of the <code>OrderWebServiceConfiguration.responseMapping</code> attribute **/
+	public static final String RESPONSEMAPPING = "responseMapping";
 	/**
 	* {@link OneToManyHandler} for handling 1:n PARAMETERS's relation attributes from 'many' side.
 	**/
@@ -53,91 +54,40 @@ public abstract class GeneratedOrderWebServiceConfiguration extends WebServiceCo
 	true,
 	CollectionType.COLLECTION
 	);
+	/**
+	* {@link OneToManyHandler} for handling 1:n PATHPARAMETERS's relation attributes from 'many' side.
+	**/
+	protected static final OneToManyHandler<OrderWebServiceParameter> PATHPARAMETERSHANDLER = new OneToManyHandler<OrderWebServiceParameter>(
+	WsclientgeneratorConstants.TC.ORDERWEBSERVICEPARAMETER,
+	false,
+	"orderConfiguration",
+	null,
+	false,
+	true,
+	CollectionType.COLLECTION
+	);
+	/**
+	* {@link OneToManyHandler} for handling 1:n RESPONSEMAPPING's relation attributes from 'many' side.
+	**/
+	protected static final OneToManyHandler<OrderWebServiceResponse> RESPONSEMAPPINGHANDLER = new OneToManyHandler<OrderWebServiceResponse>(
+	WsclientgeneratorConstants.TC.ORDERWEBSERVICERESPONSE,
+	false,
+	"customerConfiguration",
+	null,
+	false,
+	true,
+	CollectionType.COLLECTION
+	);
 	protected static final Map<String, AttributeMode> DEFAULT_INITIAL_ATTRIBUTES;
 	static
 	{
 		final Map<String, AttributeMode> tmp = new HashMap<String, AttributeMode>(WebServiceConfiguration.DEFAULT_INITIAL_ATTRIBUTES);
-		tmp.put(STATUSKEY, AttributeMode.INITIAL);
-		tmp.put(ORDERCODE, AttributeMode.INITIAL);
 		DEFAULT_INITIAL_ATTRIBUTES = Collections.unmodifiableMap(tmp);
 	}
 	@Override
 	protected Map<String, AttributeMode> getDefaultAttributeModes()
 	{
 		return DEFAULT_INITIAL_ATTRIBUTES;
-	}
-	
-	/**
-	 * <i>Generated method</i> - Getter of the <code>OrderWebServiceConfiguration.orderCode</code> attribute.
-	 * @return the orderCode
-	 */
-	public Boolean isOrderCode(final SessionContext ctx)
-	{
-		return (Boolean)getProperty( ctx, ORDERCODE);
-	}
-	
-	/**
-	 * <i>Generated method</i> - Getter of the <code>OrderWebServiceConfiguration.orderCode</code> attribute.
-	 * @return the orderCode
-	 */
-	public Boolean isOrderCode()
-	{
-		return isOrderCode( getSession().getSessionContext() );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Getter of the <code>OrderWebServiceConfiguration.orderCode</code> attribute. 
-	 * @return the orderCode
-	 */
-	public boolean isOrderCodeAsPrimitive(final SessionContext ctx)
-	{
-		Boolean value = isOrderCode( ctx );
-		return value != null ? value.booleanValue() : false;
-	}
-	
-	/**
-	 * <i>Generated method</i> - Getter of the <code>OrderWebServiceConfiguration.orderCode</code> attribute. 
-	 * @return the orderCode
-	 */
-	public boolean isOrderCodeAsPrimitive()
-	{
-		return isOrderCodeAsPrimitive( getSession().getSessionContext() );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Setter of the <code>OrderWebServiceConfiguration.orderCode</code> attribute. 
-	 * @param value the orderCode
-	 */
-	public void setOrderCode(final SessionContext ctx, final Boolean value)
-	{
-		setProperty(ctx, ORDERCODE,value);
-	}
-	
-	/**
-	 * <i>Generated method</i> - Setter of the <code>OrderWebServiceConfiguration.orderCode</code> attribute. 
-	 * @param value the orderCode
-	 */
-	public void setOrderCode(final Boolean value)
-	{
-		setOrderCode( getSession().getSessionContext(), value );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Setter of the <code>OrderWebServiceConfiguration.orderCode</code> attribute. 
-	 * @param value the orderCode
-	 */
-	public void setOrderCode(final SessionContext ctx, final boolean value)
-	{
-		setOrderCode( ctx,Boolean.valueOf( value ) );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Setter of the <code>OrderWebServiceConfiguration.orderCode</code> attribute. 
-	 * @param value the orderCode
-	 */
-	public void setOrderCode(final boolean value)
-	{
-		setOrderCode( getSession().getSessionContext(), value );
 	}
 	
 	/**
@@ -213,39 +163,147 @@ public abstract class GeneratedOrderWebServiceConfiguration extends WebServiceCo
 	}
 	
 	/**
-	 * <i>Generated method</i> - Getter of the <code>OrderWebServiceConfiguration.statusKey</code> attribute.
-	 * @return the statusKey
+	 * <i>Generated method</i> - Getter of the <code>OrderWebServiceConfiguration.pathParameters</code> attribute.
+	 * @return the pathParameters
 	 */
-	public String getStatusKey(final SessionContext ctx)
+	public Collection<OrderWebServiceParameter> getPathParameters(final SessionContext ctx)
 	{
-		return (String)getProperty( ctx, STATUSKEY);
+		return PATHPARAMETERSHANDLER.getValues( ctx, this );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Getter of the <code>OrderWebServiceConfiguration.statusKey</code> attribute.
-	 * @return the statusKey
+	 * <i>Generated method</i> - Getter of the <code>OrderWebServiceConfiguration.pathParameters</code> attribute.
+	 * @return the pathParameters
 	 */
-	public String getStatusKey()
+	public Collection<OrderWebServiceParameter> getPathParameters()
 	{
-		return getStatusKey( getSession().getSessionContext() );
+		return getPathParameters( getSession().getSessionContext() );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Setter of the <code>OrderWebServiceConfiguration.statusKey</code> attribute. 
-	 * @param value the statusKey
+	 * <i>Generated method</i> - Setter of the <code>OrderWebServiceConfiguration.pathParameters</code> attribute. 
+	 * @param value the pathParameters
 	 */
-	public void setStatusKey(final SessionContext ctx, final String value)
+	public void setPathParameters(final SessionContext ctx, final Collection<OrderWebServiceParameter> value)
 	{
-		setProperty(ctx, STATUSKEY,value);
+		PATHPARAMETERSHANDLER.setValues( ctx, this, value );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Setter of the <code>OrderWebServiceConfiguration.statusKey</code> attribute. 
-	 * @param value the statusKey
+	 * <i>Generated method</i> - Setter of the <code>OrderWebServiceConfiguration.pathParameters</code> attribute. 
+	 * @param value the pathParameters
 	 */
-	public void setStatusKey(final String value)
+	public void setPathParameters(final Collection<OrderWebServiceParameter> value)
 	{
-		setStatusKey( getSession().getSessionContext(), value );
+		setPathParameters( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Adds <code>value</code> to pathParameters. 
+	 * @param value the item to add to pathParameters
+	 */
+	public void addToPathParameters(final SessionContext ctx, final OrderWebServiceParameter value)
+	{
+		PATHPARAMETERSHANDLER.addValue( ctx, this, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Adds <code>value</code> to pathParameters. 
+	 * @param value the item to add to pathParameters
+	 */
+	public void addToPathParameters(final OrderWebServiceParameter value)
+	{
+		addToPathParameters( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Removes <code>value</code> from pathParameters. 
+	 * @param value the item to remove from pathParameters
+	 */
+	public void removeFromPathParameters(final SessionContext ctx, final OrderWebServiceParameter value)
+	{
+		PATHPARAMETERSHANDLER.removeValue( ctx, this, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Removes <code>value</code> from pathParameters. 
+	 * @param value the item to remove from pathParameters
+	 */
+	public void removeFromPathParameters(final OrderWebServiceParameter value)
+	{
+		removeFromPathParameters( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>OrderWebServiceConfiguration.responseMapping</code> attribute.
+	 * @return the responseMapping
+	 */
+	public Collection<OrderWebServiceResponse> getResponseMapping(final SessionContext ctx)
+	{
+		return RESPONSEMAPPINGHANDLER.getValues( ctx, this );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>OrderWebServiceConfiguration.responseMapping</code> attribute.
+	 * @return the responseMapping
+	 */
+	public Collection<OrderWebServiceResponse> getResponseMapping()
+	{
+		return getResponseMapping( getSession().getSessionContext() );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>OrderWebServiceConfiguration.responseMapping</code> attribute. 
+	 * @param value the responseMapping
+	 */
+	public void setResponseMapping(final SessionContext ctx, final Collection<OrderWebServiceResponse> value)
+	{
+		RESPONSEMAPPINGHANDLER.setValues( ctx, this, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>OrderWebServiceConfiguration.responseMapping</code> attribute. 
+	 * @param value the responseMapping
+	 */
+	public void setResponseMapping(final Collection<OrderWebServiceResponse> value)
+	{
+		setResponseMapping( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Adds <code>value</code> to responseMapping. 
+	 * @param value the item to add to responseMapping
+	 */
+	public void addToResponseMapping(final SessionContext ctx, final OrderWebServiceResponse value)
+	{
+		RESPONSEMAPPINGHANDLER.addValue( ctx, this, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Adds <code>value</code> to responseMapping. 
+	 * @param value the item to add to responseMapping
+	 */
+	public void addToResponseMapping(final OrderWebServiceResponse value)
+	{
+		addToResponseMapping( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Removes <code>value</code> from responseMapping. 
+	 * @param value the item to remove from responseMapping
+	 */
+	public void removeFromResponseMapping(final SessionContext ctx, final OrderWebServiceResponse value)
+	{
+		RESPONSEMAPPINGHANDLER.removeValue( ctx, this, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Removes <code>value</code> from responseMapping. 
+	 * @param value the item to remove from responseMapping
+	 */
+	public void removeFromResponseMapping(final OrderWebServiceResponse value)
+	{
+		removeFromResponseMapping( getSession().getSessionContext(), value );
 	}
 	
 }

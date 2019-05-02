@@ -3,13 +3,13 @@
  */
 package de.hybris.platform.addons.wsclientgenerator.interceptors;
 
+import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
+import de.hybris.platform.addons.wsclientgenerator.enums.RequestType;
 import de.hybris.platform.addons.wsclientgenerator.model.CustomerWebServiceConfigurationModel;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.CustomerWebServiceConfigurationDao;
-import de.hybris.platform.servicelayer.event.EventService;
 import de.hybris.platform.servicelayer.i18n.L10NService;
 import de.hybris.platform.servicelayer.interceptor.InterceptorContext;
 import de.hybris.platform.servicelayer.interceptor.InterceptorException;
-import de.hybris.platform.servicelayer.interceptor.PrepareInterceptor;
 import de.hybris.platform.servicelayer.interceptor.ValidateInterceptor;
 
 import javax.annotation.Resource;
@@ -22,11 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Ahmed-LAJMI
  *
  */
-public class CustomerConfigurationInterceptor implements ValidateInterceptor, PrepareInterceptor
+public class CustomerConfigurationInterceptor implements ValidateInterceptor
 {
-
-	@Autowired
-	private EventService eventService;
 
 	private L10NService l10NService;
 
@@ -51,19 +48,18 @@ public class CustomerConfigurationInterceptor implements ValidateInterceptor, Pr
 					throw new InterceptorException(getL10NService().getLocalizedString("unique.configuration"));
 				}
 			}
-			/*
-			 * if (customerConfiguration.ge() == null || customerConfiguration.getId().isEmpty()) {
-			 * customerConfiguration.setId(UUID.randomUUID().toString()); }
-			 */
-
+			if (customerConfiguration.getMethod().equals(MethodType.POST))
+			{
+				if (customerConfiguration.getContentType() == null)
+				{
+					throw new InterceptorException(getL10NService().getLocalizedString("empty.contentType"));
+				}
+				else if (customerConfiguration.getContentType().equals(RequestType.XML) && customerConfiguration.getRootKey() == null)
+				{
+					throw new InterceptorException(getL10NService().getLocalizedString("empty.rootKey"));
+				}
+			}
 		}
-	}
-
-
-	@Override
-	public void onPrepare(final Object model, final InterceptorContext ctx) throws InterceptorException
-	{
-		//
 	}
 
 	private L10NService getL10NService()

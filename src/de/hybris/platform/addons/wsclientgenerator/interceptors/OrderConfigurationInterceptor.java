@@ -3,12 +3,13 @@
  */
 package de.hybris.platform.addons.wsclientgenerator.interceptors;
 
+import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
+import de.hybris.platform.addons.wsclientgenerator.enums.RequestType;
 import de.hybris.platform.addons.wsclientgenerator.model.OrderWebServiceConfigurationModel;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.OrderWebServiceConfigurationDao;
 import de.hybris.platform.servicelayer.i18n.L10NService;
 import de.hybris.platform.servicelayer.interceptor.InterceptorContext;
 import de.hybris.platform.servicelayer.interceptor.InterceptorException;
-import de.hybris.platform.servicelayer.interceptor.PrepareInterceptor;
 import de.hybris.platform.servicelayer.interceptor.ValidateInterceptor;
 
 import javax.annotation.Resource;
@@ -21,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Ahmed-LAJMI
  *
  */
-public class OrderConfigurationInterceptor implements ValidateInterceptor, PrepareInterceptor
+public class OrderConfigurationInterceptor implements ValidateInterceptor
 {
 
 	private L10NService l10NService;
@@ -47,19 +48,18 @@ public class OrderConfigurationInterceptor implements ValidateInterceptor, Prepa
 					throw new InterceptorException(getL10NService().getLocalizedString("unique.configuration"));
 				}
 			}
-			/*
-			 * if (customerConfiguration.ge() == null || customerConfiguration.getId().isEmpty()) {
-			 * customerConfiguration.setId(UUID.randomUUID().toString()); }
-			 */
-
+			if (orderConfiguration.getMethod().equals(MethodType.POST))
+			{
+				if (orderConfiguration.getContentType() == null)
+				{
+					throw new InterceptorException(getL10NService().getLocalizedString("empty.contentType"));
+				}
+				else if (orderConfiguration.getContentType().equals(RequestType.XML) && orderConfiguration.getRootKey() == null)
+				{
+					throw new InterceptorException(getL10NService().getLocalizedString("empty.rootKey"));
+				}
+			}
 		}
-	}
-
-
-	@Override
-	public void onPrepare(final Object model, final InterceptorContext ctx) throws InterceptorException
-	{
-		//
 	}
 
 	private L10NService getL10NService()

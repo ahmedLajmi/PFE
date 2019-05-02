@@ -6,13 +6,11 @@ package de.hybris.platform.addons.wsclientgenerator.order.impl;
 import de.hybris.platform.addons.wsclientgenerator.customer.impl.DefaultWsCustomerFacade;
 import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
 import de.hybris.platform.addons.wsclientgenerator.enums.ModeType;
-import de.hybris.platform.addons.wsclientgenerator.enums.OrderParameter;
-import de.hybris.platform.addons.wsclientgenerator.enums.ResponseType;
+import de.hybris.platform.addons.wsclientgenerator.enums.OrderMappingResponse;
 import de.hybris.platform.addons.wsclientgenerator.exceptions.InvokeWsException;
 import de.hybris.platform.addons.wsclientgenerator.exceptions.ParseWsResponseException;
 import de.hybris.platform.addons.wsclientgenerator.model.OrderWebServiceConfigurationModel;
-import de.hybris.platform.addons.wsclientgenerator.model.OrderWebServiceParameterModel;
-import de.hybris.platform.addons.wsclientgenerator.model.PersoWSParamModel;
+import de.hybris.platform.addons.wsclientgenerator.model.OrderWebServiceResponseModel;
 import de.hybris.platform.addons.wsclientgenerator.order.WSOrderFacade;
 import de.hybris.platform.addons.wsclientgenerator.tools.WSInvoke;
 import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.service.OrderWebServiceConfigurationService;
@@ -25,34 +23,21 @@ import de.hybris.platform.converters.Converters;
 import de.hybris.platform.core.enums.OrderStatus;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.core.model.user.CustomerModel;
+import de.hybris.platform.core.model.user.UserModel;
 import de.hybris.platform.enumeration.EnumerationService;
 import de.hybris.platform.servicelayer.exceptions.ModelNotFoundException;
 import de.hybris.platform.servicelayer.exceptions.UnknownIdentifierException;
 import de.hybris.platform.servicelayer.user.UserService;
 import de.hybris.platform.store.BaseStoreModel;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.springframework.http.ResponseEntity;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 
 /**
@@ -64,7 +49,7 @@ public class DefaultWsOrderFacade extends DefaultOrderFacade implements WSOrderF
 	private static final String ORDER_NOT_FOUND_FOR_USER_AND_BASE_STORE = "Order with guid %s not found for current user in current BaseStore";
 
 	@Resource(name = "orderWebServiceConfigurationService")
-	private OrderWebServiceConfigurationService orderWebServiceConfigurationService;
+	private OrderWebServiceConfigurationService orderWsConfService;
 
 	@Resource(name = "userService")
 	private UserService userService;
@@ -105,7 +90,7 @@ public class DefaultWsOrderFacade extends DefaultOrderFacade implements WSOrderF
 		}
 
 		// custom treatment
-		orderConfiguration = orderWebServiceConfigurationService.getWsEnabledConfiguration(MethodType.GET);
+		orderConfiguration = orderWsConfService.getWsEnabledConfiguration(MethodType.GET);
 
 		if (orderConfiguration != null)
 		{
@@ -131,19 +116,6 @@ public class DefaultWsOrderFacade extends DefaultOrderFacade implements WSOrderF
 				}
 			}
 		}
-
-		return getOrderConverter().convert(orderModel);
-	}
-
-	@Override
-	public OrderData getOrderDetailsForGUID(final String guid)
-	{
-		final OrderModel orderModel = getCustomerAccountService().getGuestOrderForGUID(guid,
-				getBaseStoreService().getCurrentBaseStore());
-		if (orderModel == null)
-		{
-			throw new UnknownIdentifierException(String.format(ORDER_NOT_FOUND_FOR_USER_AND_BASE_STORE, guid));
-		}
 		return getOrderConverter().convert(orderModel);
 	}
 
@@ -154,7 +126,7 @@ public class DefaultWsOrderFacade extends DefaultOrderFacade implements WSOrderF
 		final BaseStoreModel currentBaseStore = getBaseStoreService().getCurrentBaseStore();
 		List<OrderModel> orderList = getCustomerAccountService().getOrderList(currentCustomer, currentBaseStore, statuses);
 
-		orderConfiguration = orderWebServiceConfigurationService.getWsEnabledConfiguration(MethodType.GET);
+		orderConfiguration = orderWsConfService.getWsEnabledConfiguration(MethodType.GET);
 		if (orderConfiguration != null)
 		{
 			orderList = updateStatuses(orderList, orderConfiguration);
@@ -173,7 +145,7 @@ public class DefaultWsOrderFacade extends DefaultOrderFacade implements WSOrderF
 		final SearchPageData<OrderModel> orderResults = getCustomerAccountService().getOrderList(currentCustomer, currentBaseStore,
 				statuses, pageableData);
 
-		orderConfiguration = orderWebServiceConfigurationService.getWsEnabledConfiguration(MethodType.GET);
+		orderConfiguration = orderWsConfService.getWsEnabledConfiguration(MethodType.GET);
 
 		if (orderConfiguration != null)
 		{
@@ -217,134 +189,36 @@ public class DefaultWsOrderFacade extends DefaultOrderFacade implements WSOrderF
 	public String WsGetStatusCode(final OrderModel order) throws ParseWsResponseException, InvokeWsException
 	{
 		final WSInvoke wsInvoke = new WSInvoke();
-		String result = "";
+		final Map<String, String> response = wsInvoke.getRequest(orderConfiguration.getUrl(), prepareGetParams(order),
+				orderWsConfService.prepareHeadersParams(orderConfiguration), orderConfiguration.getAccept());
 
-		final ResponseEntity<String> response = wsInvoke.getRequest(orderConfiguration.getUrl(),
-				prepareRequestParams(orderConfiguration, order),
-				orderWebServiceConfigurationService.prepareHeadersParams(orderConfiguration), orderConfiguration.getAccept());
-		System.out.println(response.getBody());
-
-		if (orderConfiguration.getAccept().equals(ResponseType.JSON))
+		for (final OrderWebServiceResponseModel item : orderConfiguration.getResponseMapping())
 		{
-			result = jsonParseResponse(response.getBody());
+			if (item.getValue().equals(OrderMappingResponse.STATUS))
+			{
+				return String.valueOf(response.get(item.getKey()));
+			}
 		}
-		else if (orderConfiguration.getAccept().equals(ResponseType.XML))
-		{
-			result = xmlParseResponse(response.getBody());
-		}
-		else if (orderConfiguration.getAccept().equals(ResponseType.TEXT))
-		{
-			//result = textParseResponse(response.getBody(), priceConfiguration);
-		}
-		return result;
+		throw new ParseWsResponseException("Invalid keys for parsing");
 	}
 
 	@Override
-	public String jsonParseResponse(final String response) throws ParseWsResponseException
+	public Map<String, Map<String, String>> prepareGetParams(final OrderModel model)
 	{
-		final ObjectMapper mapper = new ObjectMapper();
-		try
+		final Map<String, Map<String, String>> params = new HashMap<>();
+		UserModel user = null;
+		if (!userService.isAnonymousUser(userService.getCurrentUser()))
 		{
-			final JsonNode root = mapper.readTree(response);
-			if (root.has(orderConfiguration.getStatusKey()))
-			{
-				return root.path(orderConfiguration.getStatusKey()).asText();
+			user = userService.getCurrentUser();
+		}
 
-			}
-			else
-			{
-				throw new ParseWsResponseException("Error in parsing response!! Key doesn t exist");
-			}
-		}
-		catch (final IOException e)
-		{
-			throw new ParseWsResponseException("Problem in reading JSON response \n" + e.getMessage());
-		}
-	}
+		final Map<String, String> pathPrameters = orderWsConfService.prepareDynamicPathParameters(orderConfiguration, model, user);
+		final Map<String, String> queryPrameters = orderWsConfService.prepareDynamicQueryParameters(orderConfiguration, model,
+				user);
+		queryPrameters.putAll(orderWsConfService.prepareStaticParams(orderConfiguration));
 
-	@Override
-	public String xmlParseResponse(final String response) throws ParseWsResponseException
-	{
-		Document doc;
-		try
-		{
-			doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(response)));
-			if (StringUtils.equals(orderConfiguration.getStatusKey(), doc.getDocumentElement().getTagName()))
-			{
-				return doc.getDocumentElement().getFirstChild().getNodeValue();
-			}
-			else
-			{
-				final NodeList nodeList = doc.getDocumentElement().getChildNodes();
-				for (int i = 0; i < nodeList.getLength(); i++)
-				{
-					final Node node = nodeList.item(i);
-					if (node.getNodeType() == Node.ELEMENT_NODE)
-					{
-						final Element elem = (Element) node;
-
-						if (StringUtils.equals(orderConfiguration.getStatusKey(), elem.getTagName()))
-						{
-							return elem.getFirstChild().getNodeValue();
-						}
-					}
-				}
-				throw new ParseWsResponseException("Error in parsing response!! Key doesn t exist");
-			}
-		}
-		catch (SAXException | ParserConfigurationException | IOException e)
-		{
-			throw new ParseWsResponseException("Problem in reading XML response \n" + e.getMessage());
-		}
-	}
-
-	@Override
-	public Map<String, String> prepareRequestParams(final OrderWebServiceConfigurationModel orderConfiguration,
-			final OrderModel model)
-	{
-		final Map<String, String> params = new HashMap<>();
-		final Collection<PersoWSParamModel> persoParams = orderConfiguration.getPersonalisedParameters();
-		final Collection<PersoWSParamModel> securityParams = orderConfiguration.getSecurityParameters();
-		final Collection<OrderWebServiceParameterModel> additionelParams = orderConfiguration.getParameters();
-		if (additionelParams != null && !additionelParams.isEmpty())
-		{
-			for (final OrderWebServiceParameterModel additionelParam : additionelParams)
-			{
-				if (additionelParam.getValue().equals(OrderParameter.ORDERCODE))
-				{
-					params.put(additionelParam.getKey(), model.getCode());
-				}
-				if (additionelParam.getValue().equals(OrderParameter.CLIENTCODE))
-				{
-					if (!userService.isAnonymousUser(userService.getCurrentUser()))
-					{
-						params.put(additionelParam.getKey(), userService.getCurrentUser().getUid());
-					}
-				}
-				else if (additionelParam.getValue().equals(OrderParameter.ORDERDATE))
-				{
-					params.put(additionelParam.getKey(), model.getDate().toString());
-				}
-				else if (additionelParam.getValue().equals(OrderParameter.CURRENCYCODE))
-				{
-					params.put(additionelParam.getKey(), model.getCurrency().getIsocode());
-				}
-			}
-		}
-		if (securityParams != null && !securityParams.isEmpty())
-		{
-			for (final PersoWSParamModel securityParam : securityParams)
-			{
-				params.put(securityParam.getKey(), securityParam.getValue());
-			}
-		}
-		if (persoParams != null && !persoParams.isEmpty())
-		{
-			for (final PersoWSParamModel persoParam : persoParams)
-			{
-				params.put(persoParam.getKey(), persoParam.getValue());
-			}
-		}
+		params.put("pathPrameters", pathPrameters);
+		params.put("queryPrameters", queryPrameters);
 		return params;
 	}
 

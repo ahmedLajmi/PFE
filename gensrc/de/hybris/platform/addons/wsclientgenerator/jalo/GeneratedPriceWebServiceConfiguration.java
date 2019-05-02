@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 26 avr. 2019 11:07:06                       ---
+ * --- Generated at 2 mai 2019 13:28:40                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -19,6 +19,7 @@ package de.hybris.platform.addons.wsclientgenerator.jalo;
 
 import de.hybris.platform.addons.wsclientgenerator.constants.WsclientgeneratorConstants;
 import de.hybris.platform.addons.wsclientgenerator.jalo.PriceWebServiceParameter;
+import de.hybris.platform.addons.wsclientgenerator.jalo.PriceWebServiceResponse;
 import de.hybris.platform.addons.wsclientgenerator.jalo.WebServiceConfiguration;
 import de.hybris.platform.jalo.Item.AttributeMode;
 import de.hybris.platform.jalo.SessionContext;
@@ -35,14 +36,12 @@ import java.util.Map;
 @SuppressWarnings({"deprecation","unused","cast","PMD"})
 public abstract class GeneratedPriceWebServiceConfiguration extends WebServiceConfiguration
 {
-	/** Qualifier of the <code>PriceWebServiceConfiguration.priceKey</code> attribute **/
-	public static final String PRICEKEY = "priceKey";
-	/** Qualifier of the <code>PriceWebServiceConfiguration.currencyKey</code> attribute **/
-	public static final String CURRENCYKEY = "currencyKey";
-	/** Qualifier of the <code>PriceWebServiceConfiguration.productCode</code> attribute **/
-	public static final String PRODUCTCODE = "productCode";
 	/** Qualifier of the <code>PriceWebServiceConfiguration.parameters</code> attribute **/
 	public static final String PARAMETERS = "parameters";
+	/** Qualifier of the <code>PriceWebServiceConfiguration.pathParameters</code> attribute **/
+	public static final String PATHPARAMETERS = "pathParameters";
+	/** Qualifier of the <code>PriceWebServiceConfiguration.responseMapping</code> attribute **/
+	public static final String RESPONSEMAPPING = "responseMapping";
 	/**
 	* {@link OneToManyHandler} for handling 1:n PARAMETERS's relation attributes from 'many' side.
 	**/
@@ -55,55 +54,40 @@ public abstract class GeneratedPriceWebServiceConfiguration extends WebServiceCo
 	true,
 	CollectionType.COLLECTION
 	);
+	/**
+	* {@link OneToManyHandler} for handling 1:n PATHPARAMETERS's relation attributes from 'many' side.
+	**/
+	protected static final OneToManyHandler<PriceWebServiceParameter> PATHPARAMETERSHANDLER = new OneToManyHandler<PriceWebServiceParameter>(
+	WsclientgeneratorConstants.TC.PRICEWEBSERVICEPARAMETER,
+	false,
+	"priceConfiguration",
+	null,
+	false,
+	true,
+	CollectionType.COLLECTION
+	);
+	/**
+	* {@link OneToManyHandler} for handling 1:n RESPONSEMAPPING's relation attributes from 'many' side.
+	**/
+	protected static final OneToManyHandler<PriceWebServiceResponse> RESPONSEMAPPINGHANDLER = new OneToManyHandler<PriceWebServiceResponse>(
+	WsclientgeneratorConstants.TC.PRICEWEBSERVICERESPONSE,
+	false,
+	"customerConfiguration",
+	null,
+	false,
+	true,
+	CollectionType.COLLECTION
+	);
 	protected static final Map<String, AttributeMode> DEFAULT_INITIAL_ATTRIBUTES;
 	static
 	{
 		final Map<String, AttributeMode> tmp = new HashMap<String, AttributeMode>(WebServiceConfiguration.DEFAULT_INITIAL_ATTRIBUTES);
-		tmp.put(PRICEKEY, AttributeMode.INITIAL);
-		tmp.put(CURRENCYKEY, AttributeMode.INITIAL);
-		tmp.put(PRODUCTCODE, AttributeMode.INITIAL);
 		DEFAULT_INITIAL_ATTRIBUTES = Collections.unmodifiableMap(tmp);
 	}
 	@Override
 	protected Map<String, AttributeMode> getDefaultAttributeModes()
 	{
 		return DEFAULT_INITIAL_ATTRIBUTES;
-	}
-	
-	/**
-	 * <i>Generated method</i> - Getter of the <code>PriceWebServiceConfiguration.currencyKey</code> attribute.
-	 * @return the currencyKey
-	 */
-	public String getCurrencyKey(final SessionContext ctx)
-	{
-		return (String)getProperty( ctx, CURRENCYKEY);
-	}
-	
-	/**
-	 * <i>Generated method</i> - Getter of the <code>PriceWebServiceConfiguration.currencyKey</code> attribute.
-	 * @return the currencyKey
-	 */
-	public String getCurrencyKey()
-	{
-		return getCurrencyKey( getSession().getSessionContext() );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Setter of the <code>PriceWebServiceConfiguration.currencyKey</code> attribute. 
-	 * @param value the currencyKey
-	 */
-	public void setCurrencyKey(final SessionContext ctx, final String value)
-	{
-		setProperty(ctx, CURRENCYKEY,value);
-	}
-	
-	/**
-	 * <i>Generated method</i> - Setter of the <code>PriceWebServiceConfiguration.currencyKey</code> attribute. 
-	 * @param value the currencyKey
-	 */
-	public void setCurrencyKey(final String value)
-	{
-		setCurrencyKey( getSession().getSessionContext(), value );
 	}
 	
 	/**
@@ -179,112 +163,147 @@ public abstract class GeneratedPriceWebServiceConfiguration extends WebServiceCo
 	}
 	
 	/**
-	 * <i>Generated method</i> - Getter of the <code>PriceWebServiceConfiguration.priceKey</code> attribute.
-	 * @return the priceKey
+	 * <i>Generated method</i> - Getter of the <code>PriceWebServiceConfiguration.pathParameters</code> attribute.
+	 * @return the pathParameters
 	 */
-	public String getPriceKey(final SessionContext ctx)
+	public Collection<PriceWebServiceParameter> getPathParameters(final SessionContext ctx)
 	{
-		return (String)getProperty( ctx, PRICEKEY);
+		return PATHPARAMETERSHANDLER.getValues( ctx, this );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Getter of the <code>PriceWebServiceConfiguration.priceKey</code> attribute.
-	 * @return the priceKey
+	 * <i>Generated method</i> - Getter of the <code>PriceWebServiceConfiguration.pathParameters</code> attribute.
+	 * @return the pathParameters
 	 */
-	public String getPriceKey()
+	public Collection<PriceWebServiceParameter> getPathParameters()
 	{
-		return getPriceKey( getSession().getSessionContext() );
+		return getPathParameters( getSession().getSessionContext() );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Setter of the <code>PriceWebServiceConfiguration.priceKey</code> attribute. 
-	 * @param value the priceKey
+	 * <i>Generated method</i> - Setter of the <code>PriceWebServiceConfiguration.pathParameters</code> attribute. 
+	 * @param value the pathParameters
 	 */
-	public void setPriceKey(final SessionContext ctx, final String value)
+	public void setPathParameters(final SessionContext ctx, final Collection<PriceWebServiceParameter> value)
 	{
-		setProperty(ctx, PRICEKEY,value);
+		PATHPARAMETERSHANDLER.setValues( ctx, this, value );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Setter of the <code>PriceWebServiceConfiguration.priceKey</code> attribute. 
-	 * @param value the priceKey
+	 * <i>Generated method</i> - Setter of the <code>PriceWebServiceConfiguration.pathParameters</code> attribute. 
+	 * @param value the pathParameters
 	 */
-	public void setPriceKey(final String value)
+	public void setPathParameters(final Collection<PriceWebServiceParameter> value)
 	{
-		setPriceKey( getSession().getSessionContext(), value );
+		setPathParameters( getSession().getSessionContext(), value );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Getter of the <code>PriceWebServiceConfiguration.productCode</code> attribute.
-	 * @return the productCode
+	 * <i>Generated method</i> - Adds <code>value</code> to pathParameters. 
+	 * @param value the item to add to pathParameters
 	 */
-	public Boolean isProductCode(final SessionContext ctx)
+	public void addToPathParameters(final SessionContext ctx, final PriceWebServiceParameter value)
 	{
-		return (Boolean)getProperty( ctx, PRODUCTCODE);
+		PATHPARAMETERSHANDLER.addValue( ctx, this, value );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Getter of the <code>PriceWebServiceConfiguration.productCode</code> attribute.
-	 * @return the productCode
+	 * <i>Generated method</i> - Adds <code>value</code> to pathParameters. 
+	 * @param value the item to add to pathParameters
 	 */
-	public Boolean isProductCode()
+	public void addToPathParameters(final PriceWebServiceParameter value)
 	{
-		return isProductCode( getSession().getSessionContext() );
+		addToPathParameters( getSession().getSessionContext(), value );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Getter of the <code>PriceWebServiceConfiguration.productCode</code> attribute. 
-	 * @return the productCode
+	 * <i>Generated method</i> - Removes <code>value</code> from pathParameters. 
+	 * @param value the item to remove from pathParameters
 	 */
-	public boolean isProductCodeAsPrimitive(final SessionContext ctx)
+	public void removeFromPathParameters(final SessionContext ctx, final PriceWebServiceParameter value)
 	{
-		Boolean value = isProductCode( ctx );
-		return value != null ? value.booleanValue() : false;
+		PATHPARAMETERSHANDLER.removeValue( ctx, this, value );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Getter of the <code>PriceWebServiceConfiguration.productCode</code> attribute. 
-	 * @return the productCode
+	 * <i>Generated method</i> - Removes <code>value</code> from pathParameters. 
+	 * @param value the item to remove from pathParameters
 	 */
-	public boolean isProductCodeAsPrimitive()
+	public void removeFromPathParameters(final PriceWebServiceParameter value)
 	{
-		return isProductCodeAsPrimitive( getSession().getSessionContext() );
+		removeFromPathParameters( getSession().getSessionContext(), value );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Setter of the <code>PriceWebServiceConfiguration.productCode</code> attribute. 
-	 * @param value the productCode
+	 * <i>Generated method</i> - Getter of the <code>PriceWebServiceConfiguration.responseMapping</code> attribute.
+	 * @return the responseMapping
 	 */
-	public void setProductCode(final SessionContext ctx, final Boolean value)
+	public Collection<PriceWebServiceResponse> getResponseMapping(final SessionContext ctx)
 	{
-		setProperty(ctx, PRODUCTCODE,value);
+		return RESPONSEMAPPINGHANDLER.getValues( ctx, this );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Setter of the <code>PriceWebServiceConfiguration.productCode</code> attribute. 
-	 * @param value the productCode
+	 * <i>Generated method</i> - Getter of the <code>PriceWebServiceConfiguration.responseMapping</code> attribute.
+	 * @return the responseMapping
 	 */
-	public void setProductCode(final Boolean value)
+	public Collection<PriceWebServiceResponse> getResponseMapping()
 	{
-		setProductCode( getSession().getSessionContext(), value );
+		return getResponseMapping( getSession().getSessionContext() );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Setter of the <code>PriceWebServiceConfiguration.productCode</code> attribute. 
-	 * @param value the productCode
+	 * <i>Generated method</i> - Setter of the <code>PriceWebServiceConfiguration.responseMapping</code> attribute. 
+	 * @param value the responseMapping
 	 */
-	public void setProductCode(final SessionContext ctx, final boolean value)
+	public void setResponseMapping(final SessionContext ctx, final Collection<PriceWebServiceResponse> value)
 	{
-		setProductCode( ctx,Boolean.valueOf( value ) );
+		RESPONSEMAPPINGHANDLER.setValues( ctx, this, value );
 	}
 	
 	/**
-	 * <i>Generated method</i> - Setter of the <code>PriceWebServiceConfiguration.productCode</code> attribute. 
-	 * @param value the productCode
+	 * <i>Generated method</i> - Setter of the <code>PriceWebServiceConfiguration.responseMapping</code> attribute. 
+	 * @param value the responseMapping
 	 */
-	public void setProductCode(final boolean value)
+	public void setResponseMapping(final Collection<PriceWebServiceResponse> value)
 	{
-		setProductCode( getSession().getSessionContext(), value );
+		setResponseMapping( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Adds <code>value</code> to responseMapping. 
+	 * @param value the item to add to responseMapping
+	 */
+	public void addToResponseMapping(final SessionContext ctx, final PriceWebServiceResponse value)
+	{
+		RESPONSEMAPPINGHANDLER.addValue( ctx, this, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Adds <code>value</code> to responseMapping. 
+	 * @param value the item to add to responseMapping
+	 */
+	public void addToResponseMapping(final PriceWebServiceResponse value)
+	{
+		addToResponseMapping( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Removes <code>value</code> from responseMapping. 
+	 * @param value the item to remove from responseMapping
+	 */
+	public void removeFromResponseMapping(final SessionContext ctx, final PriceWebServiceResponse value)
+	{
+		RESPONSEMAPPINGHANDLER.removeValue( ctx, this, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Removes <code>value</code> from responseMapping. 
+	 * @param value the item to remove from responseMapping
+	 */
+	public void removeFromResponseMapping(final PriceWebServiceResponse value)
+	{
+		removeFromResponseMapping( getSession().getSessionContext(), value );
 	}
 	
 }

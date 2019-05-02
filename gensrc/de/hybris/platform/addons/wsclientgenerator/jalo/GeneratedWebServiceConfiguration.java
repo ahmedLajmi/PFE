@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 26 avr. 2019 11:07:06                       ---
+ * --- Generated at 2 mai 2019 13:28:40                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -36,8 +36,6 @@ import java.util.Map;
 @SuppressWarnings({"deprecation","unused","cast","PMD"})
 public abstract class GeneratedWebServiceConfiguration extends GenericItem
 {
-	/** Qualifier of the <code>WebServiceConfiguration.configID</code> attribute **/
-	public static final String CONFIGID = "configID";
 	/** Qualifier of the <code>WebServiceConfiguration.name</code> attribute **/
 	public static final String NAME = "name";
 	/** Qualifier of the <code>WebServiceConfiguration.description</code> attribute **/
@@ -66,8 +64,8 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	public static final String PASSWORD = "password";
 	/** Qualifier of the <code>WebServiceConfiguration.personalisedParameters</code> attribute **/
 	public static final String PERSONALISEDPARAMETERS = "personalisedParameters";
-	/** Qualifier of the <code>WebServiceConfiguration.SecurityParameters</code> attribute **/
-	public static final String SECURITYPARAMETERS = "SecurityParameters";
+	/** Qualifier of the <code>WebServiceConfiguration.headersParameters</code> attribute **/
+	public static final String HEADERSPARAMETERS = "headersParameters";
 	/**
 	* {@link OneToManyHandler} for handling 1:n PERSONALISEDPARAMETERS's relation attributes from 'many' side.
 	**/
@@ -81,9 +79,9 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	CollectionType.COLLECTION
 	);
 	/**
-	* {@link OneToManyHandler} for handling 1:n SECURITYPARAMETERS's relation attributes from 'many' side.
+	* {@link OneToManyHandler} for handling 1:n HEADERSPARAMETERS's relation attributes from 'many' side.
 	**/
-	protected static final OneToManyHandler<PersoWSParam> SECURITYPARAMETERSHANDLER = new OneToManyHandler<PersoWSParam>(
+	protected static final OneToManyHandler<PersoWSParam> HEADERSPARAMETERSHANDLER = new OneToManyHandler<PersoWSParam>(
 	WsclientgeneratorConstants.TC.PERSOWSPARAM,
 	false,
 	"configuration",
@@ -96,7 +94,6 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	static
 	{
 		final Map<String, AttributeMode> tmp = new HashMap<String, AttributeMode>();
-		tmp.put(CONFIGID, AttributeMode.INITIAL);
 		tmp.put(NAME, AttributeMode.INITIAL);
 		tmp.put(DESCRIPTION, AttributeMode.INITIAL);
 		tmp.put(URL, AttributeMode.INITIAL);
@@ -152,42 +149,6 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	public void setAccept(final EnumerationValue value)
 	{
 		setAccept( getSession().getSessionContext(), value );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.configID</code> attribute.
-	 * @return the configID
-	 */
-	public String getConfigID(final SessionContext ctx)
-	{
-		return (String)getProperty( ctx, CONFIGID);
-	}
-	
-	/**
-	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.configID</code> attribute.
-	 * @return the configID
-	 */
-	public String getConfigID()
-	{
-		return getConfigID( getSession().getSessionContext() );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Setter of the <code>WebServiceConfiguration.configID</code> attribute. 
-	 * @param value the configID
-	 */
-	public void setConfigID(final SessionContext ctx, final String value)
-	{
-		setProperty(ctx, CONFIGID,value);
-	}
-	
-	/**
-	 * <i>Generated method</i> - Setter of the <code>WebServiceConfiguration.configID</code> attribute. 
-	 * @param value the configID
-	 */
-	public void setConfigID(final String value)
-	{
-		setConfigID( getSession().getSessionContext(), value );
 	}
 	
 	/**
@@ -333,6 +294,78 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	public void setEnable(final boolean value)
 	{
 		setEnable( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.headersParameters</code> attribute.
+	 * @return the headersParameters
+	 */
+	public Collection<PersoWSParam> getHeadersParameters(final SessionContext ctx)
+	{
+		return HEADERSPARAMETERSHANDLER.getValues( ctx, this );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.headersParameters</code> attribute.
+	 * @return the headersParameters
+	 */
+	public Collection<PersoWSParam> getHeadersParameters()
+	{
+		return getHeadersParameters( getSession().getSessionContext() );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>WebServiceConfiguration.headersParameters</code> attribute. 
+	 * @param value the headersParameters
+	 */
+	public void setHeadersParameters(final SessionContext ctx, final Collection<PersoWSParam> value)
+	{
+		HEADERSPARAMETERSHANDLER.setValues( ctx, this, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>WebServiceConfiguration.headersParameters</code> attribute. 
+	 * @param value the headersParameters
+	 */
+	public void setHeadersParameters(final Collection<PersoWSParam> value)
+	{
+		setHeadersParameters( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Adds <code>value</code> to headersParameters. 
+	 * @param value the item to add to headersParameters
+	 */
+	public void addToHeadersParameters(final SessionContext ctx, final PersoWSParam value)
+	{
+		HEADERSPARAMETERSHANDLER.addValue( ctx, this, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Adds <code>value</code> to headersParameters. 
+	 * @param value the item to add to headersParameters
+	 */
+	public void addToHeadersParameters(final PersoWSParam value)
+	{
+		addToHeadersParameters( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Removes <code>value</code> from headersParameters. 
+	 * @param value the item to remove from headersParameters
+	 */
+	public void removeFromHeadersParameters(final SessionContext ctx, final PersoWSParam value)
+	{
+		HEADERSPARAMETERSHANDLER.removeValue( ctx, this, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Removes <code>value</code> from headersParameters. 
+	 * @param value the item to remove from headersParameters
+	 */
+	public void removeFromHeadersParameters(final PersoWSParam value)
+	{
+		removeFromHeadersParameters( getSession().getSessionContext(), value );
 	}
 	
 	/**
@@ -657,78 +690,6 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	public void setRootKey(final String value)
 	{
 		setRootKey( getSession().getSessionContext(), value );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.SecurityParameters</code> attribute.
-	 * @return the SecurityParameters
-	 */
-	public Collection<PersoWSParam> getSecurityParameters(final SessionContext ctx)
-	{
-		return SECURITYPARAMETERSHANDLER.getValues( ctx, this );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.SecurityParameters</code> attribute.
-	 * @return the SecurityParameters
-	 */
-	public Collection<PersoWSParam> getSecurityParameters()
-	{
-		return getSecurityParameters( getSession().getSessionContext() );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Setter of the <code>WebServiceConfiguration.SecurityParameters</code> attribute. 
-	 * @param value the SecurityParameters
-	 */
-	public void setSecurityParameters(final SessionContext ctx, final Collection<PersoWSParam> value)
-	{
-		SECURITYPARAMETERSHANDLER.setValues( ctx, this, value );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Setter of the <code>WebServiceConfiguration.SecurityParameters</code> attribute. 
-	 * @param value the SecurityParameters
-	 */
-	public void setSecurityParameters(final Collection<PersoWSParam> value)
-	{
-		setSecurityParameters( getSession().getSessionContext(), value );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Adds <code>value</code> to SecurityParameters. 
-	 * @param value the item to add to SecurityParameters
-	 */
-	public void addToSecurityParameters(final SessionContext ctx, final PersoWSParam value)
-	{
-		SECURITYPARAMETERSHANDLER.addValue( ctx, this, value );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Adds <code>value</code> to SecurityParameters. 
-	 * @param value the item to add to SecurityParameters
-	 */
-	public void addToSecurityParameters(final PersoWSParam value)
-	{
-		addToSecurityParameters( getSession().getSessionContext(), value );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Removes <code>value</code> from SecurityParameters. 
-	 * @param value the item to remove from SecurityParameters
-	 */
-	public void removeFromSecurityParameters(final SessionContext ctx, final PersoWSParam value)
-	{
-		SECURITYPARAMETERSHANDLER.removeValue( ctx, this, value );
-	}
-	
-	/**
-	 * <i>Generated method</i> - Removes <code>value</code> from SecurityParameters. 
-	 * @param value the item to remove from SecurityParameters
-	 */
-	public void removeFromSecurityParameters(final PersoWSParam value)
-	{
-		removeFromSecurityParameters( getSession().getSessionContext(), value );
 	}
 	
 	/**

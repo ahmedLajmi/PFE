@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 26 avr. 2019 11:07:06                       ---
+ * --- Generated at 2 mai 2019 13:28:40                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -42,6 +42,8 @@ public abstract class GeneratedPriceWebServiceParameter extends WebServiceParame
 	public static final String VALUE = "value";
 	/** Qualifier of the <code>PriceWebServiceParameter.configuration</code> attribute **/
 	public static final String CONFIGURATION = "configuration";
+	/** Qualifier of the <code>PriceWebServiceParameter.priceConfiguration</code> attribute **/
+	public static final String PRICECONFIGURATION = "priceConfiguration";
 	/**
 	* {@link BidirectionalOneToManyHandler} for handling 1:n CONFIGURATION's relation attributes from 'one' side.
 	**/
@@ -54,12 +56,25 @@ public abstract class GeneratedPriceWebServiceParameter extends WebServiceParame
 	true,
 	CollectionType.COLLECTION
 	);
+	/**
+	* {@link BidirectionalOneToManyHandler} for handling 1:n PRICECONFIGURATION's relation attributes from 'one' side.
+	**/
+	protected static final BidirectionalOneToManyHandler<GeneratedPriceWebServiceParameter> PRICECONFIGURATIONHANDLER = new BidirectionalOneToManyHandler<GeneratedPriceWebServiceParameter>(
+	WsclientgeneratorConstants.TC.PRICEWEBSERVICEPARAMETER,
+	false,
+	"priceConfiguration",
+	null,
+	false,
+	true,
+	CollectionType.COLLECTION
+	);
 	protected static final Map<String, AttributeMode> DEFAULT_INITIAL_ATTRIBUTES;
 	static
 	{
 		final Map<String, AttributeMode> tmp = new HashMap<String, AttributeMode>(WebServiceParameter.DEFAULT_INITIAL_ATTRIBUTES);
 		tmp.put(VALUE, AttributeMode.INITIAL);
 		tmp.put(CONFIGURATION, AttributeMode.INITIAL);
+		tmp.put(PRICECONFIGURATION, AttributeMode.INITIAL);
 		DEFAULT_INITIAL_ATTRIBUTES = Collections.unmodifiableMap(tmp);
 	}
 	@Override
@@ -108,7 +123,44 @@ public abstract class GeneratedPriceWebServiceParameter extends WebServiceParame
 	protected Item createItem(final SessionContext ctx, final ComposedType type, final ItemAttributeMap allAttributes) throws JaloBusinessException
 	{
 		CONFIGURATIONHANDLER.newInstance(ctx, allAttributes);
+		PRICECONFIGURATIONHANDLER.newInstance(ctx, allAttributes);
 		return super.createItem( ctx, type, allAttributes );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>PriceWebServiceParameter.priceConfiguration</code> attribute.
+	 * @return the priceConfiguration
+	 */
+	public PriceWebServiceConfiguration getPriceConfiguration(final SessionContext ctx)
+	{
+		return (PriceWebServiceConfiguration)getProperty( ctx, PRICECONFIGURATION);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>PriceWebServiceParameter.priceConfiguration</code> attribute.
+	 * @return the priceConfiguration
+	 */
+	public PriceWebServiceConfiguration getPriceConfiguration()
+	{
+		return getPriceConfiguration( getSession().getSessionContext() );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>PriceWebServiceParameter.priceConfiguration</code> attribute. 
+	 * @param value the priceConfiguration
+	 */
+	public void setPriceConfiguration(final SessionContext ctx, final PriceWebServiceConfiguration value)
+	{
+		PRICECONFIGURATIONHANDLER.addValue( ctx, value, this  );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>PriceWebServiceParameter.priceConfiguration</code> attribute. 
+	 * @param value the priceConfiguration
+	 */
+	public void setPriceConfiguration(final PriceWebServiceConfiguration value)
+	{
+		setPriceConfiguration( getSession().getSessionContext(), value );
 	}
 	
 	/**

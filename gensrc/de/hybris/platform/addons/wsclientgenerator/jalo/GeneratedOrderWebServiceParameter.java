@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 26 avr. 2019 11:07:06                       ---
+ * --- Generated at 2 mai 2019 13:28:40                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -42,6 +42,8 @@ public abstract class GeneratedOrderWebServiceParameter extends WebServiceParame
 	public static final String VALUE = "value";
 	/** Qualifier of the <code>OrderWebServiceParameter.configuration</code> attribute **/
 	public static final String CONFIGURATION = "configuration";
+	/** Qualifier of the <code>OrderWebServiceParameter.orderConfiguration</code> attribute **/
+	public static final String ORDERCONFIGURATION = "orderConfiguration";
 	/**
 	* {@link BidirectionalOneToManyHandler} for handling 1:n CONFIGURATION's relation attributes from 'one' side.
 	**/
@@ -54,12 +56,25 @@ public abstract class GeneratedOrderWebServiceParameter extends WebServiceParame
 	true,
 	CollectionType.COLLECTION
 	);
+	/**
+	* {@link BidirectionalOneToManyHandler} for handling 1:n ORDERCONFIGURATION's relation attributes from 'one' side.
+	**/
+	protected static final BidirectionalOneToManyHandler<GeneratedOrderWebServiceParameter> ORDERCONFIGURATIONHANDLER = new BidirectionalOneToManyHandler<GeneratedOrderWebServiceParameter>(
+	WsclientgeneratorConstants.TC.ORDERWEBSERVICEPARAMETER,
+	false,
+	"orderConfiguration",
+	null,
+	false,
+	true,
+	CollectionType.COLLECTION
+	);
 	protected static final Map<String, AttributeMode> DEFAULT_INITIAL_ATTRIBUTES;
 	static
 	{
 		final Map<String, AttributeMode> tmp = new HashMap<String, AttributeMode>(WebServiceParameter.DEFAULT_INITIAL_ATTRIBUTES);
 		tmp.put(VALUE, AttributeMode.INITIAL);
 		tmp.put(CONFIGURATION, AttributeMode.INITIAL);
+		tmp.put(ORDERCONFIGURATION, AttributeMode.INITIAL);
 		DEFAULT_INITIAL_ATTRIBUTES = Collections.unmodifiableMap(tmp);
 	}
 	@Override
@@ -108,7 +123,44 @@ public abstract class GeneratedOrderWebServiceParameter extends WebServiceParame
 	protected Item createItem(final SessionContext ctx, final ComposedType type, final ItemAttributeMap allAttributes) throws JaloBusinessException
 	{
 		CONFIGURATIONHANDLER.newInstance(ctx, allAttributes);
+		ORDERCONFIGURATIONHANDLER.newInstance(ctx, allAttributes);
 		return super.createItem( ctx, type, allAttributes );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>OrderWebServiceParameter.orderConfiguration</code> attribute.
+	 * @return the orderConfiguration
+	 */
+	public OrderWebServiceConfiguration getOrderConfiguration(final SessionContext ctx)
+	{
+		return (OrderWebServiceConfiguration)getProperty( ctx, ORDERCONFIGURATION);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>OrderWebServiceParameter.orderConfiguration</code> attribute.
+	 * @return the orderConfiguration
+	 */
+	public OrderWebServiceConfiguration getOrderConfiguration()
+	{
+		return getOrderConfiguration( getSession().getSessionContext() );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>OrderWebServiceParameter.orderConfiguration</code> attribute. 
+	 * @param value the orderConfiguration
+	 */
+	public void setOrderConfiguration(final SessionContext ctx, final OrderWebServiceConfiguration value)
+	{
+		ORDERCONFIGURATIONHANDLER.addValue( ctx, value, this  );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>OrderWebServiceParameter.orderConfiguration</code> attribute. 
+	 * @param value the orderConfiguration
+	 */
+	public void setOrderConfiguration(final OrderWebServiceConfiguration value)
+	{
+		setOrderConfiguration( getSession().getSessionContext(), value );
 	}
 	
 	/**

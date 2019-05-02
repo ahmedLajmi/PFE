@@ -21,5 +21,6 @@ public interface CustomerWebServiceConfigurationFacade
 
 	public List<WebServiceConfigurationData> getAllConfigurations();
 
-	public WebServiceResponseData wsConfigurationCall(final String id, final Map<String, String> params);
+	public WebServiceResponseData wsConfigurationCall(final String id, final Map<String, String> queryParams,
+			final Map<String, String> pathParams);
 }

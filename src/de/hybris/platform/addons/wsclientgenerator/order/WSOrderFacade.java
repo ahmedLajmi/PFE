@@ -24,12 +24,7 @@ public interface WSOrderFacade
 
 	public String WsGetStatusCode(final OrderModel order) throws ParseWsResponseException, InvokeWsException;
 
-	public String jsonParseResponse(final String response) throws ParseWsResponseException;
-
-	public String xmlParseResponse(final String response) throws ParseWsResponseException;
-
-	public Map<String, String> prepareRequestParams(final OrderWebServiceConfigurationModel orderConfiguration,
-			final OrderModel model);
+	public Map<String, Map<String, String>> prepareGetParams(final OrderModel model);
 
 	public OrderStatus validateStatuses(final String value);
 

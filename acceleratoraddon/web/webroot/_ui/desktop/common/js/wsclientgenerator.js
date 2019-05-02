@@ -13,6 +13,7 @@ jQuery(document).ready(
 				}
 			});
 		});
+
 $('#wsCall').submit(function(e) {
 	e.preventDefault();
 	console.log($(this).serialize());
@@ -55,7 +56,10 @@ $('#wsCall').submit(function(e) {
 function getAllConfigurations(func) {
 	if (func.value != '') {
 		$('#wsConfigurationDetails').hide();
-		$("#parameters").empty();
+		$("#query").hide();
+		$("#path").hide();
+		$("#queryParameters").empty();
+		$("#pathParameters").empty();
 		$('#submit').hide();
 		$('#response').hide();
 		$
@@ -90,7 +94,10 @@ function getAllConfigurations(func) {
 					}
 				});
 	} else {
-		$("#parameters").empty();
+		$("#query").hide();
+		$("#path").hide();
+		$("#queryParameters").empty();
+		$("#pathParameters").empty();
 		$('#wsConfigurationDetails').hide();
 		$('#configuration').empty();
 		$('#response').hide();
@@ -120,24 +127,71 @@ function getConfigurationDetails(func) {
 						$('#wsConfigurationDetails').show();
 						document.getElementById("uri").textContent = response.url;
 						document.getElementById("method").textContent = response.method;
-						document.getElementById("enable").textContent = response.enable;
 						document.getElementById("accept").textContent = response.accept;
-						if (response.parameters != null) {
-							$("#parameters").empty();
-							response.parameters
-									.forEach(function(item, index, array) {
-										$("#parameters")
-												.append(
-														'<div class="col-sm-6 form-group perso"> '
-																+ '<label> Please enter the value for "'
-																+ item.key
-																+ '" parameter :</label> <input type="text" class="form-control" id="'
-																+ item.key
-																+ '" name="'
-																+ item.key
-																+ '" required>'
-																+ '</div>');
-									});
+						if(response.enable == true){
+							document.getElementById("enable").innerHTML = 'Enable : <i class="far fa-check-circle"></i>';
+							document.getElementById("enable").className = "status text-success"
+						}
+						else{
+							document.getElementById("enable").innerHTML = 'Enable : <i class="far fa-times-circle"></i>';
+							document.getElementById("enable").className = "status text-danger"	
+						}
+						if(response.contentType != null){
+							document.getElementById("contentType").textContent = 'Request format :' + response.contentType;
+						}
+						else{
+							$('#contentType').hide();
+						}
+						if(response.securityParameters != null && response.securityParameters.length>0){
+							response.securityParameters
+							.forEach(function(item, index, array) {
+								if(item.key == "login"){
+									document.getElementById("login").textContent = 'Login :' + item.value;
+								}
+								else if (item.key == "password"){
+									document.getElementById("password").textContent = 'Password :' + item.value;
+								}	
+							});
+						}
+						if (response.pathParameters != null) {
+							$("#pathParameters").empty();
+							if (response.pathParameters.length>0) {
+								response.pathParameters
+										.forEach(function(item, index, array) {
+											$("#pathParameters")
+													.append(
+															'<div class="col-sm-6 form-group perso"> '
+																	+ '<label> Please enter the value for "'
+																	+ item.key
+																	+ '" parameter :</label> <input type="text" class="form-control" id="path_'
+																	+ item.key
+																	+ '" name="path_'
+																	+ item.key
+																	+ '" required>'
+																	+ '</div>');
+										});
+								$("#path").show();
+							}
+						}
+						if (response.queryParameters != null) {
+							$("#queryParameters").empty();
+							if (response.queryParameters.length>0) {
+								response.queryParameters
+										.forEach(function(item, index, array) {
+											$("#queryParameters")
+													.append(
+															'<div class="col-sm-6 form-group perso"> '
+																	+ '<label> Please enter the value for "'
+																	+ item.key
+																	+ '" parameter :</label> <input type="text" class="form-control" id="query_'
+																	+ item.key
+																	+ '" name="query_'
+																	+ item.key
+																	+ '" required>'
+																	+ '</div>');
+										});
+								$("#query").show();
+							}
 						}
 					},
 					error : function(e) {
@@ -148,7 +202,10 @@ function getConfigurationDetails(func) {
 					}
 				});
 	} else {
-		$("#parameters").empty();
+		$("#query").hide();
+		$("#path").hide();
+		$("#queryParameters").empty();
+		$("#pathParameters").empty();
 		$('#wsConfigurationDetails').hide();
 		$('#response').hide();
 		$('#submit').hide();

@@ -5,8 +5,10 @@ package de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.serv
 
 import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
 import de.hybris.platform.addons.wsclientgenerator.model.CustomerWebServiceConfigurationModel;
+import de.hybris.platform.commercefacades.user.data.CustomerData;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -20,5 +22,17 @@ public interface CustomerWebServiceConfigurationService extends WebServiceConfig
 	public CustomerWebServiceConfigurationModel getWsEnabledConfiguration(final MethodType method);
 
 	public CustomerWebServiceConfigurationModel findCustomerWsConfiguration(final String id);
+
+	public Map<String, String> prepareDynamicQueryParameters(final CustomerWebServiceConfigurationModel customerConfiguration,
+			final CustomerData customer);
+
+	public Map<String, String> prepareDynamicPathParameters(final CustomerWebServiceConfigurationModel customerConfiguration,
+			final CustomerData customer);
+
+	public Map<String, String> prepareDynamicQueryParameters(final CustomerWebServiceConfigurationModel customerConfiguration,
+			final CustomerData customer, final String newUid);
+
+	public CustomerData prepareCustomer(final CustomerWebServiceConfigurationModel customerConfiguration,
+			final Map<String, String> response);
 
 }
