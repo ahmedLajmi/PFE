@@ -77,6 +77,16 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 		);
 	
 		createItemType(
+			"HeaderWSParam",
+			"WebServiceParameter",
+			de.hybris.platform.addons.wsclientgenerator.jalo.HeaderWSParam.class,
+			null,
+			false,
+			null,
+			false
+		);
+	
+		createItemType(
 			"PriceWebServiceParameter",
 			"WebServiceParameter",
 			de.hybris.platform.addons.wsclientgenerator.jalo.PriceWebServiceParameter.class,
@@ -389,6 +399,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 				single_createattr_PersoWSParam_value();
 			
+				single_createattr_HeaderWSParam_value();
+			
 				single_createattr_PriceWebServiceParameter_value();
 			
 				single_createattr_OrderWebServiceParameter_value();
@@ -429,7 +441,7 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			"WebServiceConfigurationHeadersParameterRelation", 
 			false, 
 
-			"configuration", 
+			"configurationHeader", 
 			"WebServiceConfiguration", 
 			true,
 			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
@@ -437,7 +449,7 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			false,
 			CollectionType.COLLECTION,
 			"headersParameters", 
-			"PersoWSParam", 
+			"HeaderWSParam", 
 			true,
 			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
 			true,
@@ -944,6 +956,23 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 	}
 	
+	public void single_createattr_HeaderWSParam_value() throws JaloBusinessException
+	{
+		
+						Map sqlColumnDefinitions = null;
+					
+				createPropertyAttribute(
+					"HeaderWSParam", 
+					"value",  
+					null,
+					"java.lang.String",
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					null,
+					sqlColumnDefinitions
+				);
+			
+	}
+	
 	public void single_createattr_PriceWebServiceParameter_value() throws JaloBusinessException
 	{
 		
@@ -1118,7 +1147,9 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			Arrays.asList( new String[] {
 			
 				"get",
-				"post"
+				"post",
+				"put",
+				"delete"
 			} )
 		);
 	
@@ -1299,12 +1330,12 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 		connectRelation(
 			"WebServiceConfigurationHeadersParameterRelation", 
 			false, 
-			"configuration", 
+			"configurationHeader", 
 			"WebServiceConfiguration", 
 			true,
 			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
 			"headersParameters", 
-			"PersoWSParam", 
+			"HeaderWSParam", 
 			true,
 			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
 			true,
@@ -1559,6 +1590,21 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				}
 			
 			single_setAttributeProperties_PersoWSParam_value();
+		
+				{
+				Map customPropsMap = new HashMap();
+				
+				setItemTypeProperties(
+					"HeaderWSParam",
+					false,
+					true,
+					true,
+					null,
+					customPropsMap
+				);
+				}
+			
+			single_setAttributeProperties_HeaderWSParam_value();
 		
 				{
 				Map customPropsMap = new HashMap();
@@ -2157,6 +2203,28 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 							);
 						}
 					
+						public void single_setAttributeProperties_HeaderWSParam_value() throws JaloBusinessException
+						{
+							
+							
+							
+							Map customPropsMap = new HashMap();
+							
+							setAttributeProperties(
+								"HeaderWSParam", 
+								"value",
+								false, 
+								null,
+								null,
+								null,
+								true,
+								true,
+								null,
+								customPropsMap,
+								null
+							);
+						}
+					
 						public void single_setAttributeProperties_PriceWebServiceParameter_value() throws JaloBusinessException
 						{
 							
@@ -2382,8 +2450,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 									
 
 									setAttributeProperties(
-										"PersoWSParam", 
-										"configuration",
+										"HeaderWSParam", 
+										"configurationHeader",
 										false, 
 										null,
 										null,

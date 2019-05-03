@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 2 mai 2019 13:28:40                         ---
+ * --- Generated at 3 mai 2019 11:56:01                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -32,6 +32,7 @@ public class GeneratedWsclientgeneratorConstants
 		public static final String CUSTOMERWEBSERVICECONFIGURATION = "CustomerWebServiceConfiguration".intern();
 		public static final String CUSTOMERWEBSERVICEPARAMETER = "CustomerWebServiceParameter".intern();
 		public static final String CUSTOMERWEBSERVICERESPONSE = "CustomerWebServiceResponse".intern();
+		public static final String HEADERWSPARAM = "HeaderWSParam".intern();
 		public static final String METHODTYPE = "MethodType".intern();
 		public static final String MODETYPE = "ModeType".intern();
 		public static final String ORDERMAPPINGRESPONSE = "OrderMappingResponse".intern();
@@ -82,6 +83,8 @@ public class GeneratedWsclientgeneratorConstants
 		{
 			public static final String GET = "get".intern();
 			public static final String POST = "post".intern();
+			public static final String PUT = "put".intern();
+			public static final String DELETE = "delete".intern();
 		}
 		public static class ModeType
 		{

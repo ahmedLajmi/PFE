@@ -32,6 +32,8 @@
 			dynamic="true">
 			<value code="get" />
 			<value code="post" />
+			<value code="put" />
+			<value code="delete" />
 		</enumtype>
 		<enumtype code="PriceParameter" autocreate="true"
 			generate="true" dynamic="true">
@@ -109,8 +111,8 @@
 			code="WebServiceConfigurationHeadersParameterRelation"
 			localized="false" generate="true" autocreate="true">
 			<sourceElement type="WebServiceConfiguration"
-				qualifier="configuration" cardinality="one" />
-			<targetElement type="PersoWSParam"
+				qualifier="configurationHeader" cardinality="one" />
+			<targetElement type="HeaderWSParam"
 				qualifier="headersParameters" cardinality="many" />
 		</relation>
 
@@ -320,6 +322,18 @@
 		</itemtype>
 
 		<itemtype code="PersoWSParam" autocreate="true"
+			generate="true" extends="WebServiceParameter">
+			<attributes>
+				<attribute type="java.lang.String" qualifier="value">
+					<modifiers read="true" write="true" search="true"
+						optional="false" />
+					<description>The value of the parametre</description>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+		
+		<itemtype code="HeaderWSParam" autocreate="true"
 			generate="true" extends="WebServiceParameter">
 			<attributes>
 				<attribute type="java.lang.String" qualifier="value">

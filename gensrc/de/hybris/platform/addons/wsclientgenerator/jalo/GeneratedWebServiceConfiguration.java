@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 2 mai 2019 13:28:40                         ---
+ * --- Generated at 3 mai 2019 11:56:01                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -18,6 +18,7 @@
 package de.hybris.platform.addons.wsclientgenerator.jalo;
 
 import de.hybris.platform.addons.wsclientgenerator.constants.WsclientgeneratorConstants;
+import de.hybris.platform.addons.wsclientgenerator.jalo.HeaderWSParam;
 import de.hybris.platform.addons.wsclientgenerator.jalo.PersoWSParam;
 import de.hybris.platform.jalo.GenericItem;
 import de.hybris.platform.jalo.Item.AttributeMode;
@@ -81,10 +82,10 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	/**
 	* {@link OneToManyHandler} for handling 1:n HEADERSPARAMETERS's relation attributes from 'many' side.
 	**/
-	protected static final OneToManyHandler<PersoWSParam> HEADERSPARAMETERSHANDLER = new OneToManyHandler<PersoWSParam>(
-	WsclientgeneratorConstants.TC.PERSOWSPARAM,
+	protected static final OneToManyHandler<HeaderWSParam> HEADERSPARAMETERSHANDLER = new OneToManyHandler<HeaderWSParam>(
+	WsclientgeneratorConstants.TC.HEADERWSPARAM,
 	false,
-	"configuration",
+	"configurationHeader",
 	null,
 	false,
 	true,
@@ -300,7 +301,7 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.headersParameters</code> attribute.
 	 * @return the headersParameters
 	 */
-	public Collection<PersoWSParam> getHeadersParameters(final SessionContext ctx)
+	public Collection<HeaderWSParam> getHeadersParameters(final SessionContext ctx)
 	{
 		return HEADERSPARAMETERSHANDLER.getValues( ctx, this );
 	}
@@ -309,7 +310,7 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.headersParameters</code> attribute.
 	 * @return the headersParameters
 	 */
-	public Collection<PersoWSParam> getHeadersParameters()
+	public Collection<HeaderWSParam> getHeadersParameters()
 	{
 		return getHeadersParameters( getSession().getSessionContext() );
 	}
@@ -318,7 +319,7 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	 * <i>Generated method</i> - Setter of the <code>WebServiceConfiguration.headersParameters</code> attribute. 
 	 * @param value the headersParameters
 	 */
-	public void setHeadersParameters(final SessionContext ctx, final Collection<PersoWSParam> value)
+	public void setHeadersParameters(final SessionContext ctx, final Collection<HeaderWSParam> value)
 	{
 		HEADERSPARAMETERSHANDLER.setValues( ctx, this, value );
 	}
@@ -327,7 +328,7 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	 * <i>Generated method</i> - Setter of the <code>WebServiceConfiguration.headersParameters</code> attribute. 
 	 * @param value the headersParameters
 	 */
-	public void setHeadersParameters(final Collection<PersoWSParam> value)
+	public void setHeadersParameters(final Collection<HeaderWSParam> value)
 	{
 		setHeadersParameters( getSession().getSessionContext(), value );
 	}
@@ -336,7 +337,7 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	 * <i>Generated method</i> - Adds <code>value</code> to headersParameters. 
 	 * @param value the item to add to headersParameters
 	 */
-	public void addToHeadersParameters(final SessionContext ctx, final PersoWSParam value)
+	public void addToHeadersParameters(final SessionContext ctx, final HeaderWSParam value)
 	{
 		HEADERSPARAMETERSHANDLER.addValue( ctx, this, value );
 	}
@@ -345,7 +346,7 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	 * <i>Generated method</i> - Adds <code>value</code> to headersParameters. 
 	 * @param value the item to add to headersParameters
 	 */
-	public void addToHeadersParameters(final PersoWSParam value)
+	public void addToHeadersParameters(final HeaderWSParam value)
 	{
 		addToHeadersParameters( getSession().getSessionContext(), value );
 	}
@@ -354,7 +355,7 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	 * <i>Generated method</i> - Removes <code>value</code> from headersParameters. 
 	 * @param value the item to remove from headersParameters
 	 */
-	public void removeFromHeadersParameters(final SessionContext ctx, final PersoWSParam value)
+	public void removeFromHeadersParameters(final SessionContext ctx, final HeaderWSParam value)
 	{
 		HEADERSPARAMETERSHANDLER.removeValue( ctx, this, value );
 	}
@@ -363,7 +364,7 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	 * <i>Generated method</i> - Removes <code>value</code> from headersParameters. 
 	 * @param value the item to remove from headersParameters
 	 */
-	public void removeFromHeadersParameters(final PersoWSParam value)
+	public void removeFromHeadersParameters(final HeaderWSParam value)
 	{
 		removeFromHeadersParameters( getSession().getSessionContext(), value );
 	}

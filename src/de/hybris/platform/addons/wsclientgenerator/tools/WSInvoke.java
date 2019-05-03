@@ -92,41 +92,25 @@ public class WSInvoke
 		}
 	}
 
-	public ResponseEntity<String> getSimulationRequest(final String url, final Map<String, Map<String, String>> params,
-			final Map<String, String> headersParam, final ResponseType accept) throws InvokeWsException
-	{
-		final HttpHeaders headers = new HttpHeaders();
-		if (accept.equals(ResponseType.JSON))
-		{
-			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-		}
-		else if (accept.equals(ResponseType.XML))
-		{
-			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_XML));
-		}
-		for (final String key : headersParam.keySet())
-		{
-			headers.add(key, headersParam.get(key));
-		}
-
-		final HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
-		final RestTemplate restTemplate = new RestTemplate();
-		try
-		{
-			final ResponseEntity<String> response = restTemplate.exchange(prepareUrl(url, params), HttpMethod.GET, entity,
-					String.class);
-			return response;
-		}
-		catch (final Exception e)
-		{
-			throw new InvokeWsException("Error in invoking web service!! " + e.getMessage());
-		}
-	}
-
-
 	public Map<String, String> postRequest(final String url, final Map<String, Map<String, String>> params,
 			final Map<String, String> headersParam, final ResponseType accept, final RequestType contentType)
 			throws InvokeWsException, CreateWsRequestException
+	{
+
+		return postAndput(url, params, headersParam, accept, contentType, HttpMethod.POST);
+	}
+
+	public Map<String, String> putRequest(final String url, final Map<String, Map<String, String>> params,
+			final Map<String, String> headersParam, final ResponseType accept, final RequestType contentType)
+			throws InvokeWsException, CreateWsRequestException
+	{
+
+		return postAndput(url, params, headersParam, accept, contentType, HttpMethod.PUT);
+	}
+
+	private Map<String, String> postAndput(final String url, final Map<String, Map<String, String>> params,
+			final Map<String, String> headersParam, final ResponseType accept, final RequestType contentType,
+			final HttpMethod method) throws InvokeWsException, CreateWsRequestException
 	{
 		final HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> entity = null;
@@ -170,7 +154,7 @@ public class WSInvoke
 					entity = new HttpEntity<>(prepareXMLRequest(params.get("body")), headers);
 				}
 				System.out.println("Body of request: " + entity.getBody());
-				response = restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
+				response = restTemplate.exchange(uri, method, entity, String.class);
 			}
 			if (accept.equals(ResponseType.JSON))
 			{
@@ -180,6 +164,51 @@ public class WSInvoke
 			{
 				return xmlParseResponse(response.getBody());
 			}
+		}
+		catch (final Exception e)
+		{
+			throw new InvokeWsException("Error in invoking web service!! " + e.getMessage());
+		}
+	}
+
+	public void deleteRequest(final String url, final Map<String, Map<String, String>> params) throws InvokeWsException
+	{
+		final RestTemplate restTemplate = new RestTemplate();
+		try
+		{
+			System.out.println("DELETE URL :" + prepareUrl(url, params));
+			restTemplate.delete(prepareUrl(url, params));
+		}
+		catch (final Exception e)
+		{
+			throw new InvokeWsException("Error in invoking web service!! " + e.getMessage());
+		}
+	}
+
+	public ResponseEntity<String> getSimulationRequest(final String url, final Map<String, Map<String, String>> params,
+			final Map<String, String> headersParam, final ResponseType accept) throws InvokeWsException
+	{
+		final HttpHeaders headers = new HttpHeaders();
+		if (accept.equals(ResponseType.JSON))
+		{
+			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+		}
+		else if (accept.equals(ResponseType.XML))
+		{
+			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_XML));
+		}
+		for (final String key : headersParam.keySet())
+		{
+			headers.add(key, headersParam.get(key));
+		}
+
+		final HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+		final RestTemplate restTemplate = new RestTemplate();
+		try
+		{
+			final ResponseEntity<String> response = restTemplate.exchange(prepareUrl(url, params), HttpMethod.GET, entity,
+					String.class);
+			return response;
 		}
 		catch (final Exception e)
 		{

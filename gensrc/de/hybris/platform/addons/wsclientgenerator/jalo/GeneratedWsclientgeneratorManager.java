@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 2 mai 2019 13:28:40                         ---
+ * --- Generated at 3 mai 2019 11:56:01                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -21,6 +21,7 @@ import de.hybris.platform.addons.wsclientgenerator.constants.WsclientgeneratorCo
 import de.hybris.platform.addons.wsclientgenerator.jalo.CustomerWebServiceConfiguration;
 import de.hybris.platform.addons.wsclientgenerator.jalo.CustomerWebServiceParameter;
 import de.hybris.platform.addons.wsclientgenerator.jalo.CustomerWebServiceResponse;
+import de.hybris.platform.addons.wsclientgenerator.jalo.HeaderWSParam;
 import de.hybris.platform.addons.wsclientgenerator.jalo.OrderWebServiceConfiguration;
 import de.hybris.platform.addons.wsclientgenerator.jalo.OrderWebServiceParameter;
 import de.hybris.platform.addons.wsclientgenerator.jalo.OrderWebServiceResponse;
@@ -142,6 +143,32 @@ public abstract class GeneratedWsclientgeneratorManager extends Extension
 	public CustomerWebServiceResponse createCustomerWebServiceResponse(final Map attributeValues)
 	{
 		return createCustomerWebServiceResponse( getSession().getSessionContext(), attributeValues );
+	}
+	
+	public HeaderWSParam createHeaderWSParam(final SessionContext ctx, final Map attributeValues)
+	{
+		try
+		{
+			ComposedType type = getTenant().getJaloConnection().getTypeManager().getComposedType( WsclientgeneratorConstants.TC.HEADERWSPARAM );
+			return (HeaderWSParam)type.newInstance( ctx, attributeValues );
+		}
+		catch( JaloGenericCreationException e)
+		{
+			final Throwable cause = e.getCause();
+			throw (cause instanceof RuntimeException ?
+			(RuntimeException)cause
+			:
+			new JaloSystemException( cause, cause.getMessage(), e.getErrorCode() ) );
+		}
+		catch( JaloBusinessException e )
+		{
+			throw new JaloSystemException( e ,"error creating HeaderWSParam : "+e.getMessage(), 0 );
+		}
+	}
+	
+	public HeaderWSParam createHeaderWSParam(final Map attributeValues)
+	{
+		return createHeaderWSParam( getSession().getSessionContext(), attributeValues );
 	}
 	
 	public OrderWebServiceConfiguration createOrderWebServiceConfiguration(final SessionContext ctx, final Map attributeValues)

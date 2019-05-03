@@ -66,7 +66,7 @@
 	width: 100%;
 }
 
-#wsConfigurationDetails, #response, #submit, #query, #path {
+#wsConfigurationDetails, #response, #submit, #query, #path, #statiqueParam {
 	display: none
 }
 
@@ -101,6 +101,8 @@
 	padding-top: 10px;
 	padding-bottom: 10px;
 	text-align: center;
+	font-family: "Times New Roman", Times, serif;
+    font-size: large;
 }
 
 .urlDetails {
@@ -130,7 +132,26 @@
 }
 .legend_security{
 	margin-bottom: 0;
+	font-size: medium;
+	line-height: 25px;
+	padding-top: 20px;
 }
+.securityDetails, #div_headerParam, #div_queryParam{
+	display: none;
+}
+.staticParameters{
+	padding-left: 75px;
+}
+.headerParam, .requestParam {
+	text-align: center;
+    font-size: large;
+    padding-bottom: 5px;	
+}
+.securityDetails{
+    margin: auto;
+    margin-top: 20px;
+}
+
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors

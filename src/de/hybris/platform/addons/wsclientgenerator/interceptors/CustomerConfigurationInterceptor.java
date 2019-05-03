@@ -3,10 +3,10 @@
  */
 package de.hybris.platform.addons.wsclientgenerator.interceptors;
 
+import de.hybris.platform.addons.wsclientgenerator.dao.webserviceconfiguration.CustomerWebServiceConfigurationDao;
 import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
 import de.hybris.platform.addons.wsclientgenerator.enums.RequestType;
 import de.hybris.platform.addons.wsclientgenerator.model.CustomerWebServiceConfigurationModel;
-import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.CustomerWebServiceConfigurationDao;
 import de.hybris.platform.servicelayer.i18n.L10NService;
 import de.hybris.platform.servicelayer.interceptor.InterceptorContext;
 import de.hybris.platform.servicelayer.interceptor.InterceptorException;

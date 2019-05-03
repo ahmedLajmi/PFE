@@ -46,6 +46,8 @@
 			type="java.util.List&lt;de.hybris.platform.addons.wsclientgenerator.data.WebServiceParameterData>" />
 		<property name="persoParameters"
 			type="java.util.List&lt;de.hybris.platform.addons.wsclientgenerator.data.WebServiceParameterData>" />
+		<property name="headerParameters"
+			type="java.util.List&lt;de.hybris.platform.addons.wsclientgenerator.data.WebServiceParameterData>" />
 		<property name="securityParameters"
 			type="java.util.List&lt;de.hybris.platform.addons.wsclientgenerator.data.WebServiceParameterData>" />
 	</bean>

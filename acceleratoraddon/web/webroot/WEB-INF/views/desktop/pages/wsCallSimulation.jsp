@@ -74,13 +74,60 @@
 							</div>
 							<div id="contentType" class="contentType text-secondary"></div>
 						</div>
-						<div id="securityDetails" class="securityDetails">
-							<fieldset>
-								<legend class="legend_security">Security informations</legend>
-								<div id="login" class=""></div>
-								<div id="password" class=""></div>								
-							</fieldset>
+						<div id="securityDetails" class="securityDetails col-sm-5">
+							<div class="headerParam">Security informations</div>
+							<table class="table table-bordered">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col" style="text-align: center;">Login</th>
+										<th scope="col" style="text-align: center;">Password</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td style="text-align: center;"><span id="login" class=""></span></td>
+										<td style="text-align: center;"><span id="password" class=""></span></td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
+					</div>
+					<div id="statiqueParam" class="">
+						<fieldset>
+							<legend>Static parameters</legend>
+							<div class="row staticParameters">
+								<div class="col-sm-5" id="div_headerParam">
+									<div class="headerParam">Header parameters</div>
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												<th scope="col">#</th>
+												<th scope="col">Key</th>
+												<th scope="col">Value</th>
+											</tr>
+										</thead>
+										<tbody id="headerParam">
+										</tbody>
+									</table>
+								</div>
+								<div class="col-sm-5" id="div_queryParam">
+									<div class="requestParam">Request parameters</div>
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												<th scope="col">#</th>
+												<th scope="col">Key</th>
+												<th scope="col">Value</th>
+											</tr>
+										</thead>
+										<tbody id="QueryParam">
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+							<div class="row" id="staticParams"></div>
+						</fieldset>
 					</div>
 					<div id="path">
 						<fieldset>

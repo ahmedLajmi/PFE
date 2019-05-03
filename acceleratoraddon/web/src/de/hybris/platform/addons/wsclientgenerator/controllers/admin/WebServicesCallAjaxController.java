@@ -6,10 +6,10 @@ package de.hybris.platform.addons.wsclientgenerator.controllers.admin;
 import de.hybris.platform.addons.wsclientgenerator.data.WebServiceConfigurationData;
 import de.hybris.platform.addons.wsclientgenerator.data.WebServiceConfigurationDetailsData;
 import de.hybris.platform.addons.wsclientgenerator.data.WebServiceResponseData;
-import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.facade.CustomerWebServiceConfigurationFacade;
-import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.facade.OrderWebServiceConfigurationFacade;
-import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.facade.PriceWebServiceConfigurationFacade;
-import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.facade.StockWebServiceConfigurationFacade;
+import de.hybris.platform.addons.wsclientgenerator.facade.webserviceconfiguration.CustomerWebServiceConfigurationFacade;
+import de.hybris.platform.addons.wsclientgenerator.facade.webserviceconfiguration.OrderWebServiceConfigurationFacade;
+import de.hybris.platform.addons.wsclientgenerator.facade.webserviceconfiguration.PriceWebServiceConfigurationFacade;
+import de.hybris.platform.addons.wsclientgenerator.facade.webserviceconfiguration.StockWebServiceConfigurationFacade;
 
 import java.util.HashMap;
 import java.util.List;

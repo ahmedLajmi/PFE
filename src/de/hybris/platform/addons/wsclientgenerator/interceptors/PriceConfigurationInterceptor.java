@@ -3,8 +3,8 @@
  */
 package de.hybris.platform.addons.wsclientgenerator.interceptors;
 
+import de.hybris.platform.addons.wsclientgenerator.dao.webserviceconfiguration.PriceWebServiceConfigurationDao;
 import de.hybris.platform.addons.wsclientgenerator.model.PriceWebServiceConfigurationModel;
-import de.hybris.platform.addons.wsclientgenerator.webserviceconfiguration.dao.PriceWebServiceConfigurationDao;
 import de.hybris.platform.servicelayer.event.EventService;
 import de.hybris.platform.servicelayer.i18n.L10NService;
 import de.hybris.platform.servicelayer.interceptor.InterceptorContext;
