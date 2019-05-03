@@ -86,7 +86,8 @@
 								<tbody>
 									<tr>
 										<td style="text-align: center;"><span id="login" class=""></span></td>
-										<td style="text-align: center;"><span id="password" class=""></span></td>
+										<td style="text-align: center;"><span id="password"
+											class=""></span></td>
 									</tr>
 								</tbody>
 							</table>
@@ -125,7 +126,6 @@
 									</table>
 								</div>
 							</div>
-
 							<div class="row" id="staticParams"></div>
 						</fieldset>
 					</div>
@@ -155,17 +155,7 @@
 					</div>
 					<div class="col-sm-10 form-group perso" id="editor"></div>
 				</div>
-				<div id="success_message"
-					style="width: 100%; height: 100%; display: none;">
-					<h3>Posted your message successfully!</h3>
-				</div>
-				<div id="error_message"
-					style="width: 100%; height: 100%; display: none;">
-					<h3>Error</h3>
-					Sorry there was an error sending your form.
-				</div>
 			</div>
-
 		</div>
 	</div>
 </template:page>

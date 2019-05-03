@@ -220,6 +220,20 @@ public class WSInvoke
 			final Map<String, String> headersParam, final ResponseType accept, final RequestType contentType)
 			throws InvokeWsException, CreateWsRequestException
 	{
+		return postAndPutSimulationRequest(url, params, headersParam, accept, contentType, HttpMethod.POST);
+	}
+
+	public ResponseEntity<String> putSimulationRequest(final String url, final Map<String, Map<String, String>> params,
+			final Map<String, String> headersParam, final ResponseType accept, final RequestType contentType)
+			throws InvokeWsException, CreateWsRequestException
+	{
+		return postAndPutSimulationRequest(url, params, headersParam, accept, contentType, HttpMethod.PUT);
+	}
+
+	public ResponseEntity<String> postAndPutSimulationRequest(final String url, final Map<String, Map<String, String>> params,
+			final Map<String, String> headersParam, final ResponseType accept, final RequestType contentType,
+			final HttpMethod method) throws InvokeWsException, CreateWsRequestException
+	{
 		final HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> entity = null;
 		HttpEntity<MultiValueMap<String, String>> entityForm;
@@ -262,7 +276,7 @@ public class WSInvoke
 					entity = new HttpEntity<>(prepareXMLRequest(params.get("body")), headers);
 				}
 				System.out.println("Body of request: " + entity.getBody());
-				response = restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
+				response = restTemplate.exchange(uri, method, entity, String.class);
 			}
 			return response;
 		}

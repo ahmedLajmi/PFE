@@ -32,6 +32,7 @@ $('#wsCall').submit(function(e) {
 			var JSONMode = ace.require("ace/mode/json").Mode;
 			editor.setTheme("ace/theme/twilight");
 			editor.setReadOnly(true);
+			editor.getSession().setUseWorker(false);
 			if (document.getElementById("accept").textContent == 'xml') {
 				editor.session.setMode(new XMLMode());
 			} else {
@@ -111,6 +112,8 @@ function getAllConfigurations(func) {
 }
 
 function getConfigurationDetails(func) {
+	$("#statiqueParam").hide();
+	$("#securityDetails").hide();
 	if (func.value != '') {
 		$
 				.ajax({

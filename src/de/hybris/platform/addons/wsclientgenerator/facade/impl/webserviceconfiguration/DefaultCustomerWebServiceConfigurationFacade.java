@@ -164,6 +164,12 @@ public class DefaultCustomerWebServiceConfigurationFacade implements CustomerWeb
 				wsResponse = wsInvoke.postSimulationRequest(cm.getUrl(), params, customerWsConfService.prepareHeadersParams(cm),
 						cm.getAccept(), cm.getContentType());
 			}
+			else if (cm.getMethod().equals(MethodType.PUT))
+			{
+				params.put("body", queryParams);
+				wsResponse = wsInvoke.putSimulationRequest(cm.getUrl(), params, customerWsConfService.prepareHeadersParams(cm),
+						cm.getAccept(), cm.getContentType());
+			}
 		}
 		catch (final InvokeWsException | CreateWsRequestException e)
 		{
