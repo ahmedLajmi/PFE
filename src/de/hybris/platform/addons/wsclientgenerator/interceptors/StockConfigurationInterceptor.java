@@ -7,10 +7,13 @@ import de.hybris.platform.addons.wsclientgenerator.dao.webserviceconfiguration.S
 import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
 import de.hybris.platform.addons.wsclientgenerator.enums.RequestType;
 import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceConfigurationModel;
+import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceParameterModel;
 import de.hybris.platform.servicelayer.i18n.L10NService;
 import de.hybris.platform.servicelayer.interceptor.InterceptorContext;
 import de.hybris.platform.servicelayer.interceptor.InterceptorException;
 import de.hybris.platform.servicelayer.interceptor.ValidateInterceptor;
+
+import java.util.Collection;
 
 import javax.annotation.Resource;
 
@@ -54,9 +57,37 @@ public class StockConfigurationInterceptor implements ValidateInterceptor
 				{
 					throw new InterceptorException(getL10NService().getLocalizedString("empty.contentType"));
 				}
-				else if (stockConfiguration.getContentType().equals(RequestType.XML) && stockConfiguration.getRootKey() == null)
+				if (stockConfiguration.getContentType().equals(RequestType.XML) && stockConfiguration.getRootKey() == null)
 				{
 					throw new InterceptorException(getL10NService().getLocalizedString("empty.rootKey"));
+				}
+			}
+			if (stockConfiguration.getPathParameters() != null && !stockConfiguration.getPathParameters().isEmpty())
+			{
+				if (StringUtils.countMatches(stockConfiguration.getUrl(), "{") > 0)
+				{
+					final Collection<StockWebServiceParameterModel> pathParameters = stockConfiguration.getPathParameters();
+					final int size = pathParameters.size();
+					if (StringUtils.countMatches(stockConfiguration.getUrl(), "{") != StringUtils
+							.countMatches(stockConfiguration.getUrl(), "}")
+							&& StringUtils.countMatches(stockConfiguration.getUrl(), "{") != size)
+					{
+						throw new InterceptorException(getL10NService().getLocalizedString("invalid.pathParameters"));
+					}
+					else
+					{
+						for (final StockWebServiceParameterModel param : pathParameters)
+						{
+							if (!StringUtils.contains(stockConfiguration.getUrl(), "{" + param.getKey() + "}"))
+							{
+								throw new InterceptorException(getL10NService().getLocalizedString("invalid.pathParameters"));
+							}
+						}
+					}
+				}
+				else
+				{
+					throw new InterceptorException(getL10NService().getLocalizedString("invalid.pathParameters"));
 				}
 			}
 		}

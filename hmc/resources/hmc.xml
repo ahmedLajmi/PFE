@@ -19,6 +19,7 @@
 	<explorertree>
 		<group name="wsclientgenerator">
 			<typeref type="WebServiceConfiguration" />
+			
 		</group>
 	</explorertree>
 
@@ -41,6 +42,24 @@
 			</result>
 		</organizer>
 	</type>
+	
+<!-- <type name="WsCall" mode="append">
+		<organizer>
+			<search mode="replace">
+				<condition attribute="configuration" />
+			</search>
+			<result>
+				<listview mode="replace">
+					<itemlayout>
+						<attribute name="requestBody" width="200" />
+						<attribute name="responseBody" width="200" />
+						<attribute name="responseCode" width="200" />
+						<attribute name="time" width="200" />
+					</itemlayout>
+				</listview>
+			</result>
+		</organizer>
+	</type> -->	
 
 	<type name="PriceWebServiceConfiguration" mode="append">
 		<organizer>
@@ -68,6 +87,22 @@
 						</attribute>
 						<attribute name="url" />
 						<attribute name="enable" />
+						<attribute name="pathParameters">
+							<referencecollectioneditor
+								editable="true" externalcreate="false" remove="true"
+								create="true" autosave="true">
+								<itemeditorlayout>
+									<attribute name="key" width="77">
+										<editor
+											classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+											<parameter key="align" value="right" />
+										</editor>
+									</attribute>
+									<attribute name="value" width="80">
+									</attribute>
+								</itemeditorlayout>
+							</referencecollectioneditor>
+						</attribute>
 					</listlayout>
 				</essentials>
 				<tab name="tab.PriceWebServiceConfiguration">
@@ -121,10 +156,6 @@
 									</itemeditorlayout>
 								</referencecollectioneditor>
 							</attribute>
-						</listlayout>
-					</section>
-					<section name="section.perso">
-						<listlayout>
 							<attribute name="personalisedParameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
@@ -149,6 +180,7 @@
 					</section>
 					<section name="section.response">
 						<listlayout>
+							<attribute name="successCode" />
 							<attribute name="responseMapping">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
@@ -202,6 +234,22 @@
 						<attribute name="url" />
 						<attribute name="method" />
 						<attribute name="enable" />
+						<attribute name="pathParameters">
+							<referencecollectioneditor
+								editable="true" externalcreate="false" remove="true"
+								create="true" autosave="true">
+								<itemeditorlayout>
+									<attribute name="key" width="77">
+										<editor
+											classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+											<parameter key="align" value="right" />
+										</editor>
+									</attribute>
+									<attribute name="value" width="80">
+									</attribute>
+								</itemeditorlayout>
+							</referencecollectioneditor>
+						</attribute>
 					</listlayout>
 				</essentials>
 				<tab name="tab.StockWebServiceConfiguration">
@@ -257,10 +305,6 @@
 									</itemeditorlayout>
 								</referencecollectioneditor>
 							</attribute>
-						</listlayout>
-					</section>
-					<section name="section.perso">
-						<listlayout>
 							<attribute name="personalisedParameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
@@ -286,6 +330,7 @@
 					</section>
 					<section name="section.response">
 						<listlayout>
+							<attribute name="successCode" />
 							<attribute name="responseMapping">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
@@ -340,6 +385,22 @@
 						<attribute name="url" />
 						<attribute name="method" />
 						<attribute name="enable" />
+						<attribute name="pathParameters">
+							<referencecollectioneditor
+								editable="true" externalcreate="false" remove="true"
+								create="true" autosave="true">
+								<itemeditorlayout>
+									<attribute name="key" width="77">
+										<editor
+											classname="de.hybris.platform.hmc.attribute.StringEditorChip">
+											<parameter key="align" value="right" />
+										</editor>
+									</attribute>
+									<attribute name="value" width="80">
+									</attribute>
+								</itemeditorlayout>
+							</referencecollectioneditor>
+						</attribute>
 					</listlayout>
 				</essentials>
 				<tab name="tab.OrderWebServiceConfiguration">
@@ -395,10 +456,6 @@
 									</itemeditorlayout>
 								</referencecollectioneditor>
 							</attribute>
-						</listlayout>
-					</section>
-					<section name="section.perso">
-						<listlayout>
 							<attribute name="personalisedParameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
@@ -424,6 +481,7 @@
 					</section>
 					<section name="section.response">
 						<listlayout>
+							<attribute name="successCode" />
 							<attribute name="responseMapping">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
@@ -553,10 +611,6 @@
 									</itemeditorlayout>
 								</referencecollectioneditor>
 							</attribute>
-						</listlayout>
-					</section>
-					<section name="section.perso">
-						<listlayout>
 							<attribute name="personalisedParameters">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"
@@ -582,6 +636,7 @@
 					</section>
 					<section name="section.response">
 						<listlayout>
+							<attribute name="successCode" />
 							<attribute name="responseMapping">
 								<referencecollectioneditor
 									editable="true" externalcreate="false" remove="true"

@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 3 mai 2019 13:04:19                         ---
+ * --- Generated at 6 mai 2019 13:57:02                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -63,6 +63,8 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	public static final String LOGIN = "login";
 	/** Qualifier of the <code>WebServiceConfiguration.password</code> attribute **/
 	public static final String PASSWORD = "password";
+	/** Qualifier of the <code>WebServiceConfiguration.successCode</code> attribute **/
+	public static final String SUCCESSCODE = "successCode";
 	/** Qualifier of the <code>WebServiceConfiguration.personalisedParameters</code> attribute **/
 	public static final String PERSONALISEDPARAMETERS = "personalisedParameters";
 	/** Qualifier of the <code>WebServiceConfiguration.headersParameters</code> attribute **/
@@ -108,6 +110,7 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 		tmp.put(ROOTKEY, AttributeMode.INITIAL);
 		tmp.put(LOGIN, AttributeMode.INITIAL);
 		tmp.put(PASSWORD, AttributeMode.INITIAL);
+		tmp.put(SUCCESSCODE, AttributeMode.INITIAL);
 		DEFAULT_INITIAL_ATTRIBUTES = Collections.unmodifiableMap(tmp);
 	}
 	@Override
@@ -691,6 +694,42 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	public void setRootKey(final String value)
 	{
 		setRootKey( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.successCode</code> attribute.
+	 * @return the successCode
+	 */
+	public String getSuccessCode(final SessionContext ctx)
+	{
+		return (String)getProperty( ctx, SUCCESSCODE);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.successCode</code> attribute.
+	 * @return the successCode
+	 */
+	public String getSuccessCode()
+	{
+		return getSuccessCode( getSession().getSessionContext() );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>WebServiceConfiguration.successCode</code> attribute. 
+	 * @param value the successCode
+	 */
+	public void setSuccessCode(final SessionContext ctx, final String value)
+	{
+		setProperty(ctx, SUCCESSCODE,value);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>WebServiceConfiguration.successCode</code> attribute. 
+	 * @param value the successCode
+	 */
+	public void setSuccessCode(final String value)
+	{
+		setSuccessCode( getSession().getSessionContext(), value );
 	}
 	
 	/**

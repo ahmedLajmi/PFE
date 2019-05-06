@@ -5,14 +5,17 @@ package de.hybris.platform.addons.wsclientgenerator.service.impl.webserviceconfi
 
 import de.hybris.platform.addons.wsclientgenerator.dao.webserviceconfiguration.OrderWebServiceConfigurationDao;
 import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
+import de.hybris.platform.addons.wsclientgenerator.enums.OrderMappingResponse;
 import de.hybris.platform.addons.wsclientgenerator.enums.OrderParameter;
 import de.hybris.platform.addons.wsclientgenerator.model.OrderWebServiceConfigurationModel;
 import de.hybris.platform.addons.wsclientgenerator.model.OrderWebServiceParameterModel;
+import de.hybris.platform.addons.wsclientgenerator.model.OrderWebServiceResponseModel;
 import de.hybris.platform.addons.wsclientgenerator.service.webserviceconfiguration.OrderWebServiceConfigurationService;
 import de.hybris.platform.core.model.order.OrderModel;
 import de.hybris.platform.core.model.user.UserModel;
 import de.hybris.platform.servicelayer.search.FlexibleSearchService;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,5 +110,19 @@ public class DefaultOrderWebServiceConfigurationService extends AbstractWebServi
 		}
 
 		return params;
+	}
+
+	@Override
+	public String getResponseCode(final OrderWebServiceConfigurationModel orderConfiguration)
+	{
+		final Collection<OrderWebServiceResponseModel> mapping = orderConfiguration.getResponseMapping();
+		for (final OrderWebServiceResponseModel item : mapping)
+		{
+			if (item.getValue().equals(OrderMappingResponse.SUCCESSCODE))
+			{
+				return item.getKey();
+			}
+		}
+		return null;
 	}
 }

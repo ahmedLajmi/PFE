@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 3 mai 2019 13:04:19                         ---
+ * --- Generated at 6 mai 2019 13:57:02                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -113,7 +113,7 @@ public class GeneratedWsclientgeneratorConstants
 		{
 			public static final String UID = "uid".intern();
 			public static final String CODE = "code".intern();
-			public static final String SUPERCATEGORIES = "Supercategories".intern();
+			public static final String SUPERCATEGORIES = "supercategories".intern();
 		}
 		public static class RequestType
 		{

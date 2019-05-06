@@ -4,6 +4,7 @@
 package de.hybris.platform.addons.wsclientgenerator.service.impl.webserviceconfiguration;
 
 import de.hybris.platform.addons.wsclientgenerator.dao.webserviceconfiguration.CustomerWebServiceConfigurationDao;
+import de.hybris.platform.addons.wsclientgenerator.enums.CustomerMappingResponse;
 import de.hybris.platform.addons.wsclientgenerator.enums.CustomerParameter;
 import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
 import de.hybris.platform.addons.wsclientgenerator.model.CustomerWebServiceConfigurationModel;
@@ -124,5 +125,19 @@ public class DefaultCustomerWebServiceConfigurationService extends AbstractWebSe
 			callSetter(item.getValue().getCode(), customer, response.get(item.getKey()));
 		}
 		return customer;
+	}
+
+	@Override
+	public String getResponseCode(final CustomerWebServiceConfigurationModel customerConfiguration)
+	{
+		final Collection<CustomerWebServiceResponseModel> mapping = customerConfiguration.getResponseMapping();
+		for (final CustomerWebServiceResponseModel item : mapping)
+		{
+			if (item.getValue().equals(CustomerMappingResponse.SUCCESSCODE))
+			{
+				return item.getKey();
+			}
+		}
+		return null;
 	}
 }

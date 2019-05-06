@@ -35,4 +35,6 @@ public interface CustomerWebServiceConfigurationService extends WebServiceConfig
 	public CustomerData prepareCustomer(final CustomerWebServiceConfigurationModel customerConfiguration,
 			final Map<String, String> response);
 
+	public String getResponseCode(final CustomerWebServiceConfigurationModel customerConfiguration);
+
 }

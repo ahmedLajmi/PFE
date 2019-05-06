@@ -36,4 +36,6 @@ public interface StockWebServiceConfigurationService extends WebServiceConfigura
 	public Map<String, String> prepareDynamicPathParameters(final StockWebServiceConfigurationModel stockConfiguration,
 			final ProductModel product, final UserModel user, String orderCode);
 
+	public String getResponseCode(final StockWebServiceConfigurationModel stockConfiguration);
+
 }

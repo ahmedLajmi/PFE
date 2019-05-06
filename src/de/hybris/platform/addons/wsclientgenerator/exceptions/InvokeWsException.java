@@ -9,6 +9,8 @@ package de.hybris.platform.addons.wsclientgenerator.exceptions;
  */
 public class InvokeWsException extends Exception
 {
+	String code;
+
 	public InvokeWsException()
 	{
 		super();
@@ -17,5 +19,11 @@ public class InvokeWsException extends Exception
 	public InvokeWsException(final String message)
 	{
 		super(message);
+	}
+
+	public InvokeWsException(final String message, final String code)
+	{
+		super(message);
+		this.code = code;
 	}
 }

@@ -5,11 +5,14 @@ package de.hybris.platform.addons.wsclientgenerator.interceptors;
 
 import de.hybris.platform.addons.wsclientgenerator.dao.webserviceconfiguration.PriceWebServiceConfigurationDao;
 import de.hybris.platform.addons.wsclientgenerator.model.PriceWebServiceConfigurationModel;
+import de.hybris.platform.addons.wsclientgenerator.model.PriceWebServiceParameterModel;
 import de.hybris.platform.servicelayer.event.EventService;
 import de.hybris.platform.servicelayer.i18n.L10NService;
 import de.hybris.platform.servicelayer.interceptor.InterceptorContext;
 import de.hybris.platform.servicelayer.interceptor.InterceptorException;
 import de.hybris.platform.servicelayer.interceptor.ValidateInterceptor;
+
+import java.util.Collection;
 
 import javax.annotation.Resource;
 
@@ -48,8 +51,34 @@ public class PriceConfigurationInterceptor implements ValidateInterceptor
 					throw new InterceptorException(getL10NService().getLocalizedString("unique.configuration"));
 				}
 			}
-
-
+			if (priceConfiguration.getPathParameters() != null && !priceConfiguration.getPathParameters().isEmpty())
+			{
+				if (StringUtils.countMatches(priceConfiguration.getUrl(), "{") > 0)
+				{
+					final Collection<PriceWebServiceParameterModel> pathParameters = priceConfiguration.getPathParameters();
+					final int size = pathParameters.size();
+					if (StringUtils.countMatches(priceConfiguration.getUrl(), "{") != StringUtils
+							.countMatches(priceConfiguration.getUrl(), "}")
+							&& StringUtils.countMatches(priceConfiguration.getUrl(), "{") != size)
+					{
+						throw new InterceptorException(getL10NService().getLocalizedString("invalid.pathParameters"));
+					}
+					else
+					{
+						for (final PriceWebServiceParameterModel param : pathParameters)
+						{
+							if (!StringUtils.contains(priceConfiguration.getUrl(), "{" + param.getKey() + "}"))
+							{
+								throw new InterceptorException(getL10NService().getLocalizedString("invalid.pathParameters"));
+							}
+						}
+					}
+				}
+				else
+				{
+					throw new InterceptorException(getL10NService().getLocalizedString("invalid.pathParameters"));
+				}
+			}
 		}
 	}
 

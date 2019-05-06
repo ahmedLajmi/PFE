@@ -39,7 +39,7 @@
 			generate="true" dynamic="true">
 			<value code="uid" />
 			<value code="code" />
-			<value code="Supercategories" />
+			<value code="supercategories" />
 		</enumtype>
 		<enumtype code="OrderParameter" autocreate="true"
 			generate="true" dynamic="true">
@@ -221,6 +221,8 @@
 			<targetElement type="OrderWebServiceResponse"
 				qualifier="responseMapping" cardinality="many" />
 		</relation>
+		
+		
 
 	</relations>
 
@@ -302,13 +304,13 @@
 						optional="true" />
 					<persistence type="property" />
 				</attribute>
+				<attribute type="java.lang.String" qualifier="successCode">
+					<modifiers read="true" write="true" search="true"
+						optional="true" />
+					<persistence type="property" />
+				</attribute>
 			</attributes>
 		</itemtype>
-
-
-
-
-
 
 
 		<itemtype code="WebServiceParameter" autocreate="true"

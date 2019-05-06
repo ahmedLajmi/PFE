@@ -7,10 +7,13 @@ import de.hybris.platform.addons.wsclientgenerator.dao.webserviceconfiguration.O
 import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
 import de.hybris.platform.addons.wsclientgenerator.enums.RequestType;
 import de.hybris.platform.addons.wsclientgenerator.model.OrderWebServiceConfigurationModel;
+import de.hybris.platform.addons.wsclientgenerator.model.OrderWebServiceParameterModel;
 import de.hybris.platform.servicelayer.i18n.L10NService;
 import de.hybris.platform.servicelayer.interceptor.InterceptorContext;
 import de.hybris.platform.servicelayer.interceptor.InterceptorException;
 import de.hybris.platform.servicelayer.interceptor.ValidateInterceptor;
+
+import java.util.Collection;
 
 import javax.annotation.Resource;
 
@@ -54,9 +57,37 @@ public class OrderConfigurationInterceptor implements ValidateInterceptor
 				{
 					throw new InterceptorException(getL10NService().getLocalizedString("empty.contentType"));
 				}
-				else if (orderConfiguration.getContentType().equals(RequestType.XML) && orderConfiguration.getRootKey() == null)
+				if (orderConfiguration.getContentType().equals(RequestType.XML) && orderConfiguration.getRootKey() == null)
 				{
 					throw new InterceptorException(getL10NService().getLocalizedString("empty.rootKey"));
+				}
+			}
+			if (orderConfiguration.getPathParameters() != null && !orderConfiguration.getPathParameters().isEmpty())
+			{
+				if (StringUtils.countMatches(orderConfiguration.getUrl(), "{") > 0)
+				{
+					final Collection<OrderWebServiceParameterModel> pathParameters = orderConfiguration.getPathParameters();
+					final int size = pathParameters.size();
+					if (StringUtils.countMatches(orderConfiguration.getUrl(), "{") != StringUtils
+							.countMatches(orderConfiguration.getUrl(), "}")
+							&& StringUtils.countMatches(orderConfiguration.getUrl(), "{") != size)
+					{
+						throw new InterceptorException(getL10NService().getLocalizedString("invalid.pathParameters"));
+					}
+					else
+					{
+						for (final OrderWebServiceParameterModel param : pathParameters)
+						{
+							if (!StringUtils.contains(orderConfiguration.getUrl(), "{" + param.getKey() + "}"))
+							{
+								throw new InterceptorException(getL10NService().getLocalizedString("invalid.pathParameters"));
+							}
+						}
+					}
+				}
+				else
+				{
+					throw new InterceptorException(getL10NService().getLocalizedString("invalid.pathParameters"));
 				}
 			}
 		}

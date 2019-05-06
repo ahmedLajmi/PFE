@@ -60,13 +60,34 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 			{
 				final Map<String, String> response = wsinvoke.getRequest(customerConfiguration.getUrl(), prepareGetParams(user),
 						customerWsConfService.prepareHeadersParams(customerConfiguration), customerConfiguration.getAccept());
-				// manque test sur code success
+				// test sur code success
+				final String successCode = customerConfiguration.getSuccessCode();
+				final String codeResponse = customerWsConfService.getResponseCode(customerConfiguration);
+				if (successCode != null && codeResponse != null && !successCode.isEmpty())
+				{
+					if (successCode.equalsIgnoreCase(response.get(codeResponse)))
+					{
+						customer = customerWsConfService.prepareCustomer(customerConfiguration, response);
+					}
+					else
+					{
+						/*
+						 * final WsCallModel call = new WsCallModel(); call.setConfiguration(customerConfiguration);
+						 * call.setRequestBody(prepareGetParams(user).toString()); call.setResponseCode(response.toString());
+						 * call.setResponseCode(response.get(codeResponse)); call.setTime(new Date().toString());
+						 */
+					}
+				}
 				customer = customerWsConfService.prepareCustomer(customerConfiguration, response);
 
 			}
 			catch (final InvokeWsException e)
 			{
 				LOG.error(e.getMessage());
+				/*
+				 * final WsCallModel call = new WsCallModel(); call.setConfiguration(customerConfiguration);
+				 * call.setRequestBody(prepareGetParams(user).toString()); call.setTime(new Date().toString());
+				 */
 				if (!customerConfiguration.getMode().equals(ModeType.ONLYWITHWEBSERVICE))
 				{
 					return customer;

@@ -4,14 +4,17 @@
 package de.hybris.platform.addons.wsclientgenerator.service.impl.webserviceconfiguration;
 
 import de.hybris.platform.addons.wsclientgenerator.dao.webserviceconfiguration.PriceWebServiceConfigurationDao;
+import de.hybris.platform.addons.wsclientgenerator.enums.PriceMappingResponse;
 import de.hybris.platform.addons.wsclientgenerator.enums.PriceParameter;
 import de.hybris.platform.addons.wsclientgenerator.model.PriceWebServiceConfigurationModel;
 import de.hybris.platform.addons.wsclientgenerator.model.PriceWebServiceParameterModel;
+import de.hybris.platform.addons.wsclientgenerator.model.PriceWebServiceResponseModel;
 import de.hybris.platform.addons.wsclientgenerator.service.webserviceconfiguration.PriceWebServiceConfigurationService;
 import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.core.model.user.UserModel;
 import de.hybris.platform.servicelayer.search.FlexibleSearchService;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,6 +105,20 @@ public class DefaultPriceWebServiceConfigurationService extends AbstractWebServi
 			}
 		}
 		return params;
+	}
+
+	@Override
+	public String getResponseCode(final PriceWebServiceConfigurationModel priceConfiguration)
+	{
+		final Collection<PriceWebServiceResponseModel> mapping = priceConfiguration.getResponseMapping();
+		for (final PriceWebServiceResponseModel item : mapping)
+		{
+			if (item.getValue().equals(PriceMappingResponse.SUCCESSCODE))
+			{
+				return item.getKey();
+			}
+		}
+		return null;
 	}
 
 

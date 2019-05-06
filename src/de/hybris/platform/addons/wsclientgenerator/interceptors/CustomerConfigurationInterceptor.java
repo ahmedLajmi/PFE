@@ -7,10 +7,13 @@ import de.hybris.platform.addons.wsclientgenerator.dao.webserviceconfiguration.C
 import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
 import de.hybris.platform.addons.wsclientgenerator.enums.RequestType;
 import de.hybris.platform.addons.wsclientgenerator.model.CustomerWebServiceConfigurationModel;
+import de.hybris.platform.addons.wsclientgenerator.model.CustomerWebServiceParameterModel;
 import de.hybris.platform.servicelayer.i18n.L10NService;
 import de.hybris.platform.servicelayer.interceptor.InterceptorContext;
 import de.hybris.platform.servicelayer.interceptor.InterceptorException;
 import de.hybris.platform.servicelayer.interceptor.ValidateInterceptor;
+
+import java.util.Collection;
 
 import javax.annotation.Resource;
 
@@ -35,7 +38,6 @@ public class CustomerConfigurationInterceptor implements ValidateInterceptor
 	{
 		if (model instanceof CustomerWebServiceConfigurationModel)
 		{
-
 			final CustomerWebServiceConfigurationModel customerConfiguration = (CustomerWebServiceConfigurationModel) model;
 
 			if (customerConfiguration.getEnable().booleanValue())
@@ -54,9 +56,37 @@ public class CustomerConfigurationInterceptor implements ValidateInterceptor
 				{
 					throw new InterceptorException(getL10NService().getLocalizedString("empty.contentType"));
 				}
-				else if (customerConfiguration.getContentType().equals(RequestType.XML) && customerConfiguration.getRootKey() == null)
+				if (customerConfiguration.getContentType().equals(RequestType.XML) && customerConfiguration.getRootKey() == null)
 				{
 					throw new InterceptorException(getL10NService().getLocalizedString("empty.rootKey"));
+				}
+			}
+			if (customerConfiguration.getPathParameters() != null && !customerConfiguration.getPathParameters().isEmpty())
+			{
+				if (StringUtils.countMatches(customerConfiguration.getUrl(), "{") > 0)
+				{
+					final Collection<CustomerWebServiceParameterModel> pathParameters = customerConfiguration.getPathParameters();
+					final int size = pathParameters.size();
+					if (StringUtils.countMatches(customerConfiguration.getUrl(), "{") != StringUtils
+							.countMatches(customerConfiguration.getUrl(), "}")
+							&& StringUtils.countMatches(customerConfiguration.getUrl(), "{") != size)
+					{
+						throw new InterceptorException(getL10NService().getLocalizedString("invalid.pathParameters"));
+					}
+					else
+					{
+						for (final CustomerWebServiceParameterModel param : pathParameters)
+						{
+							if (!StringUtils.contains(customerConfiguration.getUrl(), "{" + param.getKey() + "}"))
+							{
+								throw new InterceptorException(getL10NService().getLocalizedString("invalid.pathParameters"));
+							}
+						}
+					}
+				}
+				else
+				{
+					throw new InterceptorException(getL10NService().getLocalizedString("invalid.pathParameters"));
 				}
 			}
 		}

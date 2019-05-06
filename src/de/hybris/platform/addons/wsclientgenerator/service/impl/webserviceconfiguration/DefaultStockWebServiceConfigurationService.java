@@ -5,14 +5,17 @@ package de.hybris.platform.addons.wsclientgenerator.service.impl.webserviceconfi
 
 import de.hybris.platform.addons.wsclientgenerator.dao.webserviceconfiguration.StockWebServiceConfigurationDao;
 import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
+import de.hybris.platform.addons.wsclientgenerator.enums.StockMappingResponse;
 import de.hybris.platform.addons.wsclientgenerator.enums.StockParameter;
 import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceConfigurationModel;
 import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceParameterModel;
+import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceResponseModel;
 import de.hybris.platform.addons.wsclientgenerator.service.webserviceconfiguration.StockWebServiceConfigurationService;
 import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.core.model.user.UserModel;
 import de.hybris.platform.servicelayer.search.FlexibleSearchService;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -168,6 +171,20 @@ public class DefaultStockWebServiceConfigurationService extends AbstractWebServi
 			}
 		}
 		return params;
+	}
+
+	@Override
+	public String getResponseCode(final StockWebServiceConfigurationModel stockConfiguration)
+	{
+		final Collection<StockWebServiceResponseModel> mapping = stockConfiguration.getResponseMapping();
+		for (final StockWebServiceResponseModel item : mapping)
+		{
+			if (item.getValue().equals(StockMappingResponse.SUCCESSCODE))
+			{
+				return item.getKey();
+			}
+		}
+		return null;
 	}
 
 

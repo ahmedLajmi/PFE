@@ -395,6 +395,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 				single_createattr_WebServiceConfiguration_password();
 			
+				single_createattr_WebServiceConfiguration_successCode();
+			
 				single_createattr_WebServiceParameter_key();
 			
 				single_createattr_PersoWSParam_value();
@@ -922,6 +924,23 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 	}
 	
+	public void single_createattr_WebServiceConfiguration_successCode() throws JaloBusinessException
+	{
+		
+						Map sqlColumnDefinitions = null;
+					
+				createPropertyAttribute(
+					"WebServiceConfiguration", 
+					"successCode",  
+					null,
+					"java.lang.String",
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					null,
+					sqlColumnDefinitions
+				);
+			
+	}
+	
 	public void single_createattr_WebServiceParameter_key() throws JaloBusinessException
 	{
 		
@@ -1160,7 +1179,7 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			
 				"uid",
 				"code",
-				"Supercategories"
+				"supercategories"
 			} )
 		);
 	
@@ -1560,6 +1579,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			single_setAttributeProperties_WebServiceConfiguration_login();
 		
 			single_setAttributeProperties_WebServiceConfiguration_password();
+		
+			single_setAttributeProperties_WebServiceConfiguration_successCode();
 		
 				{
 				Map customPropsMap = new HashMap();
@@ -2147,6 +2168,28 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 							setAttributeProperties(
 								"WebServiceConfiguration", 
 								"password",
+								false, 
+								null,
+								null,
+								null,
+								true,
+								true,
+								null,
+								customPropsMap,
+								null
+							);
+						}
+					
+						public void single_setAttributeProperties_WebServiceConfiguration_successCode() throws JaloBusinessException
+						{
+							
+							
+							
+							Map customPropsMap = new HashMap();
+							
+							setAttributeProperties(
+								"WebServiceConfiguration", 
+								"successCode",
 								false, 
 								null,
 								null,

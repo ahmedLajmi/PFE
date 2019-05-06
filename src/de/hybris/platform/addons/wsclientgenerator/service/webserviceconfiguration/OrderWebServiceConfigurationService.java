@@ -30,4 +30,6 @@ public interface OrderWebServiceConfigurationService extends WebServiceConfigura
 	public Map<String, String> prepareDynamicPathParameters(final OrderWebServiceConfigurationModel orderConfiguration,
 			final OrderModel order, final UserModel user);
 
+	public String getResponseCode(final OrderWebServiceConfigurationModel orderConfiguration);
+
 }

@@ -28,4 +28,6 @@ public interface PriceWebServiceConfigurationService extends WebServiceConfigura
 
 	public Map<String, String> prepareDynamicPathParameters(final PriceWebServiceConfigurationModel priceConfiguration,
 			final ProductModel product, UserModel user);
+
+	public String getResponseCode(final PriceWebServiceConfigurationModel priceConfiguration);
 }
