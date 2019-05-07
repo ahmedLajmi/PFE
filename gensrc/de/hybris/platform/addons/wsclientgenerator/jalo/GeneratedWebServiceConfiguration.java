@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 6 mai 2019 13:57:02                         ---
+ * --- Generated at 7 mai 2019 13:12:56                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -20,6 +20,7 @@ package de.hybris.platform.addons.wsclientgenerator.jalo;
 import de.hybris.platform.addons.wsclientgenerator.constants.WsclientgeneratorConstants;
 import de.hybris.platform.addons.wsclientgenerator.jalo.HeaderWSParam;
 import de.hybris.platform.addons.wsclientgenerator.jalo.PersoWSParam;
+import de.hybris.platform.addons.wsclientgenerator.jalo.WSCallHistory;
 import de.hybris.platform.jalo.GenericItem;
 import de.hybris.platform.jalo.Item.AttributeMode;
 import de.hybris.platform.jalo.SessionContext;
@@ -69,6 +70,8 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	public static final String PERSONALISEDPARAMETERS = "personalisedParameters";
 	/** Qualifier of the <code>WebServiceConfiguration.headersParameters</code> attribute **/
 	public static final String HEADERSPARAMETERS = "headersParameters";
+	/** Qualifier of the <code>WebServiceConfiguration.history</code> attribute **/
+	public static final String HISTORY = "history";
 	/**
 	* {@link OneToManyHandler} for handling 1:n PERSONALISEDPARAMETERS's relation attributes from 'many' side.
 	**/
@@ -88,6 +91,18 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	WsclientgeneratorConstants.TC.HEADERWSPARAM,
 	false,
 	"configurationHeader",
+	null,
+	false,
+	true,
+	CollectionType.COLLECTION
+	);
+	/**
+	* {@link OneToManyHandler} for handling 1:n HISTORY's relation attributes from 'many' side.
+	**/
+	protected static final OneToManyHandler<WSCallHistory> HISTORYHANDLER = new OneToManyHandler<WSCallHistory>(
+	WsclientgeneratorConstants.TC.WSCALLHISTORY,
+	false,
+	"configuration",
 	null,
 	false,
 	true,
@@ -370,6 +385,78 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	public void removeFromHeadersParameters(final HeaderWSParam value)
 	{
 		removeFromHeadersParameters( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.history</code> attribute.
+	 * @return the history
+	 */
+	public Collection<WSCallHistory> getHistory(final SessionContext ctx)
+	{
+		return HISTORYHANDLER.getValues( ctx, this );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.history</code> attribute.
+	 * @return the history
+	 */
+	public Collection<WSCallHistory> getHistory()
+	{
+		return getHistory( getSession().getSessionContext() );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>WebServiceConfiguration.history</code> attribute. 
+	 * @param value the history
+	 */
+	public void setHistory(final SessionContext ctx, final Collection<WSCallHistory> value)
+	{
+		HISTORYHANDLER.setValues( ctx, this, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>WebServiceConfiguration.history</code> attribute. 
+	 * @param value the history
+	 */
+	public void setHistory(final Collection<WSCallHistory> value)
+	{
+		setHistory( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Adds <code>value</code> to history. 
+	 * @param value the item to add to history
+	 */
+	public void addToHistory(final SessionContext ctx, final WSCallHistory value)
+	{
+		HISTORYHANDLER.addValue( ctx, this, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Adds <code>value</code> to history. 
+	 * @param value the item to add to history
+	 */
+	public void addToHistory(final WSCallHistory value)
+	{
+		addToHistory( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Removes <code>value</code> from history. 
+	 * @param value the item to remove from history
+	 */
+	public void removeFromHistory(final SessionContext ctx, final WSCallHistory value)
+	{
+		HISTORYHANDLER.removeValue( ctx, this, value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Removes <code>value</code> from history. 
+	 * @param value the item to remove from history
+	 */
+	public void removeFromHistory(final WSCallHistory value)
+	{
+		removeFromHistory( getSession().getSessionContext(), value );
 	}
 	
 	/**

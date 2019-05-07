@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 6 mai 2019 13:57:02                         ---
+ * --- Generated at 7 mai 2019 13:12:56                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -55,6 +55,7 @@ public class GeneratedWsclientgeneratorConstants
 		public static final String STOCKWEBSERVICERESPONSE = "StockWebServiceResponse".intern();
 		public static final String WEBSERVICECONFIGURATION = "WebServiceConfiguration".intern();
 		public static final String WEBSERVICEPARAMETER = "WebServiceParameter".intern();
+		public static final String WSCALLHISTORY = "WSCallHistory".intern();
 	}
 	public static class Attributes
 	{
@@ -153,6 +154,7 @@ public class GeneratedWsclientgeneratorConstants
 		public static final String STOCKWEBSERVICECONFIGURATIONHEADERPARAMETERRELATION = "StockWebServiceConfigurationHeaderParameterRelation".intern();
 		public static final String STOCKWEBSERVICECONFIGURATIONPARAMETERRELATION = "StockWebServiceConfigurationParameterRelation".intern();
 		public static final String STOCKWEBSERVICECONFIGURATIONRESPONSEMAPPINGRRELATION = "StockWebServiceConfigurationResponseMappingrRelation".intern();
+		public static final String WEBSERVICECALLHISTORYRELATION = "WebServiceCallHistoryRelation".intern();
 		public static final String WEBSERVICECONFIGURATIONHEADERSPARAMETERRELATION = "WebServiceConfigurationHeadersParameterRelation".intern();
 		public static final String WEBSERVICECONFIGURATIONPARAMETERRELATION = "WebServiceConfigurationParameterRelation".intern();
 	}

@@ -41,8 +41,14 @@ $('#wsCall').submit(function(e) {
 
 			editor.selectAll();
 			editor.removeLines();
-			editor.insert(data.responseBody);
-
+			try{
+				var o = JSON.parse(data.responseBody) // may throw if json is malformed
+				val = JSON.stringify(o, null, 4) // 4 is the indent size
+				editor.insert(val);
+			}
+			catch(err){
+				editor.insert(data.responseBody);
+			}
 		},
 		error : function(e) {
 			console.log("ERROR: ", e);

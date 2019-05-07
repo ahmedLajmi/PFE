@@ -47,6 +47,11 @@
 		class="de.hybris.platform.addons.wsclientgenerator.service.impl.price.DefaultWsPriceService"
 		parent="netPriceService" />
 
+	<alias alias="calculationService" name="wsCalcultationService" />
+	<bean id="wsCalcultationService"
+		class="de.hybris.platform.addons.wsclientgenerator.service.impl.price.DefaultWsCalculationService"
+		parent="defaultCalculationService" />
+
 	<!-- <alias alias="commerceStockService" name="wsStockService"/> <bean id="wsStockService" 
 		class="de.hybris.platform.addons.wsclientgenerator.stock.impl.WSStockService" 
 		parent="defaultCommerceStockService" /> -->
@@ -116,15 +121,15 @@
 	<bean id="customerWebServiceConfigurationFacade"
 		class="de.hybris.platform.addons.wsclientgenerator.facade.impl.webserviceconfiguration.DefaultCustomerWebServiceConfigurationFacade">
 	</bean>
-	
+
 	<bean id="orderWebServiceConfigurationFacade"
 		class="de.hybris.platform.addons.wsclientgenerator.facade.impl.webserviceconfiguration.DefaultOrderWebServiceConfigurationFacade">
 	</bean>
-	
+
 	<bean id="priceWebServiceConfigurationFacade"
 		class="de.hybris.platform.addons.wsclientgenerator.facade.impl.webserviceconfiguration.DefaultPriceWebServiceConfigurationFacade">
 	</bean>
-	
+
 	<bean id="stockWebServiceConfigurationFacade"
 		class="de.hybris.platform.addons.wsclientgenerator.facade.impl.webserviceconfiguration.DefaultStockWebServiceConfigurationFacade">
 	</bean>
@@ -139,12 +144,12 @@
 		class="de.hybris.platform.addons.wsclientgenerator.interceptors.StockConfigurationInterceptor">
 		<property name="l10NService" ref="l10nService" />
 	</bean>
-	
+
 	<bean id="customerConfigurationInterceptor"
 		class="de.hybris.platform.addons.wsclientgenerator.interceptors.CustomerConfigurationInterceptor">
 		<property name="l10NService" ref="l10nService" />
 	</bean>
-	
+
 	<bean id="orderConfigurationInterceptor"
 		class="de.hybris.platform.addons.wsclientgenerator.interceptors.OrderConfigurationInterceptor">
 		<property name="l10NService" ref="l10nService" />
@@ -165,7 +170,7 @@
 		<property name="typeCode"
 			value="StockWebServiceConfiguration" />
 	</bean>
-	
+
 	<bean id="customerWebServiceConfigurationInterceptor"
 		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
 		<property name="interceptor"
@@ -173,7 +178,7 @@
 		<property name="typeCode"
 			value="CustomerWebServiceConfiguration" />
 	</bean>
-	
+
 	<bean id="orderWebServiceConfigurationInterceptor"
 		class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
 		<property name="interceptor"

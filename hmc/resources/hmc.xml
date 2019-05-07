@@ -19,7 +19,7 @@
 	<explorertree>
 		<group name="wsclientgenerator">
 			<typeref type="WebServiceConfiguration" />
-			
+			<typeref type="WSCallHistory" />
 		</group>
 	</explorertree>
 
@@ -42,8 +42,8 @@
 			</result>
 		</organizer>
 	</type>
-	
-<!-- <type name="WsCall" mode="append">
+
+	<type name="WSCallHistory" mode="append">
 		<organizer>
 			<search mode="replace">
 				<condition attribute="configuration" />
@@ -51,15 +51,18 @@
 			<result>
 				<listview mode="replace">
 					<itemlayout>
-						<attribute name="requestBody" width="200" />
-						<attribute name="responseBody" width="200" />
-						<attribute name="responseCode" width="200" />
-						<attribute name="time" width="200" />
+						<attribute name="confName" width="200" />
+						<attribute name="confMethod" width="50" />
+						<attribute name="requestBody" width="400" />
+						<attribute name="responseBody" width="400" />
+						<attribute name="description" width="400" />
+						<attribute name="responseCode" width="70" />
+						<attribute name="creationTime" width="200" />
 					</itemlayout>
 				</listview>
 			</result>
 		</organizer>
-	</type> -->	
+	</type>
 
 	<type name="PriceWebServiceConfiguration" mode="append">
 		<organizer>

@@ -5,8 +5,10 @@ package de.hybris.platform.addons.wsclientgenerator.service.impl.webserviceconfi
 
 import de.hybris.platform.addons.wsclientgenerator.model.HeaderWSParamModel;
 import de.hybris.platform.addons.wsclientgenerator.model.PersoWSParamModel;
+import de.hybris.platform.addons.wsclientgenerator.model.WSCallHistoryModel;
 import de.hybris.platform.addons.wsclientgenerator.model.WebServiceConfigurationModel;
 import de.hybris.platform.addons.wsclientgenerator.service.webserviceconfiguration.WebServiceConfigurationService;
+import de.hybris.platform.servicelayer.model.ModelService;
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
@@ -14,8 +16,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.annotation.Resource;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -26,6 +31,9 @@ import org.apache.commons.codec.binary.Base64;
  */
 public abstract class AbstractWebServiceConfigurationService implements WebServiceConfigurationService
 {
+
+	@Resource(name = "modelService")
+	private ModelService modelService;
 
 	@Override
 	public Map<String, String> prepareHeadersParams(final WebServiceConfigurationModel configuration)
@@ -58,6 +66,22 @@ public abstract class AbstractWebServiceConfigurationService implements WebServi
 			response.put(param.getKey(), param.getValue());
 		}
 		return response;
+	}
+
+	@Override
+	public void saveCall(final WebServiceConfigurationModel configuration, final String requestBody, final String responseBody,
+			final String responseCode, final String description)
+	{
+		final WSCallHistoryModel call = new WSCallHistoryModel();
+		call.setConfiguration(configuration);
+		call.setConfName(configuration.getName());
+		call.setConfMethod(configuration.getMethod());
+		call.setCreationtime(new Date());
+		call.setRequestBody(requestBody);
+		call.setResponseBody(responseBody);
+		call.setResponseCode(responseCode);
+		call.setDescription(description);
+		modelService.save(call);
 	}
 
 	protected String callGetter(final String field, final Object obj)

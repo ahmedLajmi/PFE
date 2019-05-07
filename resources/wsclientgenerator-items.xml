@@ -187,8 +187,8 @@
 			<targetElement type="CustomerWebServiceParameter"
 				qualifier="pathParameters" cardinality="many" />
 		</relation>
-		
-		
+
+
 		<relation
 			code="CustomerWebServiceConfigurationResponseMappingrRelation"
 			localized="false" generate="true" autocreate="true">
@@ -222,7 +222,16 @@
 				qualifier="responseMapping" cardinality="many" />
 		</relation>
 		
-		
+		<relation
+			code="WebServiceCallHistoryRelation"
+			localized="false" generate="true" autocreate="true">
+			<sourceElement type="WSCallHistory"
+				qualifier="history" cardinality="many" />
+			<targetElement type="WebServiceConfiguration"
+				qualifier="configuration" cardinality="one" />
+		</relation>
+
+
 
 	</relations>
 
@@ -306,7 +315,38 @@
 				</attribute>
 				<attribute type="java.lang.String" qualifier="successCode">
 					<modifiers read="true" write="true" search="true"
-						optional="true" />
+						optional="false" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="WSCallHistory" autocreate="true"
+			generate="true">
+			<deployment table="WebServiceCallHistory" typecode="21123" />
+			<attributes>
+			<attribute qualifier="confName" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="confMethod" type="MethodType">
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="url" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="requestBody" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="responseBody"
+					type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="description"
+					type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="responseCode"
+					type="java.lang.String">
 					<persistence type="property" />
 				</attribute>
 			</attributes>
@@ -334,7 +374,7 @@
 				</attribute>
 			</attributes>
 		</itemtype>
-		
+
 		<itemtype code="HeaderWSParam" autocreate="true"
 			generate="true" extends="WebServiceParameter">
 			<attributes>
@@ -410,8 +450,7 @@
 		<itemtype code="PriceWebServiceResponse" autocreate="true"
 			generate="true" extends="WebServiceParameter">
 			<attributes>
-				<attribute type="PriceMappingResponse"
-					qualifier="value">
+				<attribute type="PriceMappingResponse" qualifier="value">
 					<modifiers read="true" write="true" search="true"
 						optional="false" />
 					<persistence type="property" />
@@ -421,8 +460,7 @@
 		<itemtype code="StockWebServiceResponse" autocreate="true"
 			generate="true" extends="WebServiceParameter">
 			<attributes>
-				<attribute type="StockMappingResponse"
-					qualifier="value">
+				<attribute type="StockMappingResponse" qualifier="value">
 					<modifiers read="true" write="true" search="true"
 						optional="false" />
 					<persistence type="property" />
@@ -432,8 +470,7 @@
 		<itemtype code="OrderWebServiceResponse" autocreate="true"
 			generate="true" extends="WebServiceParameter">
 			<attributes>
-				<attribute type="OrderMappingResponse"
-					qualifier="value">
+				<attribute type="OrderMappingResponse" qualifier="value">
 					<modifiers read="true" write="true" search="true"
 						optional="false" />
 					<persistence type="property" />

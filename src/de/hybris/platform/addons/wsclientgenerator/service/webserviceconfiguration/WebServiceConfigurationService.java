@@ -18,4 +18,6 @@ public interface WebServiceConfigurationService
 
 	public Map<String, String> prepareStaticParams(WebServiceConfigurationModel configuration);
 
+	public void saveCall(final WebServiceConfigurationModel configuration, final String requestBody, final String responseBody,
+			final String responseCode, final String description);
 }

@@ -391,7 +391,7 @@ public class WSInvoke
 				final Node node = nodeList.item(i);
 				if (node.getNodeType() == Node.ELEMENT_NODE)
 				{
-					map.put(node.getNodeName(), node.getTextContent());
+					map.put(node.getNodeName(), node.getTextContent().toString());
 				}
 			}
 			return map;

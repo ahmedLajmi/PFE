@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 6 mai 2019 13:57:02                         ---
+ * --- Generated at 7 mai 2019 13:12:56                         ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -32,6 +32,7 @@ import de.hybris.platform.addons.wsclientgenerator.jalo.PriceWebServiceResponse;
 import de.hybris.platform.addons.wsclientgenerator.jalo.StockWebServiceConfiguration;
 import de.hybris.platform.addons.wsclientgenerator.jalo.StockWebServiceParameter;
 import de.hybris.platform.addons.wsclientgenerator.jalo.StockWebServiceResponse;
+import de.hybris.platform.addons.wsclientgenerator.jalo.WSCallHistory;
 import de.hybris.platform.jalo.Item;
 import de.hybris.platform.jalo.Item.AttributeMode;
 import de.hybris.platform.jalo.JaloBusinessException;
@@ -429,6 +430,32 @@ public abstract class GeneratedWsclientgeneratorManager extends Extension
 	public StockWebServiceResponse createStockWebServiceResponse(final Map attributeValues)
 	{
 		return createStockWebServiceResponse( getSession().getSessionContext(), attributeValues );
+	}
+	
+	public WSCallHistory createWSCallHistory(final SessionContext ctx, final Map attributeValues)
+	{
+		try
+		{
+			ComposedType type = getTenant().getJaloConnection().getTypeManager().getComposedType( WsclientgeneratorConstants.TC.WSCALLHISTORY );
+			return (WSCallHistory)type.newInstance( ctx, attributeValues );
+		}
+		catch( JaloGenericCreationException e)
+		{
+			final Throwable cause = e.getCause();
+			throw (cause instanceof RuntimeException ?
+			(RuntimeException)cause
+			:
+			new JaloSystemException( cause, cause.getMessage(), e.getErrorCode() ) );
+		}
+		catch( JaloBusinessException e )
+		{
+			throw new JaloSystemException( e ,"error creating WSCallHistory : "+e.getMessage(), 0 );
+		}
+	}
+	
+	public WSCallHistory createWSCallHistory(final Map attributeValues)
+	{
+		return createWSCallHistory( getSession().getSessionContext(), attributeValues );
 	}
 	
 	@Override

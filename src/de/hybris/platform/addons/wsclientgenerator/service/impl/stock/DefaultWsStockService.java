@@ -63,6 +63,11 @@ public class DefaultWsStockService extends DefaultCommerceStockService implement
 			catch (final InvokeWsException e)
 			{
 				LOG.error(e.getMessage());
+				if (!e.getMessage().isEmpty())
+				{
+					stockWsConfigService.saveCall(stockConfiguration, prepareGetParams(stockConfiguration, product).toString(), null,
+							null, e.getMessage());
+				}
 				if (!stockConfiguration.getMode().equals(ModeType.ONLYWITHWEBSERVICE))
 				{
 					return super.getStockLevelForProductAndBaseStore(product, baseStore);
@@ -93,6 +98,11 @@ public class DefaultWsStockService extends DefaultCommerceStockService implement
 			catch (final InvokeWsException e)
 			{
 				LOG.error(e.getMessage());
+				if (!e.getMessage().isEmpty())
+				{
+					stockWsConfigService.saveCall(stockConfiguration, prepareGetParams(stockConfiguration, product).toString(), null,
+							null, e.getMessage());
+				}
 				if (!stockConfiguration.getMode().equals(ModeType.ONLYWITHWEBSERVICE))
 				{
 					return super.getStockLevelForProductAndPointOfService(product, pointOfService);
@@ -113,19 +123,29 @@ public class DefaultWsStockService extends DefaultCommerceStockService implement
 				prepareGetParams(stockConfiguration, product), stockWsConfigService.prepareHeadersParams(stockConfiguration),
 				stockConfiguration.getAccept());
 
-		for (final StockWebServiceResponseModel item : stockConfiguration.getResponseMapping())
+		final String successCode = stockConfiguration.getSuccessCode();
+		final String codeResponse = stockWsConfigService.getResponseCode(stockConfiguration);
+		if (codeResponse != null && successCode.equalsIgnoreCase(response.get(codeResponse).toString()))
 		{
-			if (item.getValue().equals(StockMappingResponse.STOCKVALUE))
+			for (final StockWebServiceResponseModel item : stockConfiguration.getResponseMapping())
 			{
-				final String value = String.valueOf(response.get(item.getKey()));
-				stock = new Long(StringUtils.replaceEach(value, new String[]
-				{ "\n", " " }, new String[]
-				{ "", "" }));
+				if (item.getValue().equals(StockMappingResponse.STOCKVALUE))
+				{
+					final String value = String.valueOf(response.get(item.getKey()));
+					stock = new Long(StringUtils.replaceEach(value, new String[]
+					{ "\n", " " }, new String[]
+					{ "", "" }));
+				}
 			}
+
+			return stock;
 		}
-
-		return stock;
-
+		else
+		{
+			stockWsConfigService.saveCall(stockConfiguration, prepareGetParams(stockConfiguration, product).toString(),
+					response.toString(), response.get(codeResponse), "Response code mismatch");
+			throw new InvokeWsException("");
+		}
 	}
 
 	@Override

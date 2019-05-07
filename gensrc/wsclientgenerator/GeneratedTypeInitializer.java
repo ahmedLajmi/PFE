@@ -57,6 +57,16 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 		);
 	
 		createItemType(
+			"WSCallHistory",
+			"GenericItem",
+			de.hybris.platform.addons.wsclientgenerator.jalo.WSCallHistory.class,
+			"de.hybris.platform.persistence.wsclientgenerator_WSCallHistory",
+			false,
+			null,
+			false
+		);
+	
+		createItemType(
 			"WebServiceParameter",
 			"GenericItem",
 			de.hybris.platform.addons.wsclientgenerator.jalo.WebServiceParameter.class,
@@ -290,6 +300,12 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			true
 		);
 	
+		createRelationType(
+			"WebServiceCallHistoryRelation",
+			null,
+			true
+		);
+	
 		createEnumerationType(
 			"RequestType",
 			null
@@ -396,6 +412,20 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				single_createattr_WebServiceConfiguration_password();
 			
 				single_createattr_WebServiceConfiguration_successCode();
+			
+				single_createattr_WSCallHistory_confName();
+			
+				single_createattr_WSCallHistory_confMethod();
+			
+				single_createattr_WSCallHistory_url();
+			
+				single_createattr_WSCallHistory_requestBody();
+			
+				single_createattr_WSCallHistory_responseBody();
+			
+				single_createattr_WSCallHistory_description();
+			
+				single_createattr_WSCallHistory_responseCode();
 			
 				single_createattr_WebServiceParameter_key();
 			
@@ -699,6 +729,26 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			CollectionType.COLLECTION
 		);
 	
+		createRelationAttributes(
+			"WebServiceCallHistoryRelation", 
+			false, 
+
+			"history", 
+			"WSCallHistory", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			false,
+			CollectionType.COLLECTION,
+			"configuration", 
+			"WebServiceConfiguration", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			false,
+			false,
+			CollectionType.COLLECTION
+		);
+	
 
 	}
 
@@ -932,6 +982,125 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				createPropertyAttribute(
 					"WebServiceConfiguration", 
 					"successCode",  
+					null,
+					"java.lang.String",
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					null,
+					sqlColumnDefinitions
+				);
+			
+	}
+	
+	public void single_createattr_WSCallHistory_confName() throws JaloBusinessException
+	{
+		
+						Map sqlColumnDefinitions = null;
+					
+				createPropertyAttribute(
+					"WSCallHistory", 
+					"confName",  
+					null,
+					"java.lang.String",
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					null,
+					sqlColumnDefinitions
+				);
+			
+	}
+	
+	public void single_createattr_WSCallHistory_confMethod() throws JaloBusinessException
+	{
+		
+						Map sqlColumnDefinitions = null;
+					
+				createPropertyAttribute(
+					"WSCallHistory", 
+					"confMethod",  
+					null,
+					"MethodType",
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					null,
+					sqlColumnDefinitions
+				);
+			
+	}
+	
+	public void single_createattr_WSCallHistory_url() throws JaloBusinessException
+	{
+		
+						Map sqlColumnDefinitions = null;
+					
+				createPropertyAttribute(
+					"WSCallHistory", 
+					"url",  
+					null,
+					"java.lang.String",
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					null,
+					sqlColumnDefinitions
+				);
+			
+	}
+	
+	public void single_createattr_WSCallHistory_requestBody() throws JaloBusinessException
+	{
+		
+						Map sqlColumnDefinitions = null;
+					
+				createPropertyAttribute(
+					"WSCallHistory", 
+					"requestBody",  
+					null,
+					"java.lang.String",
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					null,
+					sqlColumnDefinitions
+				);
+			
+	}
+	
+	public void single_createattr_WSCallHistory_responseBody() throws JaloBusinessException
+	{
+		
+						Map sqlColumnDefinitions = null;
+					
+				createPropertyAttribute(
+					"WSCallHistory", 
+					"responseBody",  
+					null,
+					"java.lang.String",
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					null,
+					sqlColumnDefinitions
+				);
+			
+	}
+	
+	public void single_createattr_WSCallHistory_description() throws JaloBusinessException
+	{
+		
+						Map sqlColumnDefinitions = null;
+					
+				createPropertyAttribute(
+					"WSCallHistory", 
+					"description",  
+					null,
+					"java.lang.String",
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					null,
+					sqlColumnDefinitions
+				);
+			
+	}
+	
+	public void single_createattr_WSCallHistory_responseCode() throws JaloBusinessException
+	{
+		
+						Map sqlColumnDefinitions = null;
+					
+				createPropertyAttribute(
+					"WSCallHistory", 
+					"responseCode",  
 					null,
 					"java.lang.String",
 					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
@@ -1303,6 +1472,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 	
 		single_setRelAttributeProperties_OrderWebServiceConfigurationResponseMappingrRelation_source();
 	
+		single_setRelAttributeProperties_WebServiceCallHistoryRelation_source();
+	
 		single_setRelAttributeProperties_WebServiceConfigurationParameterRelation_target();
 	
 		single_setRelAttributeProperties_WebServiceConfigurationHeadersParameterRelation_target();
@@ -1330,6 +1501,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 		single_setRelAttributeProperties_StockWebServiceConfigurationResponseMappingrRelation_target();
 	
 		single_setRelAttributeProperties_OrderWebServiceConfigurationResponseMappingrRelation_target();
+	
+		single_setRelAttributeProperties_WebServiceCallHistoryRelation_target();
 	
 		connectRelation(
 			"WebServiceConfigurationParameterRelation", 
@@ -1541,6 +1714,21 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			true
 		);
 	
+		connectRelation(
+			"WebServiceCallHistoryRelation", 
+			false, 
+			"history", 
+			"WSCallHistory", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			"configuration", 
+			"WebServiceConfiguration", 
+			true,
+			de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG, 
+			true,
+			true
+		);
+	
 				{
 				Map customPropsMap = new HashMap();
 				
@@ -1581,6 +1769,33 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 			single_setAttributeProperties_WebServiceConfiguration_password();
 		
 			single_setAttributeProperties_WebServiceConfiguration_successCode();
+		
+				{
+				Map customPropsMap = new HashMap();
+				
+				setItemTypeProperties(
+					"WSCallHistory",
+					false,
+					true,
+					true,
+					null,
+					customPropsMap
+				);
+				}
+			
+			single_setAttributeProperties_WSCallHistory_confName();
+		
+			single_setAttributeProperties_WSCallHistory_confMethod();
+		
+			single_setAttributeProperties_WSCallHistory_url();
+		
+			single_setAttributeProperties_WSCallHistory_requestBody();
+		
+			single_setAttributeProperties_WSCallHistory_responseBody();
+		
+			single_setAttributeProperties_WSCallHistory_description();
+		
+			single_setAttributeProperties_WSCallHistory_responseCode();
 		
 				{
 				Map customPropsMap = new HashMap();
@@ -2190,6 +2405,160 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 							setAttributeProperties(
 								"WebServiceConfiguration", 
 								"successCode",
+								false, 
+								null,
+								null,
+								null,
+								true,
+								true,
+								null,
+								customPropsMap,
+								null
+							);
+						}
+					
+						public void single_setAttributeProperties_WSCallHistory_confName() throws JaloBusinessException
+						{
+							
+							
+							
+							Map customPropsMap = new HashMap();
+							
+							setAttributeProperties(
+								"WSCallHistory", 
+								"confName",
+								false, 
+								null,
+								null,
+								null,
+								true,
+								true,
+								null,
+								customPropsMap,
+								null
+							);
+						}
+					
+						public void single_setAttributeProperties_WSCallHistory_confMethod() throws JaloBusinessException
+						{
+							
+							
+							
+							Map customPropsMap = new HashMap();
+							
+							setAttributeProperties(
+								"WSCallHistory", 
+								"confMethod",
+								false, 
+								null,
+								null,
+								null,
+								true,
+								true,
+								null,
+								customPropsMap,
+								null
+							);
+						}
+					
+						public void single_setAttributeProperties_WSCallHistory_url() throws JaloBusinessException
+						{
+							
+							
+							
+							Map customPropsMap = new HashMap();
+							
+							setAttributeProperties(
+								"WSCallHistory", 
+								"url",
+								false, 
+								null,
+								null,
+								null,
+								true,
+								true,
+								null,
+								customPropsMap,
+								null
+							);
+						}
+					
+						public void single_setAttributeProperties_WSCallHistory_requestBody() throws JaloBusinessException
+						{
+							
+							
+							
+							Map customPropsMap = new HashMap();
+							
+							setAttributeProperties(
+								"WSCallHistory", 
+								"requestBody",
+								false, 
+								null,
+								null,
+								null,
+								true,
+								true,
+								null,
+								customPropsMap,
+								null
+							);
+						}
+					
+						public void single_setAttributeProperties_WSCallHistory_responseBody() throws JaloBusinessException
+						{
+							
+							
+							
+							Map customPropsMap = new HashMap();
+							
+							setAttributeProperties(
+								"WSCallHistory", 
+								"responseBody",
+								false, 
+								null,
+								null,
+								null,
+								true,
+								true,
+								null,
+								customPropsMap,
+								null
+							);
+						}
+					
+						public void single_setAttributeProperties_WSCallHistory_description() throws JaloBusinessException
+						{
+							
+							
+							
+							Map customPropsMap = new HashMap();
+							
+							setAttributeProperties(
+								"WSCallHistory", 
+								"description",
+								false, 
+								null,
+								null,
+								null,
+								true,
+								true,
+								null,
+								customPropsMap,
+								null
+							);
+						}
+					
+						public void single_setAttributeProperties_WSCallHistory_responseCode() throws JaloBusinessException
+						{
+							
+							
+							
+							Map customPropsMap = new HashMap();
+							
+							setAttributeProperties(
+								"WSCallHistory", 
+								"responseCode",
 								false, 
 								null,
 								null,
@@ -3020,6 +3389,48 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 									setAttributeProperties(
 										"OrderWebServiceConfiguration", 
 										"responseMapping",
+										false, 
+										null,
+										null,
+										null,
+										true,
+										true,
+										null,
+										customPropsMap,
+										null
+									);
+								}
+							
+								public void single_setRelAttributeProperties_WebServiceCallHistoryRelation_source() throws JaloBusinessException
+								{
+									
+									Map customPropsMap = new HashMap();
+									
+
+									setAttributeProperties(
+										"WebServiceConfiguration", 
+										"history",
+										false, 
+										null,
+										null,
+										null,
+										true,
+										true,
+										null,
+										customPropsMap,
+										null
+									);
+								}
+							
+								public void single_setRelAttributeProperties_WebServiceCallHistoryRelation_target() throws JaloBusinessException
+								{
+									
+									Map customPropsMap = new HashMap();
+									
+
+									setAttributeProperties(
+										"WSCallHistory", 
+										"configuration",
 										false, 
 										null,
 										null,

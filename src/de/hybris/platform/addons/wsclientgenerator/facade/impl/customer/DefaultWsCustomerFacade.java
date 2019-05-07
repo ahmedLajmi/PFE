@@ -63,31 +63,33 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 				// test sur code success
 				final String successCode = customerConfiguration.getSuccessCode();
 				final String codeResponse = customerWsConfService.getResponseCode(customerConfiguration);
-				if (successCode != null && codeResponse != null && !successCode.isEmpty())
+				if (codeResponse != null && successCode.equalsIgnoreCase(response.get(codeResponse).toString()))
 				{
-					if (successCode.equalsIgnoreCase(response.get(codeResponse)))
+					customer = customerWsConfService.prepareCustomer(customerConfiguration, response);
+				}
+				else
+				{
+					customerWsConfService.saveCall(customerConfiguration, prepareGetParams(user).toString(), response.toString(),
+							response.get(codeResponse), "Response code mismatch");
+					if (!customerConfiguration.getMode().equals(ModeType.ONLYWITHWEBSERVICE))
 					{
-						customer = customerWsConfService.prepareCustomer(customerConfiguration, response);
+						return customer;
 					}
 					else
 					{
-						/*
-						 * final WsCallModel call = new WsCallModel(); call.setConfiguration(customerConfiguration);
-						 * call.setRequestBody(prepareGetParams(user).toString()); call.setResponseCode(response.toString());
-						 * call.setResponseCode(response.get(codeResponse)); call.setTime(new Date().toString());
-						 */
+						customer.setFirstName("");
+						customer.setLastName("");
+						customer.setDisplayUid("");
+						customer.setTitle("");
+						customer.setTitleCode("");
+						return customer;
 					}
 				}
-				customer = customerWsConfService.prepareCustomer(customerConfiguration, response);
-
 			}
 			catch (final InvokeWsException e)
 			{
 				LOG.error(e.getMessage());
-				/*
-				 * final WsCallModel call = new WsCallModel(); call.setConfiguration(customerConfiguration);
-				 * call.setRequestBody(prepareGetParams(user).toString()); call.setTime(new Date().toString());
-				 */
+				customerWsConfService.saveCall(customerConfiguration, prepareGetParams(user).toString(), null, null, e.getMessage());
 				if (!customerConfiguration.getMode().equals(ModeType.ONLYWITHWEBSERVICE))
 				{
 					return customer;
