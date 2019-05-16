@@ -11,8 +11,8 @@ import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceConfigur
 import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceResponseModel;
 import de.hybris.platform.addons.wsclientgenerator.service.impl.price.DefaultWsPriceService;
 import de.hybris.platform.addons.wsclientgenerator.service.stock.WSStockService;
+import de.hybris.platform.addons.wsclientgenerator.service.tools.WsInvokeService;
 import de.hybris.platform.addons.wsclientgenerator.service.webserviceconfiguration.StockWebServiceConfigurationService;
-import de.hybris.platform.addons.wsclientgenerator.tools.WSInvoke;
 import de.hybris.platform.commerceservices.stock.impl.DefaultCommerceStockService;
 import de.hybris.platform.core.model.product.ProductModel;
 import de.hybris.platform.core.model.user.UserModel;
@@ -42,6 +42,9 @@ public class DefaultWsStockService extends DefaultCommerceStockService implement
 	@Resource(name = "userService")
 	private UserService userService;
 
+	@Resource(name = "wsInvokeService")
+	WsInvokeService wsInvoke;
+
 	private StockWebServiceConfigurationModel stockConfiguration;
 
 	private static final Logger LOG = Logger.getLogger(DefaultWsPriceService.class);
@@ -65,8 +68,8 @@ public class DefaultWsStockService extends DefaultCommerceStockService implement
 				LOG.error(e.getMessage());
 				if (!e.getMessage().isEmpty())
 				{
-					stockWsConfigService.saveCall(stockConfiguration, prepareGetParams(stockConfiguration, product).toString(), null,
-							null, e.getMessage());
+					stockWsConfigService.saveCall(stockConfiguration, prepareGetParams(product).toString(), null, null,
+							e.getMessage());
 				}
 				if (!stockConfiguration.getMode().equals(ModeType.ONLYWITHWEBSERVICE))
 				{
@@ -100,8 +103,8 @@ public class DefaultWsStockService extends DefaultCommerceStockService implement
 				LOG.error(e.getMessage());
 				if (!e.getMessage().isEmpty())
 				{
-					stockWsConfigService.saveCall(stockConfiguration, prepareGetParams(stockConfiguration, product).toString(), null,
-							null, e.getMessage());
+					stockWsConfigService.saveCall(stockConfiguration, prepareGetParams(product).toString(), null, null,
+							e.getMessage());
 				}
 				if (!stockConfiguration.getMode().equals(ModeType.ONLYWITHWEBSERVICE))
 				{
@@ -117,11 +120,9 @@ public class DefaultWsStockService extends DefaultCommerceStockService implement
 
 	private Long wsTreatment(final ProductModel product) throws InvokeWsException
 	{
-		final WSInvoke wsinvoke = new WSInvoke();
 		Long stock = new Long(0);
-		final Map<String, String> response = wsinvoke.getRequest(stockConfiguration.getUrl(),
-				prepareGetParams(stockConfiguration, product), stockWsConfigService.prepareHeadersParams(stockConfiguration),
-				stockConfiguration.getAccept());
+		final Map<String, String> response = wsInvoke.getRequest(stockConfiguration.getUrl(), prepareGetParams(product),
+				stockWsConfigService.prepareHeadersParams(stockConfiguration), stockConfiguration.getAccept());
 
 		final String successCode = stockConfiguration.getSuccessCode();
 		final String codeResponse = stockWsConfigService.getResponseCode(stockConfiguration);
@@ -142,15 +143,14 @@ public class DefaultWsStockService extends DefaultCommerceStockService implement
 		}
 		else
 		{
-			stockWsConfigService.saveCall(stockConfiguration, prepareGetParams(stockConfiguration, product).toString(),
-					response.toString(), response.get(codeResponse), "Response code mismatch");
+			stockWsConfigService.saveCall(stockConfiguration, prepareGetParams(product).toString(), response.toString(),
+					response.get(codeResponse), "Response code mismatch");
 			throw new InvokeWsException("");
 		}
 	}
 
 	@Override
-	public Map<String, Map<String, String>> prepareGetParams(final StockWebServiceConfigurationModel stockConfiguration,
-			final ProductModel product)
+	public Map<String, Map<String, String>> prepareGetParams(final ProductModel product)
 	{
 		final Map<String, Map<String, String>> params = new HashMap<>();
 		UserModel user = null;

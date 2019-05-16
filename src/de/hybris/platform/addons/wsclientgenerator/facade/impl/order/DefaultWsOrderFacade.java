@@ -12,8 +12,8 @@ import de.hybris.platform.addons.wsclientgenerator.facade.impl.customer.DefaultW
 import de.hybris.platform.addons.wsclientgenerator.facade.order.WSOrderFacade;
 import de.hybris.platform.addons.wsclientgenerator.model.OrderWebServiceConfigurationModel;
 import de.hybris.platform.addons.wsclientgenerator.model.OrderWebServiceResponseModel;
+import de.hybris.platform.addons.wsclientgenerator.service.tools.WsInvokeService;
 import de.hybris.platform.addons.wsclientgenerator.service.webserviceconfiguration.OrderWebServiceConfigurationService;
-import de.hybris.platform.addons.wsclientgenerator.tools.WSInvoke;
 import de.hybris.platform.commercefacades.order.data.OrderData;
 import de.hybris.platform.commercefacades.order.data.OrderHistoryData;
 import de.hybris.platform.commercefacades.order.impl.DefaultOrderFacade;
@@ -58,6 +58,9 @@ public class DefaultWsOrderFacade extends DefaultOrderFacade implements WSOrderF
 
 	@Resource(name = "enumerationService")
 	private EnumerationService enumerationService;
+
+	@Resource(name = "wsInvokeService")
+	WsInvokeService wsInvoke;
 
 	private static final Logger LOG = Logger.getLogger(DefaultWsCustomerFacade.class);
 
@@ -188,7 +191,6 @@ public class DefaultWsOrderFacade extends DefaultOrderFacade implements WSOrderF
 	@Override
 	public String WsGetStatusCode(final OrderModel order) throws ParseWsResponseException, InvokeWsException
 	{
-		final WSInvoke wsInvoke = new WSInvoke();
 		final Map<String, String> response = wsInvoke.getRequest(orderConfiguration.getUrl(), prepareGetParams(order),
 				orderWsConfService.prepareHeadersParams(orderConfiguration), orderConfiguration.getAccept());
 

@@ -14,6 +14,28 @@ jQuery(document).ready(
 			});
 		});
 
+function download(filename, text, type) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:'+type+'/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+}
+
+$("#submitDownload").click(
+		function() {
+			var text = document.getElementById("responseText").value;
+		    var filename = document.getElementById("responseName").value;
+		    var type = document.getElementById("responseType").value;;
+		    
+		    download(filename, text,type);
+		});
+
 $('#wsCall').submit(function(e) {
 	e.preventDefault();
 	console.log($(this).serialize());
@@ -26,6 +48,7 @@ $('#wsCall').submit(function(e) {
 		timeout : 100000,
 		success : function(data) {
 			console.log("SUCCESS: ", data);
+			$('#submitDownload').show();
 			$('#response').show();
 			var editor = ace.edit("editor");
 			var XMLMode = ace.require("ace/mode/xml").Mode;
@@ -33,21 +56,27 @@ $('#wsCall').submit(function(e) {
 			editor.setTheme("ace/theme/twilight");
 			editor.setReadOnly(true);
 			editor.getSession().setUseWorker(false);
-			if (document.getElementById("accept").textContent == 'xml') {
+			if (document.getElementById("accept").textContent == 'XML') {
 				editor.session.setMode(new XMLMode());
+				$('#responseName').val('Response.xml');
+				$('#responseType').val('xml');
 			} else {
 				editor.session.setMode(new JSONMode());
+				$('#responseName').val('Response.json');
+				$('#responseType').val('json');
 			}
 
 			editor.selectAll();
 			editor.removeLines();
-			try{
-				var o = JSON.parse(data.responseBody) // may throw if json is malformed
+			try {
+				var o = JSON.parse(data.responseBody) // may throw if json is
+														// malformed
 				val = JSON.stringify(o, null, 4) // 4 is the indent size
 				editor.insert(val);
-			}
-			catch(err){
+				$('#responseText').val(val);
+			} catch (err) {
 				editor.insert(data.responseBody);
+				$('#responseText').val(data.responseBody);
 			}
 		},
 		error : function(e) {
@@ -71,6 +100,7 @@ function getAllConfigurations(func) {
 		$("#pathParameters").empty();
 		$('#submit').hide();
 		$('#response').hide();
+		$('#submitDownload').hide();
 		$
 				.ajax({
 					type : "POST",
@@ -113,6 +143,7 @@ function getAllConfigurations(func) {
 		$('#submit').hide();
 		$('#securityDetails').hide();
 		$("#statiqueParam").hide();
+		$('#submitDownload').hide();
 	}
 
 }
@@ -120,6 +151,7 @@ function getAllConfigurations(func) {
 function getConfigurationDetails(func) {
 	$("#statiqueParam").hide();
 	$("#securityDetails").hide();
+	$('#submitDownload').hide();
 	if (func.value != '') {
 		$
 				.ajax({
@@ -205,12 +237,10 @@ function getConfigurationDetails(func) {
 									&& $("#div_queryParam").is(":visible")) {
 								document.getElementById("div_headerParam").className = "col-sm-5"
 								document.getElementById("div_queryParam").className = "col-sm-5"
-							} 
-							else if ($("#div_headerParam").is(":visible")
+							} else if ($("#div_headerParam").is(":visible")
 									&& !$("#div_queryParam").is(":visible")) {
 								document.getElementById("div_headerParam").className = "col-sm-10"
-							}
-							else if (!$("#div_headerParam").is(":visible")
+							} else if (!$("#div_headerParam").is(":visible")
 									&& $("#div_queryParam").is(":visible")) {
 								document.getElementById("div_queryParam").className = "col-sm-10"
 							}
@@ -273,6 +303,7 @@ function getConfigurationDetails(func) {
 		$('#submit').hide();
 		$('#securityDetails').hide();
 		$("#statiqueParam").hide();
+		$('#submitDownload').hide();
 	}
 
 }

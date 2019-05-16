@@ -243,6 +243,11 @@
 		<itemtype code="WebServiceConfiguration" autocreate="true"
 			generate="true" abstract="true">
 			<attributes>
+				<attribute type="java.lang.String" qualifier="code">
+					<modifiers read="true" write="true" search="true"
+						optional="true" />
+					<persistence type="property" />
+				</attribute>
 				<attribute type="java.lang.String" qualifier="name">
 					<modifiers read="true" write="true" search="true"
 						optional="false" />

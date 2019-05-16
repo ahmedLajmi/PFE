@@ -9,8 +9,8 @@ import de.hybris.platform.addons.wsclientgenerator.exceptions.InvokeWsException;
 import de.hybris.platform.addons.wsclientgenerator.model.PriceWebServiceConfigurationModel;
 import de.hybris.platform.addons.wsclientgenerator.model.PriceWebServiceResponseModel;
 import de.hybris.platform.addons.wsclientgenerator.service.price.WSPriceService;
+import de.hybris.platform.addons.wsclientgenerator.service.tools.WsInvokeService;
 import de.hybris.platform.addons.wsclientgenerator.service.webserviceconfiguration.PriceWebServiceConfigurationService;
-import de.hybris.platform.addons.wsclientgenerator.tools.WSInvoke;
 import de.hybris.platform.commercefacades.storesession.StoreSessionFacade;
 import de.hybris.platform.commercefacades.storesession.data.CurrencyData;
 import de.hybris.platform.commerceservices.price.impl.NetPriceService;
@@ -51,6 +51,9 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 	@Resource(name = "storeSessionFacade")
 	private StoreSessionFacade storeSessionFacade;
 
+	@Resource(name = "wsInvokeService")
+	WsInvokeService wsInvoke;
+
 	private PriceWebServiceConfigurationModel priceConfiguration;
 
 	private static final Logger LOG = Logger.getLogger(DefaultWsPriceService.class);
@@ -70,12 +73,10 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 			PriceInformation priceInfo;
 			String currency = "EUR";
 			double value = 0;
-			final WSInvoke wsinvoke = new WSInvoke();
 			try
 			{
-				final Map<String, String> response = wsinvoke.getRequest(priceConfiguration.getUrl(),
-						prepareGetParams(priceConfiguration, model), priceWsConfService.prepareHeadersParams(priceConfiguration),
-						priceConfiguration.getAccept());
+				final Map<String, String> response = wsInvoke.getRequest(priceConfiguration.getUrl(), prepareGetParams(model),
+						priceWsConfService.prepareHeadersParams(priceConfiguration), priceConfiguration.getAccept());
 
 				final String successCode = priceConfiguration.getSuccessCode();
 				final String codeResponse = priceWsConfService.getResponseCode(priceConfiguration);
@@ -98,8 +99,8 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 				}
 				else
 				{
-					priceWsConfService.saveCall(priceConfiguration, prepareGetParams(priceConfiguration, model).toString(),
-							response.toString(), response.get(codeResponse), "Response code mismatch");
+					priceWsConfService.saveCall(priceConfiguration, prepareGetParams(model).toString(), response.toString(),
+							response.get(codeResponse), "Response code mismatch");
 					if (!priceConfiguration.getMode().equals(ModeType.ONLYWITHWEBSERVICE))
 					{
 						return super.getPriceInformationsForProduct(model);
@@ -124,8 +125,7 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 			catch (final InvokeWsException | NumberFormatException e)
 			{
 				LOG.error(e.getMessage());
-				priceWsConfService.saveCall(priceConfiguration, prepareGetParams(priceConfiguration, model).toString(), null, null,
-						e.getMessage());
+				priceWsConfService.saveCall(priceConfiguration, prepareGetParams(model).toString(), null, null, e.getMessage());
 				if (!priceConfiguration.getMode().equals(ModeType.ONLYWITHWEBSERVICE))
 				{
 					return super.getPriceInformationsForProduct(model);
@@ -139,8 +139,7 @@ public class DefaultWsPriceService extends NetPriceService implements WSPriceSer
 	}
 
 	@Override
-	public Map<String, Map<String, String>> prepareGetParams(final PriceWebServiceConfigurationModel priceConfiguration,
-			final ProductModel product)
+	public Map<String, Map<String, String>> prepareGetParams(final ProductModel product)
 	{
 		final Map<String, Map<String, String>> params = new HashMap<>();
 

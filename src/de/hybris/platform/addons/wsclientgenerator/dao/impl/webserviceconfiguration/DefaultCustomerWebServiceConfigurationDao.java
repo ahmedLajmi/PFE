@@ -40,8 +40,9 @@ public class DefaultCustomerWebServiceConfigurationDao implements CustomerWebSer
 	@Override
 	public CustomerWebServiceConfigurationModel findCustomerWsConfiguration(final String id)
 	{
-		final StringBuilder builder = new StringBuilder("SELECT " + CustomerWebServiceConfigurationModel.PK
-				+ " FROM {CustomerWebServiceConfiguration AS s } WHERE {s." + CustomerWebServiceConfigurationModel.PK + "}=" + id);
+		final StringBuilder builder = new StringBuilder(
+				"SELECT " + CustomerWebServiceConfigurationModel.PK + " FROM {CustomerWebServiceConfiguration AS s } WHERE {s."
+						+ CustomerWebServiceConfigurationModel.CODE + "}='" + id + "'");
 
 		final FlexibleSearchQuery query = new FlexibleSearchQuery(builder.toString());
 		final SearchResult<CustomerWebServiceConfigurationModel> result = flexibleSearchService.search(query);

@@ -41,7 +41,7 @@ public class DefaultOrderWebServiceConfigurationDao implements OrderWebServiceCo
 	public OrderWebServiceConfigurationModel findOrderWsConfiguration(final String id)
 	{
 		final StringBuilder builder = new StringBuilder("SELECT " + OrderWebServiceConfigurationModel.PK
-				+ " FROM {OrderWebServiceConfiguration AS s } WHERE {s." + OrderWebServiceConfigurationModel.PK + "}=" + id);
+				+ " FROM {OrderWebServiceConfiguration AS s } WHERE {s." + OrderWebServiceConfigurationModel.CODE + "}='" + id + "'");
 
 		final FlexibleSearchQuery query = new FlexibleSearchQuery(builder.toString());
 		final SearchResult<OrderWebServiceConfigurationModel> result = flexibleSearchService.search(query);

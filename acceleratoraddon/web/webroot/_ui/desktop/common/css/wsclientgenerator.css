@@ -66,18 +66,18 @@
 	width: 100%;
 }
 
-#wsConfigurationDetails, #response, #submit, #query, #path, #statiqueParam {
+#wsConfigurationDetails, #response, #submit, #query, #path, #statiqueParam,#submitDownload{
 	display: none
 }
 
 #editor {
 	width: 100%;
-	min-height: 100px;
+	min-height: 200px;
 	border-radius: 25px;
 	margin: auto;
 }
 
-#btn {
+#btn,#btn2 {
 	margin: auto;
 }
 

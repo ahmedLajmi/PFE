@@ -8,8 +8,8 @@ import de.hybris.platform.addons.wsclientgenerator.exceptions.CreateWsRequestExc
 import de.hybris.platform.addons.wsclientgenerator.exceptions.InvokeWsException;
 import de.hybris.platform.addons.wsclientgenerator.model.StockWebServiceConfigurationModel;
 import de.hybris.platform.addons.wsclientgenerator.service.order.WSCheckoutService;
+import de.hybris.platform.addons.wsclientgenerator.service.tools.WsInvokeService;
 import de.hybris.platform.addons.wsclientgenerator.service.webserviceconfiguration.StockWebServiceConfigurationService;
-import de.hybris.platform.addons.wsclientgenerator.tools.WSInvoke;
 import de.hybris.platform.commerceservices.enums.SalesApplication;
 import de.hybris.platform.commerceservices.order.impl.DefaultCommerceCheckoutService;
 import de.hybris.platform.commerceservices.service.data.CommerceCheckoutParameter;
@@ -39,6 +39,9 @@ public class DefaultWsCheckoutService extends DefaultCommerceCheckoutService imp
 
 	@Resource(name = "userService")
 	private UserService userService;
+
+	@Resource(name = "wsInvokeService")
+	WsInvokeService wsInvoke;
 
 	private StockWebServiceConfigurationModel stockConfiguration;
 
@@ -79,13 +82,12 @@ public class DefaultWsCheckoutService extends DefaultCommerceCheckoutService imp
 		stockConfiguration = stockWsConfService.getWsEnabledConfiguration(MethodType.POST);
 		if (stockConfiguration != null)
 		{
-			final WSInvoke wsinvoke = new WSInvoke();
 			final List<AbstractOrderEntryModel> entries = model.getEntries();
 			for (final AbstractOrderEntryModel entry : entries)
 			{
 				try
 				{
-					wsinvoke.postRequest(stockConfiguration.getUrl(),
+					wsInvoke.postRequest(stockConfiguration.getUrl(),
 							prepareRequestData(entry.getProduct(), model.getCode(), entry.getQuantity().toString()),
 							stockWsConfService.prepareHeadersParams(stockConfiguration), stockConfiguration.getAccept(),
 							stockConfiguration.getContentType());

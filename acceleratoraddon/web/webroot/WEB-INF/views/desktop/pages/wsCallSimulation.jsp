@@ -155,6 +155,21 @@
 					</div>
 					<div class="col-sm-10 form-group perso" id="editor"></div>
 				</div>
+				<div class="row">
+					<form role="form" method="post" id="wsResponseDownload"
+						action="https://hybris.local:9002/store/hybris/en/admin/downloadResponse">
+						<input type="hidden" id="csrf" name="CSRFToken"
+							value="${CSRFToken}"> <input type="hidden"
+							id="responseText" name="responseText" /> <input type="hidden"
+							id="responseType" name="responseType" /> <input type="hidden"
+							id="responseName" name="responseName" />
+					</form>
+					<div class="form-group perso" id="btn2">
+						<button id="submitDownload" type="button" class="btn btn-danger">
+							Download Response</button>
+					</div>
+
+				</div>
 			</div>
 		</div>
 	</div>

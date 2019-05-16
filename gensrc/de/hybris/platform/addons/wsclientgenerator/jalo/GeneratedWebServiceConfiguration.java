@@ -1,7 +1,7 @@
 /*
  * ----------------------------------------------------------------
  * --- WARNING: THIS FILE IS GENERATED AND WILL BE OVERWRITTEN! ---
- * --- Generated at 7 mai 2019 13:12:56                         ---
+ * --- Generated at 14 mai 2019 09:22:34                        ---
  * ----------------------------------------------------------------
  *  
  * [y] hybris Platform
@@ -38,6 +38,8 @@ import java.util.Map;
 @SuppressWarnings({"deprecation","unused","cast","PMD"})
 public abstract class GeneratedWebServiceConfiguration extends GenericItem
 {
+	/** Qualifier of the <code>WebServiceConfiguration.code</code> attribute **/
+	public static final String CODE = "code";
 	/** Qualifier of the <code>WebServiceConfiguration.name</code> attribute **/
 	public static final String NAME = "name";
 	/** Qualifier of the <code>WebServiceConfiguration.description</code> attribute **/
@@ -112,6 +114,7 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	static
 	{
 		final Map<String, AttributeMode> tmp = new HashMap<String, AttributeMode>();
+		tmp.put(CODE, AttributeMode.INITIAL);
 		tmp.put(NAME, AttributeMode.INITIAL);
 		tmp.put(DESCRIPTION, AttributeMode.INITIAL);
 		tmp.put(URL, AttributeMode.INITIAL);
@@ -168,6 +171,42 @@ public abstract class GeneratedWebServiceConfiguration extends GenericItem
 	public void setAccept(final EnumerationValue value)
 	{
 		setAccept( getSession().getSessionContext(), value );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.code</code> attribute.
+	 * @return the code
+	 */
+	public String getCode(final SessionContext ctx)
+	{
+		return (String)getProperty( ctx, CODE);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Getter of the <code>WebServiceConfiguration.code</code> attribute.
+	 * @return the code
+	 */
+	public String getCode()
+	{
+		return getCode( getSession().getSessionContext() );
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>WebServiceConfiguration.code</code> attribute. 
+	 * @param value the code
+	 */
+	public void setCode(final SessionContext ctx, final String value)
+	{
+		setProperty(ctx, CODE,value);
+	}
+	
+	/**
+	 * <i>Generated method</i> - Setter of the <code>WebServiceConfiguration.code</code> attribute. 
+	 * @param value the code
+	 */
+	public void setCode(final String value)
+	{
+		setCode( getSession().getSessionContext(), value );
 	}
 	
 	/**

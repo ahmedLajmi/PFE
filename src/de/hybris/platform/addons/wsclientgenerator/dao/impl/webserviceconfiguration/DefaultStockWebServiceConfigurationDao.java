@@ -41,7 +41,7 @@ public class DefaultStockWebServiceConfigurationDao implements StockWebServiceCo
 	public StockWebServiceConfigurationModel findStockWsConfiguration(final String id)
 	{
 		final StringBuilder builder = new StringBuilder("SELECT " + StockWebServiceConfigurationModel.PK
-				+ " FROM {StockWebServiceConfiguration AS s } WHERE {s." + StockWebServiceConfigurationModel.PK + "}=" + id);
+				+ " FROM {StockWebServiceConfiguration AS s } WHERE {s." + StockWebServiceConfigurationModel.CODE + "}='" + id + "'");
 
 		final FlexibleSearchQuery query = new FlexibleSearchQuery(builder.toString());
 		final SearchResult<StockWebServiceConfigurationModel> result = flexibleSearchService.search(query);

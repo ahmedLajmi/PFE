@@ -133,6 +133,14 @@
 	<bean id="stockWebServiceConfigurationFacade"
 		class="de.hybris.platform.addons.wsclientgenerator.facade.impl.webserviceconfiguration.DefaultStockWebServiceConfigurationFacade">
 	</bean>
+	
+	<bean id="wsInvokeService"
+		class="de.hybris.platform.addons.wsclientgenerator.service.impl.tools.DefaultWsInvokeService">
+	</bean>
+	
+	<bean id="utilities"
+		class="de.hybris.platform.addons.wsclientgenerator.service.impl.tools.DefaultUtilities">
+	</bean>
 
 
 	<bean id="priceConfigurationInterceptor"
@@ -187,7 +195,8 @@
 			value="OrderWebServiceConfiguration" />
 	</bean>
 
-
+	<bean id="wsConfPopulator" class="de.hybris.platform.addons.wsclientgenerator.populator.WebServiceConfigurationPopulator" />
+	<bean id="wsConfDetailsPopulator" class="de.hybris.platform.addons.wsclientgenerator.populator.WebServiceConfigurationDetailsPopulator" />
 
 
 

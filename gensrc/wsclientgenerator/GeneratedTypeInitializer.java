@@ -385,6 +385,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 
 	
 	
+				single_createattr_WebServiceConfiguration_code();
+			
 				single_createattr_WebServiceConfiguration_name();
 			
 				single_createattr_WebServiceConfiguration_description();
@@ -752,6 +754,23 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 
 	}
 
+	
+	public void single_createattr_WebServiceConfiguration_code() throws JaloBusinessException
+	{
+		
+						Map sqlColumnDefinitions = null;
+					
+				createPropertyAttribute(
+					"WebServiceConfiguration", 
+					"code",  
+					null,
+					"java.lang.String",
+					de.hybris.platform.jalo.type.AttributeDescriptor.READ_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.WRITE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.OPTIONAL_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.REMOVE_FLAG|de.hybris.platform.jalo.type.AttributeDescriptor.SEARCH_FLAG,
+					null,
+					sqlColumnDefinitions
+				);
+			
+	}
 	
 	public void single_createattr_WebServiceConfiguration_name() throws JaloBusinessException
 	{
@@ -1742,6 +1761,8 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 				);
 				}
 			
+			single_setAttributeProperties_WebServiceConfiguration_code();
+		
 			single_setAttributeProperties_WebServiceConfiguration_name();
 		
 			single_setAttributeProperties_WebServiceConfiguration_description();
@@ -2109,6 +2130,28 @@ public class GeneratedTypeInitializer extends AbstractTypeInitializer
 
 
 		
+						public void single_setAttributeProperties_WebServiceConfiguration_code() throws JaloBusinessException
+						{
+							
+							
+							
+							Map customPropsMap = new HashMap();
+							
+							setAttributeProperties(
+								"WebServiceConfiguration", 
+								"code",
+								false, 
+								null,
+								null,
+								null,
+								true,
+								true,
+								null,
+								customPropsMap,
+								null
+							);
+						}
+					
 						public void single_setAttributeProperties_WebServiceConfiguration_name() throws JaloBusinessException
 						{
 							

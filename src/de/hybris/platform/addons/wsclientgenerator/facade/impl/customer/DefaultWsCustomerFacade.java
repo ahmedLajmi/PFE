@@ -11,8 +11,8 @@ import de.hybris.platform.addons.wsclientgenerator.exceptions.CreateWsRequestExc
 import de.hybris.platform.addons.wsclientgenerator.exceptions.InvokeWsException;
 import de.hybris.platform.addons.wsclientgenerator.facade.customer.WSCustomerFacade;
 import de.hybris.platform.addons.wsclientgenerator.model.CustomerWebServiceConfigurationModel;
+import de.hybris.platform.addons.wsclientgenerator.service.tools.WsInvokeService;
 import de.hybris.platform.addons.wsclientgenerator.service.webserviceconfiguration.CustomerWebServiceConfigurationService;
-import de.hybris.platform.addons.wsclientgenerator.tools.WSInvoke;
 import de.hybris.platform.commercefacades.customer.impl.DefaultCustomerFacade;
 import de.hybris.platform.commercefacades.user.data.CustomerData;
 import de.hybris.platform.commercefacades.user.data.RegisterData;
@@ -42,6 +42,9 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 	@Resource(name = "customerWebServiceConfigurationService")
 	private CustomerWebServiceConfigurationService customerWsConfService;
 
+	@Resource(name = "wsInvokeService")
+	WsInvokeService wsInvoke;
+
 	private CustomerWebServiceConfigurationModel customerConfiguration;
 
 	private static final Logger LOG = Logger.getLogger(DefaultWsCustomerFacade.class);
@@ -55,10 +58,9 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 		customerConfiguration = customerWsConfService.getWsEnabledConfiguration(MethodType.GET);
 		if (customerConfiguration != null)
 		{
-			final WSInvoke wsinvoke = new WSInvoke();
 			try
 			{
-				final Map<String, String> response = wsinvoke.getRequest(customerConfiguration.getUrl(), prepareGetParams(user),
+				final Map<String, String> response = wsInvoke.getRequest(customerConfiguration.getUrl(), prepareGetParams(user),
 						customerWsConfService.prepareHeadersParams(customerConfiguration), customerConfiguration.getAccept());
 				// test sur code success
 				final String successCode = customerConfiguration.getSuccessCode();
@@ -201,10 +203,9 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 	@Override
 	public void wsUpdateEmail(final String newUid)
 	{
-		final WSInvoke wsinvoke = new WSInvoke();
 		try
 		{
-			wsinvoke.postRequest(customerConfiguration.getUrl(), prepareUpdateEmailRequest(newUid),
+			wsInvoke.postRequest(customerConfiguration.getUrl(), prepareUpdateEmailRequest(newUid),
 					customerWsConfService.prepareHeadersParams(customerConfiguration), customerConfiguration.getAccept(),
 					customerConfiguration.getContentType());
 		}
@@ -218,10 +219,9 @@ public class DefaultWsCustomerFacade extends DefaultCustomerFacade implements WS
 	@Override
 	public void wsCreateUpdateProfil(final CustomerData customerData)
 	{
-		final WSInvoke wsinvoke = new WSInvoke();
 		try
 		{
-			wsinvoke.postRequest(customerConfiguration.getUrl(), prepareProfilRequest(customerData),
+			wsInvoke.postRequest(customerConfiguration.getUrl(), prepareProfilRequest(customerData),
 					customerWsConfService.prepareHeadersParams(customerConfiguration), customerConfiguration.getAccept(),
 					customerConfiguration.getContentType());
 		}

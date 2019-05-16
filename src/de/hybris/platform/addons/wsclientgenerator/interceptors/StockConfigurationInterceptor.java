@@ -14,6 +14,7 @@ import de.hybris.platform.servicelayer.interceptor.InterceptorException;
 import de.hybris.platform.servicelayer.interceptor.ValidateInterceptor;
 
 import java.util.Collection;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -89,6 +90,10 @@ public class StockConfigurationInterceptor implements ValidateInterceptor
 				{
 					throw new InterceptorException(getL10NService().getLocalizedString("invalid.pathParameters"));
 				}
+			}
+			if (stockConfiguration.getCode() == null || StringUtils.isEmpty(stockConfiguration.getCode()))
+			{
+				stockConfiguration.setCode(UUID.randomUUID().toString());
 			}
 		}
 	}

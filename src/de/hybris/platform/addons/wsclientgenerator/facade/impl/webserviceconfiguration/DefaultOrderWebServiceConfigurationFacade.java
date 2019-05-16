@@ -5,18 +5,16 @@ package de.hybris.platform.addons.wsclientgenerator.facade.impl.webserviceconfig
 
 import de.hybris.platform.addons.wsclientgenerator.data.WebServiceConfigurationData;
 import de.hybris.platform.addons.wsclientgenerator.data.WebServiceConfigurationDetailsData;
-import de.hybris.platform.addons.wsclientgenerator.data.WebServiceParameterData;
 import de.hybris.platform.addons.wsclientgenerator.data.WebServiceResponseData;
 import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
 import de.hybris.platform.addons.wsclientgenerator.exceptions.CreateWsRequestException;
 import de.hybris.platform.addons.wsclientgenerator.exceptions.InvokeWsException;
 import de.hybris.platform.addons.wsclientgenerator.facade.webserviceconfiguration.OrderWebServiceConfigurationFacade;
-import de.hybris.platform.addons.wsclientgenerator.model.HeaderWSParamModel;
 import de.hybris.platform.addons.wsclientgenerator.model.OrderWebServiceConfigurationModel;
-import de.hybris.platform.addons.wsclientgenerator.model.OrderWebServiceParameterModel;
-import de.hybris.platform.addons.wsclientgenerator.model.PersoWSParamModel;
+import de.hybris.platform.addons.wsclientgenerator.populator.WebServiceConfigurationDetailsPopulator;
+import de.hybris.platform.addons.wsclientgenerator.populator.WebServiceConfigurationPopulator;
+import de.hybris.platform.addons.wsclientgenerator.service.tools.WsInvokeService;
 import de.hybris.platform.addons.wsclientgenerator.service.webserviceconfiguration.OrderWebServiceConfigurationService;
-import de.hybris.platform.addons.wsclientgenerator.tools.WSInvoke;
 import de.hybris.platform.enumeration.EnumerationService;
 
 import java.util.ArrayList;
@@ -26,7 +24,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 
@@ -44,85 +41,27 @@ public class DefaultOrderWebServiceConfigurationFacade implements OrderWebServic
 	@Resource(name = "enumerationService")
 	private EnumerationService enumerationService;
 
+	@Resource(name = "wsInvokeService")
+	WsInvokeService wsInvoke;
+
+	@Resource(name = "wsConfPopulator")
+	WebServiceConfigurationPopulator wsConfPopulator;
+
+	@Resource(name = "wsConfDetailsPopulator")
+	WebServiceConfigurationDetailsPopulator wsConfDetailsPopulator;
+
 	private static final Logger LOG = Logger.getLogger(DefaultOrderWebServiceConfigurationFacade.class);
 
 
 	@Override
 	public WebServiceConfigurationDetailsData getConfigurationDetails(final String id)
 	{
-		final OrderWebServiceConfigurationModel om = orderWsConfService.findOrderWsConfiguration(id);
-		final WebServiceConfigurationDetailsData cd = new WebServiceConfigurationDetailsData();
-		cd.setId(om.getPk().toString());
-		cd.setName(om.getName());
-		cd.setUrl(om.getUrl());
-		cd.setDescription(om.getDescription());
-		cd.setMethod(enumerationService.getEnumerationName(om.getMethod()));
-		cd.setEnable(om.getEnable().booleanValue());
+		final OrderWebServiceConfigurationModel confModel = orderWsConfService.findOrderWsConfiguration(id);
+		final WebServiceConfigurationDetailsData confData = new WebServiceConfigurationDetailsData();
 
-		final List<WebServiceParameterData> pathParams = new ArrayList<>();
-		final List<WebServiceParameterData> queryParams = new ArrayList<>();
-		final List<WebServiceParameterData> persoParams = new ArrayList<>();
-		final List<WebServiceParameterData> headerParams = new ArrayList<>();
-		final List<WebServiceParameterData> securityParams = new ArrayList<>();
+		wsConfDetailsPopulator.populate(confModel, confData);
 
-		for (final OrderWebServiceParameterModel param : om.getParameters())
-		{
-			final WebServiceParameterData pd = new WebServiceParameterData();
-			pd.setKey(param.getKey());
-			pd.setValue(param.getValue().toString());
-			queryParams.add(pd);
-		}
-		cd.setQueryParameters(queryParams);
-
-		for (final OrderWebServiceParameterModel param : om.getPathParameters())
-		{
-			final WebServiceParameterData pd = new WebServiceParameterData();
-			pd.setKey(param.getKey());
-			pd.setValue(param.getValue().toString());
-			pathParams.add(pd);
-		}
-		cd.setPathParameters(pathParams);
-
-		for (final PersoWSParamModel param : om.getPersonalisedParameters())
-		{
-			final WebServiceParameterData pd = new WebServiceParameterData();
-			pd.setKey(param.getKey());
-			pd.setValue(param.getValue().toString());
-			persoParams.add(pd);
-		}
-		cd.setPersoParameters(persoParams);
-
-
-		for (final HeaderWSParamModel param : om.getHeadersParameters())
-		{
-			final WebServiceParameterData pd = new WebServiceParameterData();
-			pd.setKey(param.getKey());
-			pd.setValue(param.getValue().toString());
-			headerParams.add(pd);
-		}
-		cd.setHeaderParameters(headerParams);
-
-
-		if (om.getLogin() != null && !StringUtils.isEmpty(om.getLogin()))
-		{
-			final WebServiceParameterData login = new WebServiceParameterData();
-			final WebServiceParameterData password = new WebServiceParameterData();
-			login.setKey("login");
-			login.setValue(om.getLogin());
-			password.setKey("password");
-			password.setValue(om.getPassword());
-			securityParams.add(login);
-			securityParams.add(password);
-			cd.setSecurityParameters(securityParams);
-		}
-
-		cd.setAccept(enumerationService.getEnumerationName(om.getAccept()));
-		if (om.getContentType() != null)
-		{
-			cd.setContentType(enumerationService.getEnumerationName(om.getContentType()));
-		}
-
-		return cd;
+		return confData;
 	}
 
 	@Override
@@ -130,12 +69,11 @@ public class DefaultOrderWebServiceConfigurationFacade implements OrderWebServic
 	{
 		final List<OrderWebServiceConfigurationModel> orderConfigModels = orderWsConfService.getAllConfigurations();
 		final List<WebServiceConfigurationData> orderWsConfigData = new ArrayList<WebServiceConfigurationData>();
-		for (final OrderWebServiceConfigurationModel om : orderConfigModels)
+		for (final OrderWebServiceConfigurationModel confModel : orderConfigModels)
 		{
-			final WebServiceConfigurationData cd = new WebServiceConfigurationData();
-			cd.setId(om.getPk().toString());
-			cd.setName(om.getName());
-			orderWsConfigData.add(cd);
+			final WebServiceConfigurationData confData = new WebServiceConfigurationData();
+			wsConfPopulator.populate(confModel, confData);
+			orderWsConfigData.add(confData);
 		}
 		return orderWsConfigData;
 	}
@@ -146,7 +84,6 @@ public class DefaultOrderWebServiceConfigurationFacade implements OrderWebServic
 	{
 		final OrderWebServiceConfigurationModel om = orderWsConfService.findOrderWsConfiguration(id);
 		final WebServiceResponseData response = new WebServiceResponseData();
-		final WSInvoke wsInvoke = new WSInvoke();
 		ResponseEntity<String> wsResponse = null;
 		queryParams.putAll(orderWsConfService.prepareStaticParams(om));
 		final Map<String, Map<String, String>> params = new HashMap<>();

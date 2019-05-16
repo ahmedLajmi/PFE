@@ -14,6 +14,7 @@ import de.hybris.platform.servicelayer.interceptor.InterceptorException;
 import de.hybris.platform.servicelayer.interceptor.ValidateInterceptor;
 
 import java.util.Collection;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -88,6 +89,10 @@ public class CustomerConfigurationInterceptor implements ValidateInterceptor
 				{
 					throw new InterceptorException(getL10NService().getLocalizedString("invalid.pathParameters"));
 				}
+			}
+			if (customerConfiguration.getCode() == null || StringUtils.isEmpty(customerConfiguration.getCode()))
+			{
+				customerConfiguration.setCode(UUID.randomUUID().toString());
 			}
 		}
 	}

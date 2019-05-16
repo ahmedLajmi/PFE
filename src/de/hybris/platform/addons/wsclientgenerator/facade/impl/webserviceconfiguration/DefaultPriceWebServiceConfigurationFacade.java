@@ -5,17 +5,15 @@ package de.hybris.platform.addons.wsclientgenerator.facade.impl.webserviceconfig
 
 import de.hybris.platform.addons.wsclientgenerator.data.WebServiceConfigurationData;
 import de.hybris.platform.addons.wsclientgenerator.data.WebServiceConfigurationDetailsData;
-import de.hybris.platform.addons.wsclientgenerator.data.WebServiceParameterData;
 import de.hybris.platform.addons.wsclientgenerator.data.WebServiceResponseData;
 import de.hybris.platform.addons.wsclientgenerator.enums.MethodType;
 import de.hybris.platform.addons.wsclientgenerator.exceptions.InvokeWsException;
 import de.hybris.platform.addons.wsclientgenerator.facade.webserviceconfiguration.PriceWebServiceConfigurationFacade;
-import de.hybris.platform.addons.wsclientgenerator.model.HeaderWSParamModel;
-import de.hybris.platform.addons.wsclientgenerator.model.PersoWSParamModel;
 import de.hybris.platform.addons.wsclientgenerator.model.PriceWebServiceConfigurationModel;
-import de.hybris.platform.addons.wsclientgenerator.model.PriceWebServiceParameterModel;
+import de.hybris.platform.addons.wsclientgenerator.populator.WebServiceConfigurationDetailsPopulator;
+import de.hybris.platform.addons.wsclientgenerator.populator.WebServiceConfigurationPopulator;
+import de.hybris.platform.addons.wsclientgenerator.service.tools.WsInvokeService;
 import de.hybris.platform.addons.wsclientgenerator.service.webserviceconfiguration.PriceWebServiceConfigurationService;
-import de.hybris.platform.addons.wsclientgenerator.tools.WSInvoke;
 import de.hybris.platform.enumeration.EnumerationService;
 
 import java.util.ArrayList;
@@ -25,7 +23,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 
@@ -43,84 +40,27 @@ public class DefaultPriceWebServiceConfigurationFacade implements PriceWebServic
 	@Resource(name = "enumerationService")
 	private EnumerationService enumerationService;
 
-	private static final Logger LOG = Logger.getLogger(DefaultPriceWebServiceConfigurationFacade.class);
+	@Resource(name = "wsInvokeService")
+	WsInvokeService wsInvoke;
+
+	@Resource(name = "wsConfPopulator")
+	WebServiceConfigurationPopulator wsConfPopulator;
+
+	@Resource(name = "wsConfDetailsPopulator")
+	WebServiceConfigurationDetailsPopulator wsConfDetailsPopulator;
+
+	private static final Logger LOG = Logger.getLogger(DefaultOrderWebServiceConfigurationFacade.class);
 
 
 	@Override
 	public WebServiceConfigurationDetailsData getConfigurationDetails(final String id)
 	{
-		final PriceWebServiceConfigurationModel pm = priceWsConfService.findPriceWsConfiguration(id);
-		final WebServiceConfigurationDetailsData cd = new WebServiceConfigurationDetailsData();
-		cd.setId(pm.getPk().toString());
-		cd.setName(pm.getName());
-		cd.setUrl(pm.getUrl());
-		cd.setDescription(pm.getDescription());
-		cd.setMethod(enumerationService.getEnumerationName(pm.getMethod()));
-		cd.setEnable(pm.getEnable().booleanValue());
-		final List<WebServiceParameterData> pathParams = new ArrayList<>();
-		final List<WebServiceParameterData> queryParams = new ArrayList<>();
-		final List<WebServiceParameterData> persoParams = new ArrayList<>();
-		final List<WebServiceParameterData> headerParams = new ArrayList<>();
-		final List<WebServiceParameterData> securityParams = new ArrayList<>();
+		final PriceWebServiceConfigurationModel confModel = priceWsConfService.findPriceWsConfiguration(id);
+		final WebServiceConfigurationDetailsData confData = new WebServiceConfigurationDetailsData();
 
-		for (final PriceWebServiceParameterModel param : pm.getParameters())
-		{
-			final WebServiceParameterData pd = new WebServiceParameterData();
-			pd.setKey(param.getKey());
-			pd.setValue(param.getValue().toString());
-			queryParams.add(pd);
-		}
-		cd.setQueryParameters(queryParams);
+		wsConfDetailsPopulator.populate(confModel, confData);
 
-		for (final PriceWebServiceParameterModel param : pm.getPathParameters())
-		{
-			final WebServiceParameterData pd = new WebServiceParameterData();
-			pd.setKey(param.getKey());
-			pd.setValue(param.getValue().toString());
-			pathParams.add(pd);
-		}
-		cd.setPathParameters(pathParams);
-
-		for (final PersoWSParamModel param : pm.getPersonalisedParameters())
-		{
-			final WebServiceParameterData pd = new WebServiceParameterData();
-			pd.setKey(param.getKey());
-			pd.setValue(param.getValue().toString());
-			persoParams.add(pd);
-		}
-		cd.setPersoParameters(persoParams);
-
-
-		for (final HeaderWSParamModel param : pm.getHeadersParameters())
-		{
-			final WebServiceParameterData pd = new WebServiceParameterData();
-			pd.setKey(param.getKey());
-			pd.setValue(param.getValue().toString());
-			headerParams.add(pd);
-		}
-		cd.setHeaderParameters(headerParams);
-
-
-		if (pm.getLogin() != null && !StringUtils.isEmpty(pm.getLogin()))
-		{
-			final WebServiceParameterData login = new WebServiceParameterData();
-			final WebServiceParameterData password = new WebServiceParameterData();
-			login.setKey("login");
-			login.setValue(pm.getLogin());
-			password.setKey("password");
-			password.setValue(pm.getPassword());
-			securityParams.add(login);
-			securityParams.add(password);
-			cd.setSecurityParameters(securityParams);
-		}
-
-		cd.setAccept(enumerationService.getEnumerationName(pm.getAccept()));
-		if (pm.getContentType() != null)
-		{
-			cd.setContentType(enumerationService.getEnumerationName(pm.getContentType()));
-		}
-
-		return cd;
+		return confData;
 	}
 
 	@Override
@@ -128,12 +68,11 @@ public class DefaultPriceWebServiceConfigurationFacade implements PriceWebServic
 	{
 		final List<PriceWebServiceConfigurationModel> priceConfigModels = priceWsConfService.getAllConfigurations();
 		final List<WebServiceConfigurationData> priceWsConfigData = new ArrayList<WebServiceConfigurationData>();
-		for (final PriceWebServiceConfigurationModel pm : priceConfigModels)
+		for (final PriceWebServiceConfigurationModel confModel : priceConfigModels)
 		{
-			final WebServiceConfigurationData cd = new WebServiceConfigurationData();
-			cd.setId(pm.getPk().toString());
-			cd.setName(pm.getName());
-			priceWsConfigData.add(cd);
+			final WebServiceConfigurationData confData = new WebServiceConfigurationData();
+			wsConfPopulator.populate(confModel, confData);
+			priceWsConfigData.add(confData);
 		}
 		return priceWsConfigData;
 	}
@@ -144,7 +83,6 @@ public class DefaultPriceWebServiceConfigurationFacade implements PriceWebServic
 	{
 		final PriceWebServiceConfigurationModel pm = priceWsConfService.findPriceWsConfiguration(id);
 		final WebServiceResponseData response = new WebServiceResponseData();
-		final WSInvoke wsInvoke = new WSInvoke();
 		ResponseEntity<String> wsResponse = null;
 		queryParams.putAll(priceWsConfService.prepareStaticParams(pm));
 		final Map<String, Map<String, String>> params = new HashMap<>();

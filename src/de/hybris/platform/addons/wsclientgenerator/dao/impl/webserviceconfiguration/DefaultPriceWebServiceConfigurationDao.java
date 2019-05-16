@@ -58,7 +58,7 @@ public class DefaultPriceWebServiceConfigurationDao implements PriceWebServiceCo
 	public PriceWebServiceConfigurationModel findPriceWsConfiguration(final String id)
 	{
 		final StringBuilder builder = new StringBuilder("SELECT " + PriceWebServiceConfigurationModel.PK
-				+ " FROM {PriceWebServiceConfiguration AS s } WHERE {s." + PriceWebServiceConfigurationModel.PK + "}=" + id);
+				+ " FROM {PriceWebServiceConfiguration AS s } WHERE {s." + PriceWebServiceConfigurationModel.CODE + "}='" + id + "'");
 
 		final FlexibleSearchQuery query = new FlexibleSearchQuery(builder.toString());
 		final SearchResult<PriceWebServiceConfigurationModel> result = flexibleSearchService.search(query);
